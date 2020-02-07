@@ -16,3 +16,11 @@ of your daily life is contributing to climate change from your daily lifestyle c
 - Receive a personalized chart of where your carbon emissions are coming from
 - Receive tips on where to lessen your carbon emissions
 - Search for more sustainable routes
+
+### User Stories
+- As a user, I want to be able to log my sources of carbon emissions
+- As a user, I want to be able to view personalized emission calculations for my lifestyle
+- As a user, I want to be able to compare my results with others in my area
+- As a user, I want to be able to see the emission details of each part of my lifestyle
+- As a user, I want to be able to see my progress over time
+- As a user, I want to be able to receive information on reducing my emissions
