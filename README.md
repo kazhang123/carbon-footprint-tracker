@@ -18,7 +18,7 @@ of your daily life is contributing to climate change from your daily lifestyle c
 - Search for more sustainable routes
 
 ### User Stories
-- As a user, I want to be able to log my sources of carbon emissions
+- As a user, I want to be able to add a source of carbon emission to my emissions log
 - As a user, I want to be able to view personalized emission calculations for my lifestyle
 - As a user, I want to be able to compare my results with others in my area
 - As a user, I want to be able to see the emission details of each part of my lifestyle
