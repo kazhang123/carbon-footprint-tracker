@@ -1,11 +1,11 @@
 package model;
 
-import model.emissions.*;
+import model.emission.*;
+import model.emission.exception.NegativeAmountException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 class CarbonFootprintTest {
 
@@ -76,7 +76,9 @@ class CarbonFootprintTest {
 
     // test whether carbon footprint changes when new diet or daily calorie intake is set
     @Test
-    public void testDietSetters() {
+    public void testDietSetters() throws NegativeAmountException {
+        assertThrows(NegativeAmountException.class, () -> dietLM.setCalPerDay(-1));
+
         dietLM.setCalPerDay(2000);
         assertEquals(2000 * 365 * (Diet.LOWMEATEATER_EF / 2000), dietLM.getCarbonFootprint());
         assertEquals(2000, dietLM.getCalPerDay());
@@ -107,7 +109,9 @@ class CarbonFootprintTest {
 
     // test whether carbon footprint and distance changes when new daily distance is set
     @Test
-    public void testSetTransportationDistance() {
+    public void testSetTransportationDistance() throws NegativeAmountException {
+        assertThrows(NegativeAmountException.class, () -> transportation.setDistancePerDay(-1));
+
         transportation.setDistancePerDay(1000);
         assertEquals(1000 * 365 * Transportation.BUS_EF, transportation.getCarbonFootprint());
         assertEquals(1000, transportation.getDistance());
@@ -132,7 +136,9 @@ class CarbonFootprintTest {
 
     // test whether carbon footprint and distance changes when new daily distance is set
     @Test
-    public void testSetVehicleDistancePerDay() {
+    public void testSetVehicleDistancePerDay() throws NegativeAmountException {
+        assertThrows(NegativeAmountException.class, () -> vehicle.setDistancePerDay(-1));
+
         vehicle.setDistancePerDay(45);
         assertEquals(45, vehicle.getDistance());
         assertEquals((45 * 365 *  Vehicle.MILES_PER_KM / Vehicle.AVG_MPG) * Vehicle.GASOLINE_EF, vehicle.getCarbonFootprint());
@@ -172,7 +178,9 @@ class CarbonFootprintTest {
 
     // test whether carbon footprint and daily kwh changes when new daily energy consumption is set
     @Test
-    public void testSetDailyKwhHomeEnergy() {
+    public void testSetDailyKwhHomeEnergy() throws NegativeAmountException {
+        assertThrows(NegativeAmountException.class, () -> homeEnergyE.setMonthlyKwh(-1));
+
         homeEnergyO.setMonthlyKwh(1000);
         assertEquals(1000, homeEnergyO.getMonthlyKwh());
         assertEquals(1000 * 12 * HomeEnergy.OIL_EF, homeEnergyO.getCarbonFootprint());
@@ -182,6 +190,16 @@ class CarbonFootprintTest {
 
         homeEnergyE.setMonthlyKwh(1000);
         assertEquals(1000 * 12 * HomeEnergy.ELECTRIC_EF, homeEnergyE.getCarbonFootprint());
+    }
+
+    @Test
+    public void testToString() {
+        assertEquals("Diet: " + String.format("%.2f", dietLM.getCarbonFootprint()), dietLM.toString());
+        assertEquals("Electricity: " + String.format("%.2f", homeEnergyE.getCarbonFootprint()), homeEnergyE.toString());
+        assertEquals("Oil: " + String.format("%.2f", homeEnergyO.getCarbonFootprint()), homeEnergyO.toString());
+        assertEquals("Gas: " + String.format("%.2f", homeEnergyG.getCarbonFootprint()), homeEnergyG.toString());
+        assertEquals("Transportation: " + String.format("%.2f", transportation.getCarbonFootprint()), transportation.toString());
+        assertEquals("Vehicle: " + String.format("%.2f", vehicle.getCarbonFootprint()), vehicle.toString());
     }
 
 

@@ -1,13 +1,16 @@
 package model;
 
-import model.emissions.CarbonFootprint;
+import model.emission.CarbonFootprint;
 
 import java.util.ArrayList;
 import java.util.List;
 
+// represents a log tracking different sources of carbon emissions,
+// with a list of all sources, and a user country to determine
+// statistics of their country
 public class CarbonFootprintLog {
 
-    public static final double CARBON_PER_TREE = 0.006; // amount of Co2 absorbed anually by average tree in tonnes
+    public static final double CARBON_PER_TREE = 0.06; // amount of Co2 absorbed anually by average tree in tonnes
     public static final double USA_AVG = 16.49;
     public static final double CAN_AVG = 15.12;
     public static final double WORLD_AVG = 5;
@@ -15,6 +18,7 @@ public class CarbonFootprintLog {
     private String country;
     private List<CarbonFootprint> emissionSources;
 
+    // EFFECTS: constructs a new carbon footprint log
     public CarbonFootprintLog(String country) {
         this.country = country;
         emissionSources = new ArrayList<>();

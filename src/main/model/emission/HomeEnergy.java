@@ -1,5 +1,9 @@
-package model.emissions;
+package model.emission;
 
+import model.emission.exception.NegativeAmountException;
+
+// represents energy used in a home as a source of carbon emission,
+// with an energy type, monthly power consumed, and annual carbon emission
 public class HomeEnergy extends CarbonFootprint {
 
     // Emission factors in tonnes CO2e / kwh
@@ -8,8 +12,9 @@ public class HomeEnergy extends CarbonFootprint {
     public static final double ELECTRIC_EF = 0.0005; // differs by country, temporary constant
 
     private EnergyType energyType;
-    private int monthlyKwh;
+    private double monthlyKwh;
 
+    // EFFECTS: constructs a new home energy emission source
     public HomeEnergy(EnergyType energyType) {
         super();
         this.energyType = energyType;
@@ -30,20 +35,36 @@ public class HomeEnergy extends CarbonFootprint {
         }
     }
 
+    // EFFECTS: returns string representation of home energy's carbon emission
+    @Override
+    public String toString() {
+        String energyString = "";
+        if (energyType.equals(EnergyType.ELECTRICITY)) {
+            energyString =  "Electricity: " + String.format("%.2f", getCarbonFootprint());
+        } else if (energyType.equals(EnergyType.OIL)) {
+            energyString =  "Oil: " + String.format("%.2f", getCarbonFootprint());
+        } else if (energyType.equals(EnergyType.GAS)) {
+            energyString =  "Gas: " + String.format("%.2f", getCarbonFootprint());
+        }
+        return energyString;
+    }
+
     // EFFECTS: returns the energy type of the home energy source
     public EnergyType getEnergyType() {
         return energyType;
     }
 
     // EFFECTS: returns the monthly energy consumption in kwh
-    public int getMonthlyKwh() {
+    public double getMonthlyKwh() {
         return monthlyKwh;
     }
 
     // MODIFIES: this
-    // REQUIRES: monthlyKwh >= 0
     // EFFECTS: sets the the monthly energy consumption in kwh and sets carbon footprint emission based on kwh amount
-    public void setMonthlyKwh(int monthlyKwh) {
+    public void setMonthlyKwh(double monthlyKwh) throws NegativeAmountException {
+        if (monthlyKwh < 0) {
+            throw new NegativeAmountException();
+        }
         this.monthlyKwh = monthlyKwh;
         calculateCarbonEmission(this.monthlyKwh);
     }

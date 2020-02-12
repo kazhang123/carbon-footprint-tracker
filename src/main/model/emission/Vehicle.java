@@ -1,5 +1,9 @@
-package model.emissions;
+package model.emission;
 
+import model.emission.exception.NegativeAmountException;
+
+// represents a personal vehicle as a source of carbon emission,
+// with a daily distance travelled on bus and annual carbon emission
 public class Vehicle extends CarbonFootprint {
 
     // emission factor in tonnes of CO2e per gallon of gasoline consumed
@@ -23,15 +27,23 @@ public class Vehicle extends CarbonFootprint {
         carbonEmission = (dailyDistance * 365 * MILES_PER_KM / AVG_MPG) * GASOLINE_EF;
     }
 
+    // EFFECTS: returns a string representation of vehicle's carbon emissions
+    @Override
+    public String toString() {
+        return "Vehicle: " + String.format("%.2f", getCarbonFootprint());
+    }
+
     // EFFECTS: returns the distance travelled by car a day
     public double getDistance() {
         return dailyDistance;
     }
 
     // MODIFIES: this
-    // REQUIRES: distance >= 0
     // EFFECTS: sets km travelled by car per day
-    public void setDistancePerDay(int distance) {
+    public void setDistancePerDay(double distance) throws NegativeAmountException {
+        if (distance < 0) {
+            throw new NegativeAmountException();
+        }
         dailyDistance = distance;
         calculateCarbonEmission(dailyDistance);
     }

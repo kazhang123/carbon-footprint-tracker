@@ -1,5 +1,9 @@
-package model.emissions;
+package model.emission;
 
+import model.emission.exception.NegativeAmountException;
+
+// represents a diet as a source of carbon emissions,
+// with a diet type, daily calorie intake, and annual carbon emission
 public class Diet extends CarbonFootprint {
 
     // Emission factors by diet type measured in tonnes Co2e / 2000 kCal
@@ -13,6 +17,7 @@ public class Diet extends CarbonFootprint {
     private DietType dietType;
     private int calsPerDay;
 
+    // EFFECTS: constructs a new diet emission source
     public Diet(DietType dietType) {
         super();
         this.dietType = dietType;
@@ -40,6 +45,12 @@ public class Diet extends CarbonFootprint {
         }
     }
 
+    // EFFECTS: returns a string representation of diet's carbon emission
+    @Override
+    public String toString() {
+        return "Diet: " + String.format("%.2f", getCarbonFootprint());
+    }
+
     // EFFECTS: returns the diet type
     public DietType getDietType() {
         return dietType;
@@ -57,9 +68,11 @@ public class Diet extends CarbonFootprint {
     }
 
     // MODIFIES: this
-    // REQUIRES: cals >= 0
     // EFFECTS: sets the kCal consumed per day
-    public void setCalPerDay(int cals) {
+    public void setCalPerDay(int cals) throws NegativeAmountException {
+        if (cals < 0) {
+            throw new NegativeAmountException();
+        }
         calsPerDay = cals;
         calculateCarbonEmission(calsPerDay);
     }

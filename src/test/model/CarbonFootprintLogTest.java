@@ -1,6 +1,7 @@
 package model;
 
-import model.emissions.*;
+import model.emission.*;
+import model.emission.exception.NegativeAmountException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -15,7 +16,7 @@ public class CarbonFootprintLogTest {
     Vehicle car;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws NegativeAmountException {
         testCarbonLog = new CarbonFootprintLog("Canada");
         diet = new Diet(DietType.MEDIUM_MEAT);
         energy = new HomeEnergy(EnergyType.ELECTRICITY);
@@ -52,28 +53,6 @@ public class CarbonFootprintLogTest {
                 testCarbonLog.getTotalEmission());
     }
 
-//    @Test
-//    public void testAddExistingSource() {
-//        testCarbonLog.addCarbonSource(diet);
-//        testCarbonLog.addCarbonSource(energy);
-//        HomeEnergy energy2 = new HomeEnergy(EnergyType.ELECTRICITY);
-//        energy2.setMonthlyKwh(30);
-//
-//        assertEquals(diet.getCarbonFootprint() + energy.getCarbonFootprint(),
-//                testCarbonLog.getTotalEmission());
-//        testCarbonLog.addCarbonSource(energy2);
-//        assertEquals(diet.getCarbonFootprint() + energy2.getCarbonFootprint(),
-//                testCarbonLog.getTotalEmission());
-//
-//        HomeEnergy energy3 = new HomeEnergy(EnergyType.GAS);
-//        energy3.setMonthlyKwh(50);
-//
-//        testCarbonLog.addCarbonSource(energy3);
-//        assertEquals(diet.getCarbonFootprint() + energy2.getCarbonFootprint() + energy3.getCarbonFootprint(),
-//                testCarbonLog.getTotalEmission());
-//
-//    }
-
     @Test
     public void testRemoveSource() {
         testCarbonLog.addCarbonSource(diet);
@@ -88,7 +67,6 @@ public class CarbonFootprintLogTest {
         testCarbonLog.removeCarbonSource(energy);
         assertEquals(diet.getCarbonFootprint(), testCarbonLog.getTotalEmission());
     }
-
 
     @Test
     public void testNumTreesToOffset() {
