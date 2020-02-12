@@ -40,7 +40,7 @@ public class Diet extends CarbonFootprint {
             carbonEmission = calories * 365 * (PESCETARIAN_EF / 2000);
         } else if (dietType.equals(DietType.VEGETARIAN)) {
             carbonEmission = calories * 365 * (VEGETARIAN_EF / 2000);
-        } else if (dietType.equals(DietType.VEGAN)) {
+        } else {
             carbonEmission = calories * 365 * (VEGAN_EF / 2000);
         }
     }

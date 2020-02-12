@@ -30,7 +30,7 @@ public class HomeEnergy extends CarbonFootprint {
             carbonEmission = monthlyKwh * 12 * ELECTRIC_EF;
         } else if (energyType.equals(EnergyType.GAS)) {
             carbonEmission = monthlyKwh * 12 * GAS_EF;
-        } else if (energyType.equals(EnergyType.OIL)) {
+        } else {
             carbonEmission = monthlyKwh * 12 * OIL_EF;
         }
     }
@@ -43,7 +43,7 @@ public class HomeEnergy extends CarbonFootprint {
             energyString =  "Electricity: " + String.format("%.2f", getCarbonFootprint());
         } else if (energyType.equals(EnergyType.OIL)) {
             energyString =  "Oil: " + String.format("%.2f", getCarbonFootprint());
-        } else if (energyType.equals(EnergyType.GAS)) {
+        } else {
             energyString =  "Gas: " + String.format("%.2f", getCarbonFootprint());
         }
         return energyString;
