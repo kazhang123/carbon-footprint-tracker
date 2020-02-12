@@ -92,6 +92,8 @@ class CarbonFootprintTest {
 
         dietLM.setDietType(DietType.VEGAN);
         assertEquals(3000 * 365 * (Diet.VEGAN_EF / 2000), dietLM.getCarbonFootprint());
+        dietLM.setCalPerDay(5000);
+        assertEquals(5000 * 365 * (Diet.VEGAN_EF / 2000), dietLM.getCarbonFootprint());
     }
 
 
@@ -187,6 +189,8 @@ class CarbonFootprintTest {
         homeEnergyO.setMonthlyKwh(1000);
         assertEquals(1000, homeEnergyO.getMonthlyKwh());
         assertEquals(1000 * 12 * HomeEnergy.OIL_EF, homeEnergyO.getCarbonFootprint());
+        homeEnergyO.setMonthlyKwh(2000);
+        assertEquals(2000 * 12 * HomeEnergy.OIL_EF, homeEnergyO.getCarbonFootprint());
 
         homeEnergyG.setMonthlyKwh(1000);
         assertEquals(1000 * 12 * HomeEnergy.GAS_EF, homeEnergyG.getCarbonFootprint());
