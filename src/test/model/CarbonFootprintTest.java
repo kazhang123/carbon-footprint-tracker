@@ -89,6 +89,9 @@ class CarbonFootprintTest {
         dietLM.setCalPerDay(3000);
         assertEquals(3000  * 365 * (Diet.VEGETARIAN_EF / 2000), dietLM.getCarbonFootprint());
         assertEquals(3000, dietLM.getCalPerDay());
+
+        dietLM.setDietType(DietType.VEGAN);
+        assertEquals(3000 * 365 * (Diet.VEGAN_EF / 2000), dietLM.getCarbonFootprint());
     }
 
 
@@ -187,19 +190,24 @@ class CarbonFootprintTest {
 
         homeEnergyG.setMonthlyKwh(1000);
         assertEquals(1000 * 12 * HomeEnergy.GAS_EF, homeEnergyG.getCarbonFootprint());
+        homeEnergyG.setMonthlyKwh(23000);
+        assertEquals(23000 * 12 * HomeEnergy.GAS_EF, homeEnergyG.getCarbonFootprint());
 
         homeEnergyE.setMonthlyKwh(1000);
         assertEquals(1000 * 12 * HomeEnergy.ELECTRIC_EF, homeEnergyE.getCarbonFootprint());
     }
 
     @Test
-    public void testToString() {
+    public void testToString() throws NegativeAmountException {
         assertEquals("Diet: " + String.format("%.2f", dietLM.getCarbonFootprint()), dietLM.toString());
         assertEquals("Electricity: " + String.format("%.2f", homeEnergyE.getCarbonFootprint()), homeEnergyE.toString());
         assertEquals("Oil: " + String.format("%.2f", homeEnergyO.getCarbonFootprint()), homeEnergyO.toString());
+
+        homeEnergyG.setMonthlyKwh(1200);
         assertEquals("Gas: " + String.format("%.2f", homeEnergyG.getCarbonFootprint()), homeEnergyG.toString());
         assertEquals("Transportation: " + String.format("%.2f", transportation.getCarbonFootprint()), transportation.toString());
         assertEquals("Vehicle: " + String.format("%.2f", vehicle.getCarbonFootprint()), vehicle.toString());
+
     }
 
 
