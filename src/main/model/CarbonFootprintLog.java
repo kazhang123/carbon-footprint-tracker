@@ -3,6 +3,7 @@ package model;
 import model.emission.CarbonFootprint;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 // represents a log tracking different sources of carbon emissions,
@@ -62,7 +63,8 @@ public class CarbonFootprintLog {
 
     // EFFECTS: returns average annual carbon footprint for user's country
     public double getAvgCountryFootprint() {
-        return CountryList.countries.get(country);
+        HashMap<String, Double> countryList = CountryList.getCountries();
+        return countryList.get(country);
     }
 
     // EFFECTS: returns the percentage the Carbon footprint source makes up of the total carbon footprint
