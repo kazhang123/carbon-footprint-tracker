@@ -21,6 +21,7 @@ public class CountryListTest {
     @Test
     public void testCountryListSize() {
         assertEquals(208, countryList.getSize());
+        assertEquals(208, countryList.getCountries().size());
     }
 
     @Test
