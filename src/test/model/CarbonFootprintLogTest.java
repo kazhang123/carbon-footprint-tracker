@@ -2,7 +2,6 @@ package model;
 
 import model.emission.*;
 import model.emission.exception.NegativeAmountException;
-import model.emission.exception.NullCountryException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -89,6 +88,8 @@ public class CarbonFootprintLogTest {
         assertEquals(16.49, testCarbonLog.getAvgCountryFootprint());
         testCarbonLog.setCountry("UZBEKISTAN");
         assertEquals(3.42, testCarbonLog.getAvgCountryFootprint());
+        testCarbonLog.setCountry("ALGERIA");
+        assertEquals(3.72, testCarbonLog.getAvgCountryFootprint());
     }
 
     @Test

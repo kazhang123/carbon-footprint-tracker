@@ -279,4 +279,9 @@ public class CountryList {
         countries.put("ZAMBIA", 0.29);
         countries.put("ZIMBABWE", 0.78);
     }
+
+    // EFFECTS: returns number of countries in list
+    public int getSize() {
+        return countries.size();
+    }
 }

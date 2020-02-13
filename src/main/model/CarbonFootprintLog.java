@@ -1,10 +1,8 @@
 package model;
 
 import model.emission.CarbonFootprint;
-import model.emission.exception.NullCountryException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 // represents a log tracking different sources of carbon emissions,
@@ -65,13 +63,6 @@ public class CarbonFootprintLog {
     // EFFECTS: returns average annual carbon footprint for user's country
     public double getAvgCountryFootprint() {
         return CountryList.countries.get(country);
-//        if (country.equals("Canada")) {
-//            return CAN_AVG;
-//        } else if (country.equals("USA")) {
-//            return USA_AVG;
-//        } else {
-//            return WORLD_AVG;
-//        }
     }
 
     // EFFECTS: returns the percentage the Carbon footprint source makes up of the total carbon footprint

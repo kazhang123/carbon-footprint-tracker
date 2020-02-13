@@ -4,7 +4,6 @@ import model.CarbonFootprintLog;
 import model.CountryList;
 import model.emission.*;
 import model.emission.exception.NegativeAmountException;
-import model.emission.exception.NullCountryException;
 
 import java.util.Scanner;
 

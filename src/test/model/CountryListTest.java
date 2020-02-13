@@ -10,10 +10,17 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class CountryListTest {
 
     HashMap<String, Double> countries;
+    CountryList countryList;
 
     @BeforeEach
     public void setUp() {
         countries = CountryList.getCountries();
+        countryList = new CountryList();
+    }
+
+    @Test
+    public void testCountryListSize() {
+        assertEquals(208, countryList.getSize());
     }
 
     @Test
@@ -21,4 +28,6 @@ public class CountryListTest {
         assertEquals(15.12, countries.get("CANADA"));
         assertEquals(0.16, countries.get("BURKINA FASO"));
     }
+
+
 }
