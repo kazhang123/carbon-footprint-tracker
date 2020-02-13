@@ -28,6 +28,7 @@ public class CountryListTest {
     public void testGetCountryAvg() {
         assertEquals(15.12, countries.get("CANADA"));
         assertEquals(0.16, countries.get("BURKINA FASO"));
+        assertEquals(16.49, CountryList.countries.get("USA"));
     }
 
 
