@@ -1,8 +1,10 @@
 package ui;
 
 import model.CarbonFootprintLog;
+import model.CountryList;
 import model.emission.*;
 import model.emission.exception.NegativeAmountException;
+import model.emission.exception.NullCountryException;
 
 import java.util.Scanner;
 
@@ -68,7 +70,7 @@ public class CarbonFootprintApp {
     // EFFECTS: displays start menu for program
     private void displayMenu() {
         System.out.println("What would you like to do?");
-        System.out.println("c - calculate footprint");
+        System.out.println("c - calculate new carbon footprint");
         System.out.println("e - edit footprint");
         System.out.println("s - see your statistics");
         System.out.println("t - receive tips on reducing your emissions!");
@@ -127,9 +129,17 @@ public class CarbonFootprintApp {
         System.out.println("You would need " + carbonLog.numTreesToOffset()
                 + " trees to offset your footprint. \n");
         System.out.println("How do you compare?");
-        System.out.println("Your country's average: " + carbonLog.getAvgCountryFootprint()
-                + " tonnes of CO2 a year \n");
+        printCountryAverage();
         System.out.println("The world average: " + CarbonFootprintLog.WORLD_AVG + " tonnes of CO2 a year \n");
+    }
+
+    private void printCountryAverage() {
+        if (CountryList.getCountries().get(carbonLog.getCountry()) != null) {
+            System.out.println("Your country's average: " + carbonLog.getAvgCountryFootprint()
+                    + " tonnes of CO2 a year \n");
+        } else {
+            System.out.println("Sorry, don't have data for your selected country... \n");
+        }
     }
 
     // MODIFIES: this
@@ -251,25 +261,10 @@ public class CarbonFootprintApp {
     // MODIFIES: this
     // EFFECTS: prompts user to enter their public transportation distance/day
     private void selectCountry() {
-        String selection = "";
-
-        while (!(selection.equals("c") || selection.equals("a") || selection.equals("o"))) {
-            System.out.println("Select your country: ");
-            System.out.println("c - Canada");
-            System.out.println("a - USA");
-            System.out.println("o - other");
-
-            selection = input.next();
-            selection = selection.toLowerCase();
-        }
-
-        if (selection.equals("c")) {
-            carbonLog.setCountry("Canada");
-        } else if (selection.equals("a")) {
-            carbonLog.setCountry("USA");
-        } else {
-            carbonLog.setCountry("Other");
-        }
+        System.out.println("Enter your country");
+        String country = input.next();
+        country = country.toUpperCase();
+        carbonLog.setCountry(country);
     }
 
     // EFFECTS: prints sustainability tips based on user's emission sources to screen
@@ -277,7 +272,7 @@ public class CarbonFootprintApp {
         System.out.println("REDUCE YOUR IMPACT:\n");
         if (diet.getDietType().equals(DietType.HIGH_MEAT) || diet.getDietType().equals(DietType.MEDIUM_MEAT)) {
             System.out.println("Consider eating meatless meals once a week! \n"
-                    + " Eating one meatless a week can offset your footprint by up to 0.4 tonnes a year \n");
+                    + " Eating one meatless meal a week can offset your footprint by up to 0.4 tonnes a year \n");
         }
         if (car.getCarbonFootprint() > 0) {
             System.out.println("Take public transportation! \n For each day of the week you take the bus,"

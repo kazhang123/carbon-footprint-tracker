@@ -1,8 +1,10 @@
 package model;
 
 import model.emission.CarbonFootprint;
+import model.emission.exception.NullCountryException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 // represents a log tracking different sources of carbon emissions,
@@ -10,9 +12,7 @@ import java.util.List;
 // statistics of their country
 public class CarbonFootprintLog {
 
-    public static final double CARBON_PER_TREE = 0.06; // amount of Co2 absorbed anually by average tree in tonnes
-    public static final double USA_AVG = 16.49;
-    public static final double CAN_AVG = 15.12;
+    public static final double CARBON_PER_TREE = 0.06; // amount of Co2 absorbed annually by average tree in tonnes
     public static final double WORLD_AVG = 5;
 
     private String country;
@@ -64,13 +64,14 @@ public class CarbonFootprintLog {
 
     // EFFECTS: returns average annual carbon footprint for user's country
     public double getAvgCountryFootprint() {
-        if (country.equals("Canada")) {
-            return CAN_AVG;
-        } else if (country.equals("USA")) {
-            return USA_AVG;
-        } else {
-            return WORLD_AVG;
-        }
+        return CountryList.countries.get(country);
+//        if (country.equals("Canada")) {
+//            return CAN_AVG;
+//        } else if (country.equals("USA")) {
+//            return USA_AVG;
+//        } else {
+//            return WORLD_AVG;
+//        }
     }
 
     // EFFECTS: returns the percentage the Carbon footprint source makes up of the total carbon footprint

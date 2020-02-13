@@ -1,5 +1,6 @@
 package model.emission;
 
+import model.CarbonFootprintLog;
 import model.emission.exception.NegativeAmountException;
 
 // represents a personal vehicle as a source of carbon emission,
@@ -47,6 +48,7 @@ public class Vehicle extends CarbonFootprint {
         dailyDistance = distance;
         calculateCarbonEmission(dailyDistance);
     }
+
 
 
 
