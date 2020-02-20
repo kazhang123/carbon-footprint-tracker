@@ -92,10 +92,7 @@ class CarbonFootprintTest {
 
         dietLM.setDietType(DietType.VEGAN);
         assertEquals(3000 * 365 * (Diet.VEGAN_EF / 2000), dietLM.getCarbonFootprint());
-        dietLM.setCalPerDay(5000);
-        assertEquals(5000 * 365 * (Diet.VEGAN_EF / 2000), dietLM.getCarbonFootprint());
     }
-
 
     @Test
     public void testTransportationConstructor() {
@@ -136,7 +133,8 @@ class CarbonFootprintTest {
     @Test
     public void testVehicleCalculations() {
         vehicle.calculateCarbonEmission(45);
-        assertEquals((45 * 365 * 0.62 / Vehicle.AVG_MPG) * Vehicle.GASOLINE_EF, vehicle.getCarbonFootprint());
+        assertEquals((45 * 365 * 0.62 / Vehicle.AVG_MPG)
+                * Vehicle.GASOLINE_EF, vehicle.getCarbonFootprint());
     }
 
     // test whether carbon footprint and distance changes when new daily distance is set
@@ -146,11 +144,13 @@ class CarbonFootprintTest {
 
         vehicle.setDistancePerDay(45);
         assertEquals(45, vehicle.getDistance());
-        assertEquals((45 * 365 *  Vehicle.MILES_PER_KM / Vehicle.AVG_MPG) * Vehicle.GASOLINE_EF, vehicle.getCarbonFootprint());
+        assertEquals((45 * 365 *  Vehicle.MILES_PER_KM / Vehicle.AVG_MPG)
+                * Vehicle.GASOLINE_EF, vehicle.getCarbonFootprint());
 
         vehicle.setDistancePerDay(20);
         assertEquals(20, vehicle.getDistance());
-        assertEquals((20 * 365 * Vehicle.MILES_PER_KM / Vehicle.AVG_MPG) * Vehicle.GASOLINE_EF, vehicle.getCarbonFootprint());
+        assertEquals((20 * 365 * Vehicle.MILES_PER_KM / Vehicle.AVG_MPG)
+                * Vehicle.GASOLINE_EF, vehicle.getCarbonFootprint());
     }
 
     @Test
@@ -204,12 +204,14 @@ class CarbonFootprintTest {
     @Test
     public void testToString() throws NegativeAmountException {
         assertEquals("Diet: " + String.format("%.2f", dietLM.getCarbonFootprint()), dietLM.toString());
-        assertEquals("Electricity: " + String.format("%.2f", homeEnergyE.getCarbonFootprint()), homeEnergyE.toString());
+        assertEquals("Electricity: "
+                + String.format("%.2f", homeEnergyE.getCarbonFootprint()), homeEnergyE.toString());
         assertEquals("Oil: " + String.format("%.2f", homeEnergyO.getCarbonFootprint()), homeEnergyO.toString());
 
         homeEnergyG.setMonthlyKwh(1200);
         assertEquals("Gas: " + String.format("%.2f", homeEnergyG.getCarbonFootprint()), homeEnergyG.toString());
-        assertEquals("Transportation: " + String.format("%.2f", transportation.getCarbonFootprint()), transportation.toString());
+        assertEquals("Transportation: " +
+                String.format("%.2f", transportation.getCarbonFootprint()), transportation.toString());
         assertEquals("Vehicle: " + String.format("%.2f", vehicle.getCarbonFootprint()), vehicle.toString());
 
     }

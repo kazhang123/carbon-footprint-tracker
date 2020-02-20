@@ -90,7 +90,6 @@ public class CarbonFootprintLogTest {
         assertEquals(3.42, testCarbonLog.getAvgCountryFootprint());
         testCarbonLog.setCountry("ALGERIA");
         assertEquals(3.72, testCarbonLog.getAvgCountryFootprint());
-        testCarbonLog.setCountry("AHHHHHHH");
     }
 
     @Test

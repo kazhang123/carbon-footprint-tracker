@@ -132,6 +132,7 @@ public class CarbonFootprintApp {
         System.out.println("The world average: " + CarbonFootprintLog.WORLD_AVG + " tonnes of CO2 a year \n");
     }
 
+    // EFFECTS: prints caverage carbon footprint of user country if found.If not found, prints that it was not found
     private void printCountryAverage() {
         if (CountryList.getCountries().get(carbonLog.getCountry()) != null) {
             System.out.println("Your country's average: " + carbonLog.getAvgCountryFootprint()
