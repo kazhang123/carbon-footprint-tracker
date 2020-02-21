@@ -65,13 +65,6 @@ public class CarbonFootprintLog implements Jsonable {
     }
 
     // MODIFIES: this
-    // REQUIRES: source != null
-    // EFFECTS: removes source of emission
-    public void removeCarbonSource(CarbonEmission source) {
-        emissionSources.remove(source);
-    }
-
-    // MODIFIES: this
     // REQUIRES: carbon footprint source must not already exist in carbon footprint log
     // EFFECTS: adds new carbon footprint source to log
     public void addCarbonSource(CarbonEmission source) {

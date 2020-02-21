@@ -5,7 +5,6 @@ import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +12,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
+// source: TellerApp
 public class JsonSimpleReaderTest {
 
     @Test
@@ -85,27 +85,11 @@ public class JsonSimpleReaderTest {
         }
     }
 
-//    @Test
-//    public void parseCarbonFootprintLogFile() {
-//        CarbonFootprintLog carbonLog = new CarbonFootprintLog("");
-//        try {
-//            carbonLog = JsonSimpleReader.readCarbonFootprintLog(new File("./data/testCarbonEmissionsFile.txt"));
-//            assertEquals("CANADA", carbonLog.getCountry());
-//            assertEquals(200, carbonLog.getTotalEmission());
-//
-//            // check that nextLog id is set correctly
-//            CarbonFootprintLog nextLog = new CarbonFootprintLog("ALGERIA");
-//            assertEquals(2, nextLog.getId());
-//        } catch (IOException e) {
-//            fail("exception should not have been thrown");
-//        }
-//
-//    }
 
     @Test
     public void testIOException() {
         try {
-            JsonSimpleReader.readJson(new File("./does/not/exist/testCarbonEmissionsFile.txt"));
+            JsonSimpleReader.readJson(new File("./does/not/exist/testJsonFile.txt"));
         } catch (IOException e) {
             // expected
         } catch (ParseException e) {

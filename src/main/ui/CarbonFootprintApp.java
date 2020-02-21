@@ -4,12 +4,16 @@ import model.emission.CarbonFootprintLog;
 import model.CountryList;
 import model.emission.*;
 import model.emission.exception.NegativeAmountException;
+import org.json.simple.parser.ParseException;
+import persistence.JsonSimpleReader;
+import persistence.JsonSimpleWriter;
 
+import java.io.*;
+import java.util.List;
 import java.util.Scanner;
 
 // carbon footprint tracker application
 // Source code: TellerApp
-
 public class CarbonFootprintApp {
     private static final String JSON_FILE = "data/json";
     private CarbonFootprintLog carbonLog;
@@ -33,7 +37,7 @@ public class CarbonFootprintApp {
         runProgram = true;
         input = new Scanner(System.in);
 
-        initializeCarbonFootprint();
+        loadCurrentLog();
 
         while (runProgram) {
             displayMenu();
@@ -52,11 +56,51 @@ public class CarbonFootprintApp {
     // EFFECTS: loads most recent log from JSON_FILE if it exists,
     // otherwise initialize log with default values
     private void loadCurrentLog() {
+        try {
+            List<CarbonFootprintLog> allLogs = JsonSimpleReader.readJson(new File(JSON_FILE));
+            carbonLog = allLogs.get(allLogs.size() - 1);
+            List<CarbonEmission> emissions = carbonLog.getEmissionSources();
+            diet = (Diet) emissions.get(0);
+            electricity = (HomeEnergy) emissions.get(1);
+            gas = (HomeEnergy) emissions.get(2);
+            oil = (HomeEnergy) emissions.get(3);
+            transportation = (Transportation) emissions.get(4);
+            car = (Vehicle) emissions.get(5);
+
+        } catch (IOException e) {
+            initializeCarbonFootprint();
+        } catch (ParseException e) {
+            initializeCarbonFootprint();
+        }
+    }
+
+    // EFFECTS: displays past carbon footprint logs saved to JSON_FILE
+    private void displayPast() {
+        try {
+            List<CarbonFootprintLog> allLogs = JsonSimpleReader.readJson(new File(JSON_FILE));
+            System.out.println("Your carbon footprint over time in tonnes of CO2e per year:");
+            for (CarbonFootprintLog l : allLogs) {
+                System.out.println(String.format("%.2f", l.getTotalEmission()));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            System.out.println("No records to display \n");
+        }
+
 
     }
 
-    // EFFECTS: loads past carbon footprint logs from JSON_FILE
-    private void loadLogs() {
+    // EFFECTS: saves state of carbon footprint log to JSON_FILE
+    private void saveLog() {
+        try {
+            JsonSimpleWriter writer = new JsonSimpleWriter(new File(JSON_FILE));
+            writer.write(carbonLog);
+            writer.close();
+            System.out.println("Current footprint saved to file \n");
+        } catch (IOException e) {
+            System.out.println("Unable to save to file \n");
+        }
 
     }
 
@@ -84,7 +128,9 @@ public class CarbonFootprintApp {
         System.out.println("What would you like to do?");
         System.out.println("c - calculate new carbon footprint");
         System.out.println("e - edit footprint");
-        System.out.println("s - see your statistics");
+        System.out.println("p - see your statistics");
+        System.out.println("s - save your current footprint to file");
+        System.out.println("h = see your emissions over time");
         System.out.println("t - receive tips on reducing your emissions!");
         System.out.println("q - quit");
     }
@@ -96,8 +142,12 @@ public class CarbonFootprintApp {
             calculateNewFootprint();
         } else if (command.equals("e")) {
             editFooprint();
-        } else if (command.equals("s")) {
+        } else if (command.equals("p")) {
             printStatistics();
+        } else if (command.equals("s")) {
+            saveLog();
+        } else if (command.equals("h")) {
+            displayPast();
         } else if (command.equals("t")) {
             printTips();
         } else {
@@ -128,13 +178,13 @@ public class CarbonFootprintApp {
                 + "% of your total emission");
         System.out.println(electricity.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(electricity)
                 + "% of your total emission");
-        System.out.println(oil.toString() + " tonnes of CO2, "  + carbonLog.percentageEmission(oil)
+        System.out.println(oil.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(oil)
                 + "% of your total emission");
-        System.out.println(gas.toString() + " tonnes of CO2, "  + carbonLog.percentageEmission(gas)
+        System.out.println(gas.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(gas)
                 + "% of your total emission");
         System.out.println(transportation.toString() + " tonnes of CO2, "
                 + carbonLog.percentageEmission(transportation) + "% of your total emission");
-        System.out.println(car.toString() + " tonnes of CO2, "  + carbonLog.percentageEmission(car)
+        System.out.println(car.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(car)
                 + "% of your total emission \n");
         System.out.println("Your annual emission: " + String.format("%.2f", carbonLog.getTotalEmission())
                 + " tonnes of CO2");
@@ -280,7 +330,7 @@ public class CarbonFootprintApp {
         carbonLog.setCountry(country);
     }
 
-    // EFFECTS: prints sustainability tips based on user's emission sources to screen
+    // EFFECTS: prints sustainability OffsetTips.txt based on user's emission sources to screen
     private void printTips() {
         System.out.println("REDUCE YOUR IMPACT:\n");
         if (diet.getDietType().equals(DietType.HIGH_MEAT) || diet.getDietType().equals(DietType.MEDIUM_MEAT)) {
@@ -292,16 +342,18 @@ public class CarbonFootprintApp {
                     + " you can save up to 0.7 tonnes of CO2 and $2000 every year on fuel. \n");
             System.out.println("Carpool to work to save 0.9 tonnes a year. \n");
         }
-        System.out.println("Adjust your thermostat. \n For every degree you turn down your thermostat,"
-                + " you save 0.06 tonnes of CO2 every year. \n Reducing your heating by 1 degree celsius"
-                + " can reduce your emissions by 8% and save $55 every year. \n"
-                + " Help the planet by bundling up and wearing more layers! \n");
-        System.out.println("Hang your clothes instead of using the dryer. \n "
-                + " Line drying your laundry will save about 0.15 tonnes of CO2 and $70 annually. \n");
-        System.out.println("Change your lightbulbs to low-energy bulbs. \n"
-                + " Changing 1 lightbulb to a low-energy 18 W bulb will save"
-                + " you $20 and the planet 0.052 tonnes of CO2 annually. \n");
-        System.out.println("Turn off electrical equipment that aren't in use! \n");
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("data/OffsetTips.txt"));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                System.out.println(line + "\n");
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // EFFECTS: displays menu to select what emission source to edit

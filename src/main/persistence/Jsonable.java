@@ -9,7 +9,7 @@ import java.io.IOException;
 // represents data that can be saved to file
 public interface Jsonable {
     // MODIFIES: printWriter
-    // EFFECTS: writes the saveable to printWriter
+    // EFFECTS: writes the jsonable to printWriter
     void saveJson(FileWriter fileWriter, Object obj) throws IOException;
 
 }

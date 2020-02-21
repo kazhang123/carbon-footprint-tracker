@@ -58,21 +58,6 @@ public class CarbonFootprintLogTest {
     }
 
     @Test
-    public void testRemoveSource() {
-        testCarbonLog.addCarbonSource(diet);
-        testCarbonLog.addCarbonSource(energy);
-        HomeEnergy oil = new HomeEnergy(EnergyType.OIL);
-        testCarbonLog.addCarbonSource(oil);
-        assertEquals(diet.getCarbonEmission() + energy.getCarbonEmission() + oil.getCarbonEmission(),
-                testCarbonLog.getTotalEmission());
-        testCarbonLog.removeCarbonSource(oil);
-        assertEquals(diet.getCarbonEmission() + energy.getCarbonEmission(),
-                testCarbonLog.getTotalEmission());
-        testCarbonLog.removeCarbonSource(energy);
-        assertEquals(diet.getCarbonEmission(), testCarbonLog.getTotalEmission());
-    }
-
-    @Test
     public void testNumTreesToOffset() {
         testCarbonLog.addCarbonSource(diet);
         assertEquals(Math.round(diet.getCarbonEmission() / CarbonFootprintLog.CARBON_PER_TREE),

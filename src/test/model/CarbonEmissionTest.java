@@ -49,30 +49,6 @@ class CarbonEmissionTest {
         assertEquals(dietVegan.getDietType(), DietType.VEGAN);
     }
 
-    // test whether calculation method is multiplying emissions factor correctly
-//    @Test
-//    public void testDietCalculation() {
-//        dietLM.calculateCarbonEmission(2000);
-//        assertEquals(2000 * 365 * (Diet.LOWMEATEATER_EF / 2000) , dietLM.getCarbonEmission());
-//        dietLM.calculateCarbonEmission(4000);
-//        assertEquals(4000  * 365 * (Diet.LOWMEATEATER_EF / 2000), dietLM.getCarbonEmission());
-//
-//        dietMM.calculateCarbonEmission(4000);
-//        assertEquals(4000  * 365 * (Diet.MEDMEATEATER_EF / 2000), dietMM.getCarbonEmission());
-//
-//        dietHM.calculateCarbonEmission(4000);
-//        assertEquals(4000  * 365 * (Diet.HIGHMEATEATER_EF / 2000), dietHM.getCarbonEmission());
-//
-//        dietP.calculateCarbonEmission(4000);
-//        assertEquals(4000  * 365 * (Diet.PESCETARIAN_EF / 2000), dietP.getCarbonEmission());
-//
-//        dietVege.calculateCarbonEmission(4000);
-//        assertEquals(4000  * 365 * (Diet.VEGETARIAN_EF / 2000), dietVege.getCarbonEmission());
-//
-//        dietVegan.calculateCarbonEmission(4000);
-//        assertEquals(4000  * 365 * (Diet.VEGAN_EF / 2000), dietVegan.getCarbonEmission());
-//    }
-
     // test whether carbon footprint changes when new diet or daily calorie intake is set
     @Test
     public void testDietSetters() throws NegativeAmountException {
@@ -108,15 +84,6 @@ class CarbonEmissionTest {
         assertEquals(0, transportation.getDistance());
     }
 
-//    // test whether calculation method is multiplying emissions factor correctly
-//    @Test
-//    public void testTransportationCalculation() {
-//        transportation.calculateCarbonEmission(1000);
-//        assertEquals(1000 * 365  * Transportation.BUS_EF, transportation.getCarbonEmission());
-//        transportation.calculateCarbonEmission(500);
-//        assertEquals(500  * 365 * Transportation.BUS_EF, transportation.getCarbonEmission());
-//    }
-
     // test whether carbon footprint and distance changes when new daily distance is set
     @Test
     public void testSetTransportationDistance() throws NegativeAmountException {
@@ -136,14 +103,6 @@ class CarbonEmissionTest {
         assertEquals(0, vehicle.getDistance());
         assertEquals(0, vehicle.getCarbonEmission());
     }
-
-//    // test whether calculation method is multiplying emissions factor correctly
-//    @Test
-//    public void testVehicleCalculations() {
-//        vehicle.calculateCarbonEmission(45);
-//        assertEquals((45 * 365 * 0.62 / Vehicle.AVG_MPG)
-//                * Vehicle.GASOLINE_EF, vehicle.getCarbonEmission());
-//    }
 
     // test whether carbon footprint and distance changes when new daily distance is set
     @Test
@@ -175,19 +134,6 @@ class CarbonEmissionTest {
         assertEquals(0, homeEnergyO.getMonthlyKwh());
         assertEquals(homeEnergyO.getEnergyType(), EnergyType.OIL);
     }
-
-//    // test whether calculation method is multiplying emission factors correctly
-//    @Test
-//    public void testHomeEnergyCalculation() {
-//        homeEnergyO.calculateCarbonEmission(1000);
-//        assertEquals(1000 * 12 * HomeEnergy.OIL_EF, homeEnergyO.getCarbonEmission());
-//
-//        homeEnergyG.calculateCarbonEmission(1000);
-//        assertEquals(1000 * 12 * HomeEnergy.GAS_EF, homeEnergyG.getCarbonEmission());
-//
-//        homeEnergyE.calculateCarbonEmission(1000);
-//        assertEquals(1000 * 12 * HomeEnergy.ELECTRIC_EF, homeEnergyE.getCarbonEmission());
-//    }
 
     // test whether carbon footprint and daily kwh changes when new daily energy consumption is set
     @Test
