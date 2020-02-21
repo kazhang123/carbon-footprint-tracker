@@ -26,11 +26,7 @@ public class JsonSimpleWriter {
 
     // MODIFIES: this
     // EFFECTS: closes file writer
-    public void close() {
-        try {
-            fileWriter.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void close() throws IOException {
+        fileWriter.close();
     }
 }
