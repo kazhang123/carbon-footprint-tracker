@@ -2,9 +2,11 @@ package model.emission;
 
 import model.emission.exception.NegativeAmountException;
 
+import java.io.PrintWriter;
+
 // represents energy used in a home as a source of carbon emission,
 // with an energy type, monthly power consumed, and annual carbon emission
-public class HomeEnergy extends CarbonFootprint {
+public class HomeEnergy extends CarbonEmission {
 
     // Emission factors in tonnes CO2e / kwh
     public static final double GAS_EF = 0.00018;
@@ -21,11 +23,18 @@ public class HomeEnergy extends CarbonFootprint {
         monthlyKwh = 0;
     }
 
+    // NOTE: only used when constructing a home energy emission source from file
+    public HomeEnergy(int nextId, int id, double emission, double kwh, String type) {
+        super(nextId, id, emission);
+        monthlyKwh = kwh;
+        energyType = processEnergyType();
+    }
+
     // MODIFIES: this
     // EFFECTS: calculates and sets the annual emission quantity in tonnes of carbon dioxide equivalent based on
     //          given kwh used per month
     @Override
-    public void calculateCarbonEmission(double monthlyKwh) {
+    protected void calculateCarbonEmission(double monthlyKwh) {
         if (energyType.equals(EnergyType.ELECTRICITY)) {
             carbonEmission = monthlyKwh * 12 * ELECTRIC_EF;
         } else if (energyType.equals(EnergyType.GAS)) {
@@ -40,11 +49,11 @@ public class HomeEnergy extends CarbonFootprint {
     public String toString() {
         String energyString = "";
         if (energyType.equals(EnergyType.ELECTRICITY)) {
-            energyString =  "Electricity: " + String.format("%.2f", getCarbonFootprint());
+            energyString =  "Electricity: " + String.format("%.2f", getCarbonEmission());
         } else if (energyType.equals(EnergyType.OIL)) {
-            energyString =  "Oil: " + String.format("%.2f", getCarbonFootprint());
+            energyString =  "Oil: " + String.format("%.2f", getCarbonEmission());
         } else {
-            energyString =  "Gas: " + String.format("%.2f", getCarbonFootprint());
+            energyString =  "Gas: " + String.format("%.2f", getCarbonEmission());
         }
         return energyString;
     }
@@ -70,6 +79,12 @@ public class HomeEnergy extends CarbonFootprint {
     }
 
 
+    @Override
+    public void save(PrintWriter printwriter) {
 
+    }
 
+    private EnergyType processEnergyType() {
+        return null;
+    }
 }

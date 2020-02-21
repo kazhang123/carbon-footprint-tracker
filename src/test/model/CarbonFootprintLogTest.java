@@ -35,12 +35,14 @@ public class CarbonFootprintLogTest {
         assertEquals(0, testCarbonLog.getTotalEmission());
         assertEquals("CANADA", testCarbonLog.getCountry());
         assertEquals(15.12, testCarbonLog.getAvgCountryFootprint());
+        assertEquals(0, testCarbonLog.getEmissionSources().size());
     }
 
     @Test
     public void testAddOneSource() {
         testCarbonLog.addCarbonSource(diet);
-        assertEquals(diet.getCarbonFootprint(), testCarbonLog.getTotalEmission());
+        assertEquals(diet.getCarbonEmission(), testCarbonLog.getTotalEmission());
+        assertEquals(1, testCarbonLog.getEmissionSources().size());
     }
 
     @Test
@@ -49,9 +51,10 @@ public class CarbonFootprintLogTest {
         testCarbonLog.addCarbonSource(energy);
         testCarbonLog.addCarbonSource(bus);
         testCarbonLog.addCarbonSource(car);
-        assertEquals(diet.getCarbonFootprint() + energy.getCarbonFootprint() +
-                        bus.getCarbonFootprint() + car.getCarbonFootprint(),
+        assertEquals(diet.getCarbonEmission() + energy.getCarbonEmission() +
+                        bus.getCarbonEmission() + car.getCarbonEmission(),
                 testCarbonLog.getTotalEmission());
+        assertEquals(4, testCarbonLog.getEmissionSources().size());
     }
 
     @Test
@@ -60,19 +63,19 @@ public class CarbonFootprintLogTest {
         testCarbonLog.addCarbonSource(energy);
         HomeEnergy oil = new HomeEnergy(EnergyType.OIL);
         testCarbonLog.addCarbonSource(oil);
-        assertEquals(diet.getCarbonFootprint() + energy.getCarbonFootprint() + oil.getCarbonFootprint(),
+        assertEquals(diet.getCarbonEmission() + energy.getCarbonEmission() + oil.getCarbonEmission(),
                 testCarbonLog.getTotalEmission());
         testCarbonLog.removeCarbonSource(oil);
-        assertEquals(diet.getCarbonFootprint() + energy.getCarbonFootprint(),
+        assertEquals(diet.getCarbonEmission() + energy.getCarbonEmission(),
                 testCarbonLog.getTotalEmission());
         testCarbonLog.removeCarbonSource(energy);
-        assertEquals(diet.getCarbonFootprint(), testCarbonLog.getTotalEmission());
+        assertEquals(diet.getCarbonEmission(), testCarbonLog.getTotalEmission());
     }
 
     @Test
     public void testNumTreesToOffset() {
         testCarbonLog.addCarbonSource(diet);
-        assertEquals(Math.round(diet.getCarbonFootprint() / CarbonFootprintLog.CARBON_PER_TREE),
+        assertEquals(Math.round(diet.getCarbonEmission() / CarbonFootprintLog.CARBON_PER_TREE),
                 testCarbonLog.numTreesToOffset());
         testCarbonLog.addCarbonSource(energy);
         testCarbonLog.addCarbonSource(bus);
@@ -97,7 +100,7 @@ public class CarbonFootprintLogTest {
         testCarbonLog.addCarbonSource(diet);
         assertEquals(100, testCarbonLog.percentageEmission(diet));
         testCarbonLog.addCarbonSource(energy);
-        assertEquals(Math.round(diet.getCarbonFootprint() / testCarbonLog.getTotalEmission() * 100),
+        assertEquals(Math.round(diet.getCarbonEmission() / testCarbonLog.getTotalEmission() * 100),
                 testCarbonLog.percentageEmission(diet));
     }
 

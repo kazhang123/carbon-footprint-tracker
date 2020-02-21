@@ -1,6 +1,6 @@
 package ui;
 
-import model.CarbonFootprintLog;
+import model.emission.CarbonFootprintLog;
 import model.CountryList;
 import model.emission.*;
 import model.emission.exception.NegativeAmountException;
@@ -274,7 +274,7 @@ public class CarbonFootprintApp {
             System.out.println("Consider eating meatless meals once a week! \n"
                     + " Eating one meatless meal a week can offset your footprint by up to 0.4 tonnes a year \n");
         }
-        if (car.getCarbonFootprint() > 0) {
+        if (car.getCarbonEmission() > 0) {
             System.out.println("Take public transportation! \n For each day of the week you take the bus,"
                     + " you can save up to 0.7 tonnes of CO2 and $2000 every year on fuel. \n");
             System.out.println("Carpool to work to save 0.9 tonnes a year. \n");

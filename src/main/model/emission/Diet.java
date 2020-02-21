@@ -2,9 +2,11 @@ package model.emission;
 
 import model.emission.exception.NegativeAmountException;
 
+import java.io.PrintWriter;
+
 // represents a diet as a source of carbon emissions,
 // with a diet type, daily calorie intake, and annual carbon emission
-public class Diet extends CarbonFootprint {
+public class Diet extends CarbonEmission {
 
     // Emission factors by diet type measured in tonnes Co2e / 2000 kCal
     public static final double HIGHMEATEATER_EF = 0.00719; // >= 100 g meat / day
@@ -24,12 +26,19 @@ public class Diet extends CarbonFootprint {
         calsPerDay = 0;
     }
 
+    // NOTE: only used when constructing a diet emission source from file
+    public Diet(int nextId, int id, double emission, double cals, String type) {
+        super(nextId, id, emission);
+        calsPerDay = (int) cals;
+        dietType = processDietType();
+    }
+
     // MODIFIES: this
     // EFFECTS: calculates and sets the annual emission quantity in
     //          tonnes of carbon dioxide equivalent based on calories
     //          consumed per day and type of diet
     @Override
-    public void calculateCarbonEmission(double calories) {
+    protected void calculateCarbonEmission(double calories) {
         if (dietType.equals(DietType.HIGH_MEAT)) {
             carbonEmission = calories * 365 * (HIGHMEATEATER_EF / 2000);
         } else if (dietType.equals(DietType.MEDIUM_MEAT)) {
@@ -48,7 +57,7 @@ public class Diet extends CarbonFootprint {
     // EFFECTS: returns a string representation of diet's carbon emission
     @Override
     public String toString() {
-        return "Diet: " + String.format("%.2f", getCarbonFootprint());
+        return "Diet: " + String.format("%.2f", getCarbonEmission());
     }
 
     // EFFECTS: returns the diet type
@@ -78,6 +87,12 @@ public class Diet extends CarbonFootprint {
     }
 
 
+    @Override
+    public void save(PrintWriter printwriter) {
 
+    }
 
+    private DietType processDietType() {
+        return null;
+    }
 }

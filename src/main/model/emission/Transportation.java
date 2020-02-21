@@ -2,9 +2,11 @@ package model.emission;
 
 import model.emission.exception.NegativeAmountException;
 
+import java.io.PrintWriter;
+
 // represents public transportation as a source of carbon emission,
 // with a daily distance travelled on bus and annual carbon emission
-public class Transportation extends CarbonFootprint {
+public class Transportation extends CarbonEmission {
 
     // Emission factors for public transportation measured in tonnes CO2e / km
     public static final double BUS_EF = 0.00011;
@@ -17,18 +19,24 @@ public class Transportation extends CarbonFootprint {
         dailyDistance = 0;
     }
 
+    // NOTE: only used when constructing a transportation emission source from file
+    public Transportation(int nextId, int id, double emission, double distance) {
+        super(nextId, id, emission);
+        dailyDistance = distance;
+    }
+
     // MODIFIES: this
     // EFFECTS: calculates and sets the annual emission quantity in
     //          tonnes of carbon dioxide equivalent based on km spent on bus a day
     @Override
-    public void calculateCarbonEmission(double dailyDistance) {
+    protected void calculateCarbonEmission(double dailyDistance) {
         carbonEmission = dailyDistance * 365 * BUS_EF;
     }
 
     // EFFECTS: returns a string representation of transportation's carbon emissions
     @Override
     public String toString() {
-        return "Transportation: " + String.format("%.2f", getCarbonFootprint());
+        return "Transportation: " + String.format("%.2f", getCarbonEmission());
     }
 
     // EFFECTS: returns the distance spent on bus each day
@@ -47,4 +55,8 @@ public class Transportation extends CarbonFootprint {
     }
 
 
+    @Override
+    public void save(PrintWriter printwriter) {
+
+    }
 }

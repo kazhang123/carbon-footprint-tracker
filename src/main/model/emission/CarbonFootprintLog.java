@@ -1,7 +1,11 @@
-package model;
+package model.emission;
 
-import model.emission.CarbonFootprint;
+import model.CountryList;
+import model.emission.CarbonEmission;
+import persistence.Saveable;
 
+import java.io.PrintWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,28 +13,48 @@ import java.util.List;
 // represents a log tracking different sources of carbon emissions,
 // with a list of all sources, and a user country to determine
 // statistics of their country
-public class CarbonFootprintLog {
-
+public class CarbonFootprintLog implements Saveable {
     public static final double CARBON_PER_TREE = 0.06; // amount of Co2 absorbed annually by average tree in tonnes
     public static final double WORLD_AVG = 5;
 
+    protected static int nextLogId = 1;  // tracks id of next log created
+    private int id;                    // carbon footprint log id
     private String country;
-    private List<CarbonFootprint> emissionSources;
+    private List<CarbonEmission> emissionSources;
 
     // EFFECTS: constructs a new carbon footprint log
     public CarbonFootprintLog(String country) {
+        id = nextLogId++;
         this.country = country;
         emissionSources = new ArrayList<>();
+    }
+
+    // EFFECTS: constructs a carbon footprint log with id, and emission sources
+    //          nextLogId is the id of the next log to be constructed
+    // NOTE: this constructor is to be used only when constructing a log from data stored in file
+    public CarbonFootprintLog(int nextId, int id, String country,  ArrayList<CarbonEmission> emissions) {
+        nextLogId = nextId;
+        this.id = id;
+        this.country = country;
+        emissionSources = emissions;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    // EFFECTS: returns list of emission sources
+    public List<CarbonEmission> getEmissionSources() {
+        return emissionSources;
     }
 
     // EFFECTS: returns the total tonnes of CO2e emitted
     public double getTotalEmission() {
         double total = 0;
 
-        for (CarbonFootprint c : emissionSources) {
-            total += c.getCarbonFootprint();
+        for (CarbonEmission c : emissionSources) {
+            total += c.getCarbonEmission();
         }
-
         return total;
     }
 
@@ -48,15 +72,14 @@ public class CarbonFootprintLog {
     // MODIFIES: this
     // REQUIRES: source != null
     // EFFECTS: removes source of emission
-    public void removeCarbonSource(CarbonFootprint source) {
+    public void removeCarbonSource(CarbonEmission source) {
         emissionSources.remove(source);
     }
 
     // MODIFIES: this
     // REQUIRES: carbon footprint source must not already exist in carbon footprint log
-    // EFFECTS: adds new carbon footprint source if not already in log
-    //          if already in log, update existing source with tonnes of CO2e from amt
-    public void addCarbonSource(CarbonFootprint source) {
+    // EFFECTS: adds new carbon footprint source to log
+    public void addCarbonSource(CarbonEmission source) {
         emissionSources.add(source);
     }
 
@@ -68,12 +91,17 @@ public class CarbonFootprintLog {
     }
 
     // EFFECTS: returns the percentage the Carbon footprint source makes up of the total carbon footprint
-    public int percentageEmission(CarbonFootprint source) {
-        return (int) Math.round(source.getCarbonFootprint() / getTotalEmission() * 100);
+    public int percentageEmission(CarbonEmission source) {
+        return (int) Math.round(source.getCarbonEmission() / getTotalEmission() * 100);
     }
 
     // EFFECTS: returns the number of trees needed to offset total carbon footprint
     public int numTreesToOffset() {
         return (int) Math.round(getTotalEmission() / CARBON_PER_TREE);
+    }
+
+    @Override
+    public void save(PrintWriter printwriter) {
+
     }
 }

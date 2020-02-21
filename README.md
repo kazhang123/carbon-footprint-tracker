@@ -23,4 +23,4 @@ of your daily life is contributing to climate change from your daily lifestyle c
 - As a user, I want to be able to receive information on reducing my emissions
 - As a user, I want to be able to compare my carbon footprint to the average person in my country
 - As a user, I want to be able to save my carbon emission records to file, and I want the option to save my file when I select quit
-- As a user, I want to be able to load my past carbon footprints and current footprint to file when the program starts
+- As a user, I want to be able to load my current carbon footprint to file when the program starts
