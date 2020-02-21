@@ -1,30 +1,31 @@
 package model.emission;
 
 import model.CountryList;
-import model.emission.CarbonEmission;
-import persistence.Saveable;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import persistence.JsonSimpleWriter;
+import persistence.Jsonable;
 
-import java.io.PrintWriter;
-import java.lang.reflect.Array;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import static persistence.JsonSimpleWriter.logs;
+
 // represents a log tracking different sources of carbon emissions,
 // with a list of all sources, and a user country to determine
 // statistics of their country
-public class CarbonFootprintLog implements Saveable {
+public class CarbonFootprintLog implements Jsonable {
     public static final double CARBON_PER_TREE = 0.06; // amount of Co2 absorbed annually by average tree in tonnes
     public static final double WORLD_AVG = 5;
 
-    protected static int nextLogId = 1;  // tracks id of next log created
-    private int id;                    // carbon footprint log id
     private String country;
     private List<CarbonEmission> emissionSources;
 
     // EFFECTS: constructs a new carbon footprint log
     public CarbonFootprintLog(String country) {
-        id = nextLogId++;
         this.country = country;
         emissionSources = new ArrayList<>();
     }
@@ -32,15 +33,9 @@ public class CarbonFootprintLog implements Saveable {
     // EFFECTS: constructs a carbon footprint log with id, and emission sources
     //          nextLogId is the id of the next log to be constructed
     // NOTE: this constructor is to be used only when constructing a log from data stored in file
-    public CarbonFootprintLog(int nextId, int id, String country,  ArrayList<CarbonEmission> emissions) {
-        nextLogId = nextId;
-        this.id = id;
+    public CarbonFootprintLog(String country, ArrayList<CarbonEmission> emissions) {
         this.country = country;
         emissionSources = emissions;
-    }
-
-    public int getId() {
-        return id;
     }
 
     // EFFECTS: returns list of emission sources
@@ -101,7 +96,22 @@ public class CarbonFootprintLog implements Saveable {
     }
 
     @Override
-    public void save(PrintWriter printwriter) {
+    public void saveJson(FileWriter fileWriter, Object obj) throws IOException {
+        JSONObject log = new JSONObject();
+        log.put("country", country);
+
+        JSONArray emissions = new JSONArray();
+        for (CarbonEmission c : emissionSources) {
+            c.saveJson(fileWriter, emissions);
+        }
+
+        log.put("emissionSources", emissions);
+        logs.add(log);
+        JSONObject jsonObj = (JSONObject) obj;
+        jsonObj.put("logs", logs);
+
+        fileWriter.write(jsonObj.toJSONString());
 
     }
+
 }

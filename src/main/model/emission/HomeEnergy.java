@@ -1,8 +1,10 @@
 package model.emission;
 
 import model.emission.exception.NegativeAmountException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import java.io.PrintWriter;
+import java.io.FileWriter;
 
 // represents energy used in a home as a source of carbon emission,
 // with an energy type, monthly power consumed, and annual carbon emission
@@ -21,13 +23,6 @@ public class HomeEnergy extends CarbonEmission {
         super();
         this.energyType = energyType;
         monthlyKwh = 0;
-    }
-
-    // NOTE: only used when constructing a home energy emission source from file
-    public HomeEnergy(int nextId, int id, double emission, double kwh, String type) {
-        super(nextId, id, emission);
-        monthlyKwh = kwh;
-        energyType = processEnergyType();
     }
 
     // MODIFIES: this
@@ -80,11 +75,22 @@ public class HomeEnergy extends CarbonEmission {
 
 
     @Override
-    public void save(PrintWriter printwriter) {
+    public void saveJson(FileWriter fileWriter, Object obj) {
+        JSONObject energyObj = new JSONObject();
 
+        if (energyType.equals(EnergyType.ELECTRICITY)) {
+            energyObj.put("label", "Electricity");
+        } else if (energyType.equals(EnergyType.GAS)) {
+            energyObj.put("label", "Gas");
+        } else {
+            energyObj.put("label", "Oil");
+        }
+
+        energyObj.put("monthlyKwh", monthlyKwh);
+
+        JSONArray emissions = (JSONArray) obj;
+        emissions.add(energyObj);
     }
 
-    private EnergyType processEnergyType() {
-        return null;
-    }
+
 }

@@ -1,0 +1,63 @@
+{"logs" : [{
+  "country": "ALGERIA",
+  "emissionSources": [
+    {
+      "label": "Diet",
+      "cals": 2000,
+      "dietType": "MEDIUM_MEAT"
+    },
+    {
+      "label": "Electricity",
+      "monthlyKwh": 1000
+    },
+    {
+      "label": "Gas",
+      "monthlyKwh": 1000
+    },
+    {
+      "label": "Oil",
+      "monthlyKwh": 1000
+    },
+    {
+      "label": "Transportation",
+      "dailyDistance": 40
+    },
+    {
+      "label": "Vehicle",
+      "dailyDistance": 10
+    }
+  ]
+},
+  {
+    "country": "ALGERIA",
+    "emissionSources": [
+      {
+        "label": "Diet",
+        "cals": 3000,
+        "dietType": "VEGAN"
+      },
+      {
+        "label": "Electricity",
+        "monthlyKwh": 800
+      },
+      {
+        "label": "Gas",
+        "monthlyKwh": 800
+      },
+      {
+        "label": "Oil",
+        "monthlyKwh": 800
+      },
+      {
+        "label": "Transportation",
+        "dailyDistance": 40
+      },
+      {
+        "label": "Vehicle",
+        "dailyDistance": 10
+      }
+    ]
+  }]
+
+
+}

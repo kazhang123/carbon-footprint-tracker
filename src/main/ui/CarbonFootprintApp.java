@@ -11,6 +11,7 @@ import java.util.Scanner;
 // Source code: TellerApp
 
 public class CarbonFootprintApp {
+    private static final String JSON_FILE = "data/json";
     private CarbonFootprintLog carbonLog;
     private Diet diet;
     private HomeEnergy electricity;
@@ -45,6 +46,18 @@ public class CarbonFootprintApp {
                 processCommand(command);
             }
         }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads most recent log from JSON_FILE if it exists,
+    // otherwise initialize log with default values
+    private void loadCurrentLog() {
+
+    }
+
+    // EFFECTS: loads past carbon footprint logs from JSON_FILE
+    private void loadLogs() {
+
     }
 
     // MODIFIES: this

@@ -1,8 +1,10 @@
 package model.emission;
 
 import model.emission.exception.NegativeAmountException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import java.io.PrintWriter;
+import java.io.FileWriter;
 
 // represents a diet as a source of carbon emissions,
 // with a diet type, daily calorie intake, and annual carbon emission
@@ -24,13 +26,6 @@ public class Diet extends CarbonEmission {
         super();
         this.dietType = dietType;
         calsPerDay = 0;
-    }
-
-    // NOTE: only used when constructing a diet emission source from file
-    public Diet(int nextId, int id, double emission, double cals, String type) {
-        super(nextId, id, emission);
-        calsPerDay = (int) cals;
-        dietType = processDietType();
     }
 
     // MODIFIES: this
@@ -88,11 +83,14 @@ public class Diet extends CarbonEmission {
 
 
     @Override
-    public void save(PrintWriter printwriter) {
+    public void saveJson(FileWriter fileWriter, Object obj) {
+        JSONObject dietObj = new JSONObject();
+        dietObj.put("label", "Diet");
+        dietObj.put("cals", calsPerDay);
+        dietObj.put("dietType", dietType.name());
+        JSONArray emissions = (JSONArray) obj;
+        emissions.add(dietObj);
 
     }
 
-    private DietType processDietType() {
-        return null;
-    }
 }

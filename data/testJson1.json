@@ -1,0 +1,33 @@
+{"logs" : [{
+  "country": "ALGERIA",
+  "emissionSources": [
+    {
+      "label": "Diet",
+      "cals": 2000,
+      "dietType": "MEDIUM_MEAT"
+    },
+    {
+      "label": "Electricity",
+      "monthlyKwh": 1000
+    },
+    {
+      "label": "Gas",
+      "monthlyKwh": 1000
+    },
+    {
+      "label": "Oil",
+      "monthlyKwh": 1000
+    },
+    {
+      "label": "Transportation",
+      "dailyDistance": 40
+    },
+    {
+      "label": "Vehicle",
+      "dailyDistance": 10
+    }
+  ]
+}]
+
+
+}

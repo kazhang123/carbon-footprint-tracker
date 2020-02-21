@@ -1,8 +1,10 @@
 package model.emission;
 
 import model.emission.exception.NegativeAmountException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
-import java.io.PrintWriter;
+import java.io.FileWriter;
 
 // represents public transportation as a source of carbon emission,
 // with a daily distance travelled on bus and annual carbon emission
@@ -17,12 +19,6 @@ public class Transportation extends CarbonEmission {
     public Transportation() {
         super();
         dailyDistance = 0;
-    }
-
-    // NOTE: only used when constructing a transportation emission source from file
-    public Transportation(int nextId, int id, double emission, double distance) {
-        super(nextId, id, emission);
-        dailyDistance = distance;
     }
 
     // MODIFIES: this
@@ -56,7 +52,13 @@ public class Transportation extends CarbonEmission {
 
 
     @Override
-    public void save(PrintWriter printwriter) {
-
+    public void saveJson(FileWriter fileWriter, Object obj) {
+        JSONObject busObj = new JSONObject();
+        busObj.put("label", "Transportation");
+        busObj.put("dailyDistance", dailyDistance);
+        JSONArray emissions = (JSONArray) obj;
+        emissions.add(busObj);
     }
+
+
 }
