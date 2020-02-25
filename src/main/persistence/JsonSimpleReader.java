@@ -20,7 +20,8 @@ public class JsonSimpleReader {
 
     public static List<CarbonFootprintLog> readJson(File file) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        Object obj = parser.parse(new FileReader(file));
+        Reader reader = new FileReader(file);
+        Object obj = parser.parse(reader);
         JSONObject jsonObj = (JSONObject) obj;
         JSONArray jsonLogs = (JSONArray) jsonObj.get("logs");
         ArrayList<CarbonFootprintLog> logs = new ArrayList<>();

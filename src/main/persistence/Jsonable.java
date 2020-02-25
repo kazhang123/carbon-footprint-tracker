@@ -10,6 +10,6 @@ import java.io.IOException;
 public interface Jsonable {
     // MODIFIES: printWriter
     // EFFECTS: writes the jsonable to printWriter
-    void saveJson(FileWriter fileWriter) throws IOException;
+    void saveJson(FileWriter fileWriter, Object obj) throws IOException;
 
 }

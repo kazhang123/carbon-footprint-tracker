@@ -89,29 +89,6 @@ public class JsonSimpleWriterTest {
         }
     }
 
-//    @Test
-//    public void testWriteMulltipleLogs() throws IOException {
-//            writer.write(carbonLog);
-//            writer.close();
-//            writer = new JsonSimpleWriter(new File(TEST_FILE));
-//            diet.setDietType(DietType.HIGH_MEAT);
-//            writer.write(carbonLog);
-//            writer.close();
-//
-//
-//        try {
-//            List<CarbonFootprintLog> carbonLogs = JsonSimpleReader.readJson(new File(TEST_FILE));
-//            assertEquals(2, carbonLogs.size());
-//
-//        } catch (ParseException e) {
-//            fail("exception should not have been thrown");
-//        } catch (IOException e) {
-//            fail("exception should not have been thrown");
-//        }
-//
-//
-//    }
-
 
 
 
