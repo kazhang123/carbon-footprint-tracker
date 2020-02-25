@@ -18,10 +18,11 @@ import java.util.List;
 // a reader that can read carbon footprint log data from a json file
 public class JsonSimpleReader {
 
+    // EFFECTS: returns a list of carbon footprint logs parsed from file; throws
+    // IO exception/parsing exception is exception is raised when opening/reading from file
     public static List<CarbonFootprintLog> readJson(File file) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
-        Reader reader = new FileReader(file);
-        Object obj = parser.parse(reader);
+        Object obj = parser.parse(new FileReader(file));
         JSONObject jsonObj = (JSONObject) obj;
         JSONArray jsonLogs = (JSONArray) jsonObj.get("logs");
         ArrayList<CarbonFootprintLog> logs = new ArrayList<>();
@@ -38,6 +39,7 @@ public class JsonSimpleReader {
         return logs;
     }
 
+    // EFFECTS: returns a list of carbon emission sources parsed from file
     public static ArrayList<CarbonEmission> parseEmissionSources(JSONArray sources) {
         JSONObject jsonDiet = (JSONObject) sources.get(0);
         String dietTypeString = (String) jsonDiet.get("dietType");

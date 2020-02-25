@@ -52,7 +52,7 @@ public class JsonSimpleWriterTest {
     }
 
     @Test
-    public void testWriteLogs() throws IOException {
+    public void testWriteLogs() throws IOException, ParseException {
         writer.write(carbonLog);
         writer.close();
 
