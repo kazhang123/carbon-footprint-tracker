@@ -96,9 +96,4 @@ public class JsonSimpleReaderTest {
             fail("exception should not have been thrown");
         }
     }
-
-    @Test
-    public void testConstructor() {
-        JsonSimpleReader reader = new JsonSimpleReader();
-    }
 }
