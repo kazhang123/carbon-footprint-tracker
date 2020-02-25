@@ -1,8 +1,8 @@
 package model.emission;
 
 import model.emission.exception.NegativeAmountException;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import persistence.JsonSimpleWriter;
 
 import java.io.FileWriter;
 
@@ -83,13 +83,12 @@ public class Diet extends CarbonEmission {
 
 
     @Override
-    public void saveJson(FileWriter fileWriter, Object obj) {
+    public void saveJson(FileWriter fileWriter) {
         JSONObject dietObj = new JSONObject();
         dietObj.put("label", "Diet");
         dietObj.put("cals", calsPerDay);
         dietObj.put("dietType", dietType.name());
-        JSONArray emissions = (JSONArray) obj;
-        emissions.add(dietObj);
+        JsonSimpleWriter.emissions.add(dietObj);
 
     }
 

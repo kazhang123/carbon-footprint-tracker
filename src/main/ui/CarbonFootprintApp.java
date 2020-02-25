@@ -16,6 +16,7 @@ import java.util.Scanner;
 // Source code: TellerApp
 public class CarbonFootprintApp {
     private static final String JSON_FILE = "data/json";
+    private List<CarbonFootprintLog> allLogs;
     private CarbonFootprintLog carbonLog;
     private Diet diet;
     private HomeEnergy electricity;
@@ -57,7 +58,7 @@ public class CarbonFootprintApp {
     // otherwise initialize log with default values
     private void loadCurrentLog() {
         try {
-            List<CarbonFootprintLog> allLogs = JsonSimpleReader.readJson(new File(JSON_FILE));
+            allLogs = JsonSimpleReader.readJson(new File(JSON_FILE));
             carbonLog = allLogs.get(allLogs.size() - 1);
             List<CarbonEmission> emissions = carbonLog.getEmissionSources();
             diet = (Diet) emissions.get(0);
@@ -76,19 +77,10 @@ public class CarbonFootprintApp {
 
     // EFFECTS: displays past carbon footprint logs saved to JSON_FILE
     private void displayPast() {
-        try {
-            List<CarbonFootprintLog> allLogs = JsonSimpleReader.readJson(new File(JSON_FILE));
-            System.out.println("Your carbon footprint over time in tonnes of CO2e per year:");
-            for (CarbonFootprintLog l : allLogs) {
-                System.out.println(String.format("%.2f", l.getTotalEmission()));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            System.out.println("No records to display \n");
+        System.out.println("Your carbon footprint over time in tonnes of CO2e per year:");
+        for (CarbonFootprintLog l : allLogs) {
+            System.out.println(String.format("%.2f", l.getTotalEmission()));
         }
-
-
     }
 
     // EFFECTS: saves state of carbon footprint log to JSON_FILE
@@ -130,7 +122,7 @@ public class CarbonFootprintApp {
         System.out.println("e - edit footprint");
         System.out.println("p - see your statistics");
         System.out.println("s - save your current footprint to file");
-        System.out.println("h = see your emissions over time");
+        System.out.println("h - see your emissions over time");
         System.out.println("t - receive tips on reducing your emissions!");
         System.out.println("q - quit");
     }

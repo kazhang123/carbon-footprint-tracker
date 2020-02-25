@@ -1,8 +1,8 @@
 package model.emission;
 
 import model.emission.exception.NegativeAmountException;
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import persistence.JsonSimpleWriter;
 
 import java.io.FileWriter;
 
@@ -52,12 +52,11 @@ public class Transportation extends CarbonEmission {
 
 
     @Override
-    public void saveJson(FileWriter fileWriter, Object obj) {
+    public void saveJson(FileWriter fileWriter) {
         JSONObject busObj = new JSONObject();
         busObj.put("label", "Transportation");
         busObj.put("dailyDistance", dailyDistance);
-        JSONArray emissions = (JSONArray) obj;
-        emissions.add(busObj);
+        JsonSimpleWriter.emissions.add(busObj);
     }
 
 

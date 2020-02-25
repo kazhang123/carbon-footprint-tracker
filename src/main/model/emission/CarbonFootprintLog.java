@@ -12,8 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static persistence.JsonSimpleWriter.logs;
-
 // represents a log tracking different sources of carbon emissions,
 // with a list of all sources, and a user country to determine
 // statistics of their country
@@ -89,22 +87,22 @@ public class CarbonFootprintLog implements Jsonable {
     }
 
     @Override
-    public void saveJson(FileWriter fileWriter, Object obj) throws IOException {
+    public void saveJson(FileWriter fileWriter) throws IOException {
         JSONObject log = new JSONObject();
         log.put("country", country);
 
-        JSONArray emissions = new JSONArray();
+        JsonSimpleWriter.emissions = new JSONArray();
+
         for (CarbonEmission c : emissionSources) {
-            c.saveJson(fileWriter, emissions);
+            c.saveJson(fileWriter);
         }
 
-        log.put("emissionSources", emissions);
-        logs.add(log);
-        JSONObject jsonObj = (JSONObject) obj;
-        jsonObj.put("logs", logs);
+        log.put("emissionSources", JsonSimpleWriter.emissions);
+        JsonSimpleWriter.logs.add(log);
+        //JsonSimpleWriter.obj.remove("logs");
+        JsonSimpleWriter.obj.put("logs", JsonSimpleWriter.logs);
 
-        fileWriter.write(jsonObj.toJSONString());
-
+        fileWriter.write(JsonSimpleWriter.obj.toJSONString());
     }
 
 }
