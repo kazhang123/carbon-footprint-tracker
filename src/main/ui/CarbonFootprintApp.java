@@ -5,8 +5,8 @@ import model.CountryList;
 import model.emission.*;
 import model.emission.exception.NegativeAmountException;
 import org.json.simple.parser.ParseException;
-import persistence.JsonSimpleReader;
-import persistence.JsonSimpleWriter;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.io.*;
 import java.util.List;
@@ -15,7 +15,7 @@ import java.util.Scanner;
 // carbon footprint tracker application
 // Source code: TellerApp
 public class CarbonFootprintApp {
-    private static final String JSON_FILE = "data/json";
+    private static final String JSON_FILE = "data/savedLogs.json";
     private CarbonFootprintLog carbonLog;
     private Diet diet;
     private HomeEnergy electricity;
@@ -57,7 +57,7 @@ public class CarbonFootprintApp {
     // otherwise initialize log with default values
     private void loadCurrentLog() {
         try {
-            List<CarbonFootprintLog> allLogs = JsonSimpleReader.readJson(new File(JSON_FILE));
+            List<CarbonFootprintLog> allLogs = JsonReader.readJson(new File(JSON_FILE));
             carbonLog = allLogs.get(allLogs.size() - 1);
             List<CarbonEmission> emissions = carbonLog.getEmissionSources();
             diet = (Diet) emissions.get(0);
@@ -77,7 +77,7 @@ public class CarbonFootprintApp {
     // EFFECTS: displays past carbon footprint logs saved to JSON_FILE
     private void displayPast() {
         try {
-            List<CarbonFootprintLog> allLogs = JsonSimpleReader.readJson(new File(JSON_FILE));
+            List<CarbonFootprintLog> allLogs = JsonReader.readJson(new File(JSON_FILE));
             System.out.println("Your carbon footprint over time in tonnes of CO2e per year:");
             for (CarbonFootprintLog l : allLogs) {
                 System.out.println(String.format("%.2f", l.getTotalEmission()));
@@ -94,7 +94,7 @@ public class CarbonFootprintApp {
     // EFFECTS: saves state of carbon footprint log to JSON_FILE
     private void saveLog() {
         try {
-            JsonSimpleWriter writer = new JsonSimpleWriter(new File(JSON_FILE));
+            JsonWriter writer = new JsonWriter(new File(JSON_FILE));
             writer.write(carbonLog);
             writer.close();
             System.out.println("Current footprint saved to file \n");
@@ -130,7 +130,7 @@ public class CarbonFootprintApp {
         System.out.println("e - edit footprint");
         System.out.println("p - see your statistics");
         System.out.println("s - save your current footprint to file");
-        System.out.println("h = see your emissions over time");
+        System.out.println("h - see your emissions over time");
         System.out.println("t - receive tips on reducing your emissions!");
         System.out.println("q - quit");
     }

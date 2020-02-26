@@ -52,11 +52,7 @@ class CarbonEmissionTest {
     // test whether carbon footprint changes when new diet or daily calorie intake is set
     @Test
     public void testDietSetters() throws NegativeAmountException {
-        try {
-            dietLM.setCalPerDay(-1);
-        } catch (NegativeAmountException e) {
-            // expected
-        }
+        assertThrows(NegativeAmountException.class, () -> dietLM.setCalPerDay(-1));
 
         dietLM.setCalPerDay(2000);
         assertEquals(2000 * 365 * (Diet.LOWMEATEATER_EF / 2000), dietLM.getCarbonEmission());
@@ -91,11 +87,7 @@ class CarbonEmissionTest {
     // test whether carbon footprint and distance changes when new daily distance is set
     @Test
     public void testSetTransportationDistance() throws NegativeAmountException {
-        try {
-            transportation.setDistancePerDay(-1);
-        } catch (NegativeAmountException e) {
-            // expected
-        }
+        assertThrows(NegativeAmountException.class, () -> transportation.setDistancePerDay(-1));
 
         transportation.setDistancePerDay(1000);
         assertEquals(1000 * 365 * Transportation.BUS_EF, transportation.getCarbonEmission());
@@ -114,12 +106,8 @@ class CarbonEmissionTest {
 
     // test whether carbon footprint and distance changes when new daily distance is set
     @Test
-    public void testSetVehicleDistancePerDay() {
-        try {
-            vehicle.setDistancePerDay(-1);
-        } catch (NegativeAmountException e) {
-            // expected
-        }
+    public void testSetVehicleDistancePerDay() throws NegativeAmountException {
+        assertThrows(NegativeAmountException.class, () -> vehicle.setDistancePerDay(-1));
 
         vehicle.setDistancePerDay(45);
         assertEquals(45, vehicle.getDistance());
@@ -149,12 +137,8 @@ class CarbonEmissionTest {
 
     // test whether carbon footprint and daily kwh changes when new daily energy consumption is set
     @Test
-    public void testSetDailyKwhHomeEnergy() {
-        try {
-            homeEnergyE.setMonthlyKwh(-1);
-        } catch (NegativeAmountException e) {
-            // expected
-        }
+    public void testSetDailyKwhHomeEnergy() throws NegativeAmountException {
+        assertThrows(NegativeAmountException.class, () -> homeEnergyE.setMonthlyKwh(-1));
 
         homeEnergyO.setMonthlyKwh(1000);
         assertEquals(1000, homeEnergyO.getMonthlyKwh());
@@ -168,7 +152,7 @@ class CarbonEmissionTest {
     }
 
     @Test
-    public void testToString() {
+    public void testToString() throws NegativeAmountException {
         assertEquals("Diet: " + String.format("%.2f", dietLM.getCarbonEmission()), dietLM.toString());
         assertEquals("Electricity: "
                 + String.format("%.2f", homeEnergyE.getCarbonEmission()), homeEnergyE.toString());

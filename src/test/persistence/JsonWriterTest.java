@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 // source: TellerApp
 public class JsonWriterTest {
-    private static final String TEST_FILE = "data/testJson3.savedLogs.json";
+    private static final String TEST_FILE = "data/testJson3.json";
     private JsonWriter writer;
     private CarbonFootprintLog carbonLog;
     private Diet diet;
@@ -52,7 +52,7 @@ public class JsonWriterTest {
     }
 
     @Test
-    public void testWriteLogs() throws IOException, ParseException {
+    public void testWriteLogs() throws IOException {
         writer.write(carbonLog);
         writer.close();
 

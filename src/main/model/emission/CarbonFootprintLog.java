@@ -3,7 +3,6 @@ package model.emission;
 import model.CountryList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import persistence.JsonSimpleWriter;
 import persistence.Jsonable;
 
 import java.io.FileWriter;
@@ -12,7 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import static persistence.JsonSimpleWriter.logs;
+import static persistence.JsonWriter.logs;
 
 // represents a log tracking different sources of carbon emissions,
 // with a list of all sources, and a user country to determine
