@@ -13,12 +13,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 // source: TellerApp
-public class JsonSimpleReaderTest {
+public class JsonReaderTest {
 
     @Test
     public void testParseJsonFile1() {
         try {
-            List<CarbonFootprintLog> carbonLogs = JsonSimpleReader.readJson(new File("data/testJson1.json"));
+            List<CarbonFootprintLog> carbonLogs = JsonReader.readJson(new File("data/testJson1.savedLogs.json"));
             CarbonFootprintLog carbonLog = carbonLogs.get(0);
             ArrayList<CarbonEmission> carbonEmissions = (ArrayList<CarbonEmission>) carbonLog.getEmissionSources();
 
@@ -52,7 +52,7 @@ public class JsonSimpleReaderTest {
     @Test
     public void testJsonFile2() {
         try {
-            List<CarbonFootprintLog> carbonLogs = JsonSimpleReader.readJson(new File("data/testJson2.json"));
+            List<CarbonFootprintLog> carbonLogs = JsonReader.readJson(new File("data/testJson2.savedLogs.json"));
             assertEquals(2, carbonLogs.size());
 
             CarbonFootprintLog carbonLog = carbonLogs.get(1);
@@ -89,7 +89,7 @@ public class JsonSimpleReaderTest {
     @Test
     public void testIOException() {
         try {
-            JsonSimpleReader.readJson(new File("./does/not/exist/testJsonFile.txt"));
+            JsonReader.readJson(new File("./does/not/exist/testJsonFile.txt"));
         } catch (IOException e) {
             // expected
         } catch (ParseException e) {
@@ -99,6 +99,6 @@ public class JsonSimpleReaderTest {
 
     @Test
     public void testConstructor() {
-        JsonSimpleReader reader = new JsonSimpleReader();
+        JsonReader reader = new JsonReader();
     }
 }

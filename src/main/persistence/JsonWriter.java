@@ -7,15 +7,14 @@ import java.io.*;
 
 // source: TellerApp
 // a writer that can write carbon footprint log data to a file
-public class JsonSimpleWriter {
+public class JsonWriter {
     private JSONObject obj;
     private FileWriter fileWriter;
-    public static JSONArray logs = new JSONArray();
 
-    // EFFECTS: constructs a writer that will write a json object to a json file
-    public JsonSimpleWriter(File file) throws IOException {
+    // EFFECTS: constructs a writer that will write a savedLogs.json object to a savedLogs.json file
+    public JsonWriter(File file) throws IOException {
         obj = new JSONObject();
-        fileWriter = new FileWriter(file);
+        fileWriter = new FileWriter(file, true);
     }
 
     // MODIFIES: this

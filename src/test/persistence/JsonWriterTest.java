@@ -15,9 +15,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
 // source: TellerApp
-public class JsonSimpleWriterTest {
-    private static final String TEST_FILE = "data/testJson3.json";
-    private JsonSimpleWriter writer;
+public class JsonWriterTest {
+    private static final String TEST_FILE = "data/testJson3.savedLogs.json";
+    private JsonWriter writer;
     private CarbonFootprintLog carbonLog;
     private Diet diet;
     private HomeEnergy elec;
@@ -28,7 +28,7 @@ public class JsonSimpleWriterTest {
 
     @BeforeEach
     public void setUp() throws IOException {
-        writer = new JsonSimpleWriter(new File(TEST_FILE));
+        writer = new JsonWriter(new File(TEST_FILE));
 
         diet = new Diet(DietType.MEDIUM_MEAT);
         elec = new HomeEnergy(EnergyType.ELECTRICITY);
@@ -58,7 +58,7 @@ public class JsonSimpleWriterTest {
 
         // verify that the carbon footprint log has expected values
         try {
-            List<CarbonFootprintLog> carbonLogs = JsonSimpleReader.readJson(new File(TEST_FILE));
+            List<CarbonFootprintLog> carbonLogs = JsonReader.readJson(new File(TEST_FILE));
             CarbonFootprintLog carbonLog = carbonLogs.get(0);
             ArrayList<CarbonEmission> carbonEmissions = (ArrayList<CarbonEmission>) carbonLog.getEmissionSources();
 

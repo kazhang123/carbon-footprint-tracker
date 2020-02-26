@@ -3,16 +3,16 @@ package model.emission;
 import model.CountryList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import persistence.JsonSimpleWriter;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import persistence.Jsonable;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import static persistence.JsonSimpleWriter.logs;
 
 // represents a log tracking different sources of carbon emissions,
 // with a list of all sources, and a user country to determine
@@ -90,7 +90,18 @@ public class CarbonFootprintLog implements Jsonable {
 
     @Override
     public void saveJson(FileWriter fileWriter, Object obj) throws IOException {
+        JSONArray logs;
+        JSONParser parser = new JSONParser();
+        try {
+            Object parsedObject = parser.parse(new FileReader("data/savedLogs.json"));
+            JSONObject jsonParsedObject = (JSONObject) parsedObject;
+            logs = (JSONArray) jsonParsedObject.get("logs");
+        } catch (ParseException e) {
+            logs = new JSONArray();
+        }
+
         JSONObject log = new JSONObject();
+
         log.put("country", country);
 
         JSONArray emissions = new JSONArray();
@@ -100,10 +111,10 @@ public class CarbonFootprintLog implements Jsonable {
 
         log.put("emissionSources", emissions);
         logs.add(log);
-        JSONObject jsonObj = (JSONObject) obj;
-        jsonObj.put("logs", logs);
+        JSONObject jsonObject = (JSONObject) obj;
+        jsonObject.put("logs", logs);
 
-        fileWriter.write(jsonObj.toJSONString());
+        fileWriter.write(jsonObject.toJSONString());
 
     }
 

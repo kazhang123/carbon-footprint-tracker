@@ -15,8 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 
 // source: TellerApp
-// a reader that can read carbon footprint log data from a json file
-public class JsonSimpleReader {
+// a reader that can read carbon footprint log data from a savedLogs.json file
+public class JsonReader {
 
     // EFFECTS: returns a list of carbon footprint logs parsed from file; throws
     // IO exception/parsing exception is exception is raised when opening/reading from file
