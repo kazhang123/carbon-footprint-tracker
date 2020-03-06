@@ -6,10 +6,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -19,10 +16,7 @@ import java.util.List;
 public class JsonReader {
 
     public static List<CarbonFootprintLog> readJson(File file) throws IOException, ParseException {
-        JSONParser parser = new JSONParser();
-        Object obj = parser.parse(new FileReader(file));
-        JSONObject jsonObj = (JSONObject) obj;
-        JSONArray jsonLogs = (JSONArray) jsonObj.get("logs");
+        JSONArray jsonLogs = getJsonLogs(file);
         ArrayList<CarbonFootprintLog> logs = new ArrayList<>();
 
         for (Object log : jsonLogs) {
@@ -68,6 +62,14 @@ public class JsonReader {
         emissionArrayList.addAll(emissionList);
 
         return emissionArrayList;
+    }
+
+    protected static JSONArray getJsonLogs(File file) throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        Object obj = parser.parse(new FileReader(file));
+        JSONObject jsonObj = (JSONObject) obj;
+        JSONArray jsonLogs = (JSONArray) jsonObj.get("logs");
+        return jsonLogs;
     }
 
 
