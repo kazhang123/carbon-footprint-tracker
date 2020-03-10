@@ -15,6 +15,7 @@ import java.util.List;
 // a reader that can read carbon footprint log data from a savedLogs.json file
 public class JsonReader {
 
+    // EFFECTS: returns a list of carbon footprint logs read from file
     public static List<CarbonFootprintLog> readJson(File file) throws IOException, ParseException {
         JSONArray jsonLogs = getJsonLogs(file);
         ArrayList<CarbonFootprintLog> logs = new ArrayList<>();
@@ -31,31 +32,32 @@ public class JsonReader {
         return logs;
     }
 
+    // EFFECTS: returns a list of carbon emission sources for a carbon footprint log read from JSONArray
     public static ArrayList<CarbonEmission> parseEmissionSources(JSONArray sources) {
         JSONObject jsonDiet = (JSONObject) sources.get(0);
         String dietTypeString = (String) jsonDiet.get("dietType");
         Diet diet = new Diet(DietType.valueOf(dietTypeString));
-        diet.setCalPerDay((int) (long) jsonDiet.get("cals"));
+        diet.calculateCarbonEmission((int) (long) jsonDiet.get("cals"));
 
         HomeEnergy elec = new HomeEnergy(EnergyType.ELECTRICITY);
         JSONObject jsonElec = (JSONObject) sources.get(1);
-        elec.setMonthlyKwh(Double.parseDouble(String.valueOf(jsonElec.get("monthlyKwh"))));
+        elec.calculateCarbonEmission(Double.parseDouble(String.valueOf(jsonElec.get("monthlyKwh"))));
 
         HomeEnergy gas = new HomeEnergy(EnergyType.GAS);
         JSONObject jsonGas = (JSONObject) sources.get(2);
-        gas.setMonthlyKwh(Double.parseDouble(String.valueOf(jsonGas.get("monthlyKwh"))));
+        gas.calculateCarbonEmission(Double.parseDouble(String.valueOf(jsonGas.get("monthlyKwh"))));
 
         HomeEnergy oil = new HomeEnergy(EnergyType.OIL);
         JSONObject jsonOil = (JSONObject) sources.get(3);
-        oil.setMonthlyKwh(Double.parseDouble(String.valueOf(jsonOil.get("monthlyKwh"))));
+        oil.calculateCarbonEmission(Double.parseDouble(String.valueOf(jsonOil.get("monthlyKwh"))));
 
         Transportation bus = new Transportation();
         JSONObject jsonBus = (JSONObject) sources.get(4);
-        bus.setDistancePerDay(Double.parseDouble(String.valueOf(jsonBus.get("dailyDistance"))));
+        bus.calculateCarbonEmission(Double.parseDouble(String.valueOf(jsonBus.get("dailyDistance"))));
 
         Vehicle car = new Vehicle();
         JSONObject jsonCar = (JSONObject) sources.get(5);
-        car.setDistancePerDay(Double.parseDouble(String.valueOf(jsonCar.get("dailyDistance"))));
+        car.calculateCarbonEmission(Double.parseDouble(String.valueOf(jsonCar.get("dailyDistance"))));
 
         List<CarbonEmission> emissionList = Arrays.asList(diet, elec, gas, oil, bus, car);
         ArrayList<CarbonEmission> emissionArrayList = new ArrayList<>();
@@ -64,6 +66,7 @@ public class JsonReader {
         return emissionArrayList;
     }
 
+    // EFFECTS: returns a JSONArray of carbon footprint logs read from file
     protected static JSONArray getJsonLogs(File file) throws IOException, ParseException {
         JSONParser parser = new JSONParser();
         Object obj = parser.parse(new FileReader(file));

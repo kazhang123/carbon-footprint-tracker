@@ -15,7 +15,6 @@ of your daily life is contributing to climate change from your daily lifestyle c
 - Compare your carbon footprint to the average person in your country
 - Receive a personalized chart of where your carbon emissions are coming from
 - Receive tips on where to lessen your carbon emissions
-- Search for more sustainable routes
 
 ### User Stories
 - As a user, I want to be able to add a source of carbon emission to my emissions log

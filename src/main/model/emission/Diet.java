@@ -33,7 +33,7 @@ public class Diet extends CarbonEmission {
     //          tonnes of carbon dioxide equivalent based on calories
     //          consumed per day and type of diet
     @Override
-    protected void calculateCarbonEmission(double calories) {
+    public void calculateCarbonEmission(double calories) {
         if (dietType.equals(DietType.HIGH_MEAT)) {
             carbonEmission = calories * 365 * (HIGHMEATEATER_EF / 2000);
         } else if (dietType.equals(DietType.MEDIUM_MEAT)) {
@@ -47,12 +47,20 @@ public class Diet extends CarbonEmission {
         } else {
             carbonEmission = calories * 365 * (VEGAN_EF / 2000);
         }
+
+        setCalPerDay((int) calories);
     }
 
     // EFFECTS: returns a string representation of diet's carbon emission
     @Override
     public String toString() {
         return "Diet: " + String.format("%.2f", getCarbonEmission());
+    }
+
+    // EFFECTS: returns the maximum calories a user can select
+    @Override
+    public double getMax() {
+        return 10000;
     }
 
     // EFFECTS: returns the diet type
@@ -73,12 +81,12 @@ public class Diet extends CarbonEmission {
 
     // MODIFIES: this
     // EFFECTS: sets the kCal consumed per day
-    public void setCalPerDay(int cals) throws NegativeAmountException {
-        if (cals < 0) {
-            throw new NegativeAmountException();
-        }
+    private void setCalPerDay(int cals)  {
+//        if (cals < 0) {
+//            throw new NegativeAmountException();
+//        }
         calsPerDay = cals;
-        calculateCarbonEmission(calsPerDay);
+//        calculateCarbonEmission(calsPerDay);
     }
 
 

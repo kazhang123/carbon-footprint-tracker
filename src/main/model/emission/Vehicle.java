@@ -23,18 +23,25 @@ public class Vehicle extends CarbonEmission {
         dailyDistance = 0;
     }
 
+    // REQUIRES; dailyDistance >= 0
     // MODIFIES: this
     // EFFECTS: calculates and sets the annual emission quantity in
     //          tonnes of carbon dioxide equivalent based on km spent in car a day
     @Override
-    protected void calculateCarbonEmission(double dailyDistance) {
+    public void calculateCarbonEmission(double dailyDistance) {
         carbonEmission = (dailyDistance * 365 * MILES_PER_KM / AVG_MPG) * GASOLINE_EF;
+        setDistancePerDay(dailyDistance);
     }
 
     // EFFECTS: returns a string representation of vehicle's carbon emissions
     @Override
     public String toString() {
         return "Vehicle: " + String.format("%.2f", getCarbonEmission());
+    }
+
+    @Override
+    public double getMax() {
+        return 200;
     }
 
     // EFFECTS: returns the distance travelled by car a day
@@ -44,12 +51,12 @@ public class Vehicle extends CarbonEmission {
 
     // MODIFIES: this
     // EFFECTS: sets km travelled by car per day
-    public void setDistancePerDay(double distance) throws NegativeAmountException {
-        if (distance < 0) {
-            throw new NegativeAmountException();
-        }
+    private void setDistancePerDay(double distance) {
+//        if (distance < 0) {
+//            throw new NegativeAmountException();
+//        }
         dailyDistance = distance;
-        calculateCarbonEmission(dailyDistance);
+//        calculateCarbonEmission(dailyDistance);
     }
 
 

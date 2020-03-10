@@ -7,14 +7,24 @@ import model.emission.exception.NegativeAmountException;
 import org.json.simple.parser.ParseException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import ui.tabs.TakeActionTab;
+import ui.tabs.CalculateTab;
+import ui.tabs.overview.OverviewTab;
 
+import javax.swing.*;
 import java.io.*;
 import java.util.List;
 import java.util.Scanner;
 
 // carbon footprint tracker application
 // Source code: TellerApp
-public class CarbonFootprintApp {
+public class CarbonFootprintApp extends JFrame {
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 700;
+    public static final int CALCULATE_TAB_INDEX = 0;
+    public static final int OVERVIEW_TAB_INDEX = 1;
+    public static final int TAKE_ACTION_TAB_INDEX = 2;
+
     private static final String JSON_FILE = "data/savedLogs.json";
     private CarbonFootprintLog carbonLog;
     private Diet diet;
@@ -26,9 +36,36 @@ public class CarbonFootprintApp {
     private boolean runProgram;
     private Scanner input;
 
+    private JTabbedPane topBar;
+
     // EFFECTS: runs a new carbon footprint app
     public CarbonFootprintApp() {
-        runCarbonFootprint();
+        super("Carbon Footprint Tracker");
+        setSize(WIDTH, HEIGHT);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        carbonLog = loadCurrentLog();
+
+        topBar = new JTabbedPane();
+        topBar.setTabPlacement(JTabbedPane.TOP);
+
+        loadTabs();
+
+        add(topBar);
+
+        setVisible(true);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds Calculate, Overview, Take Action tabs to this ui
+    private void loadTabs() {
+        JPanel calculateTab = new CalculateTab(this);
+        JPanel overviewTab = new OverviewTab(this);
+        JPanel takeActionTab = new TakeActionTab(this);
+
+        topBar.add("Calculate", calculateTab);
+        topBar.add("Overview", overviewTab);
+        topBar.add("Take Action", takeActionTab);
     }
 
     // EFFECTS: runs CarbonFootprint App
@@ -55,7 +92,7 @@ public class CarbonFootprintApp {
     // MODIFIES: this
     // EFFECTS: loads most recent log from JSON_FILE if it exists,
     // otherwise initialize log with default values
-    private void loadCurrentLog() {
+    private CarbonFootprintLog loadCurrentLog() {
         try {
             List<CarbonFootprintLog> allLogs = JsonReader.readJson(new File(JSON_FILE));
             carbonLog = allLogs.get(allLogs.size() - 1);
@@ -67,10 +104,11 @@ public class CarbonFootprintApp {
             transportation = (Transportation) emissions.get(4);
             car = (Vehicle) emissions.get(5);
 
+            return carbonLog;
         } catch (IOException e) {
-            initializeCarbonFootprint();
+            return initializeCarbonFootprint();
         } catch (ParseException e) {
-            initializeCarbonFootprint();
+            return initializeCarbonFootprint();
         }
     }
 
@@ -106,7 +144,7 @@ public class CarbonFootprintApp {
 
     // MODIFIES: this
     // EFFECTS: initializes carbon footprint with default values
-    private void initializeCarbonFootprint() {
+    private CarbonFootprintLog initializeCarbonFootprint() {
         carbonLog = new CarbonFootprintLog("Canada");
         diet = new Diet(DietType.MEDIUM_MEAT);
         electricity = new HomeEnergy(EnergyType.ELECTRICITY);
@@ -121,6 +159,8 @@ public class CarbonFootprintApp {
         carbonLog.addCarbonSource(oil);
         carbonLog.addCarbonSource(transportation);
         carbonLog.addCarbonSource(car);
+
+        return carbonLog;
     }
 
     // EFFECTS: displays start menu for program
@@ -255,7 +295,7 @@ public class CarbonFootprintApp {
         int cals = input.nextInt();
 
         try {
-            diet.setCalPerDay(cals);
+            diet.calculateCarbonEmission(cals);
         } catch (NegativeAmountException e) {
             System.out.println("Cannot calculate negative calorie intake... \n");
         }
@@ -267,7 +307,7 @@ public class CarbonFootprintApp {
         System.out.println("Enter amount of electricity used for energy in your home, in kwh per month");
         double amount = input.nextDouble();
         try {
-            electricity.setMonthlyKwh(amount);
+            electricity.calculateCarbonEmission(amount);
         } catch (NegativeAmountException e) {
             System.out.println("Cannot calculate negative energy use... \n");
         }
@@ -279,7 +319,7 @@ public class CarbonFootprintApp {
         System.out.println("Enter amount of oil used for energy in your home, in kwh per month");
         double amount = input.nextDouble();
         try {
-            oil.setMonthlyKwh(amount);
+            oil.calculateCarbonEmission(amount);
         } catch (NegativeAmountException e) {
             System.out.println("Cannot calculate negative energy use... \n");
         }
@@ -291,7 +331,7 @@ public class CarbonFootprintApp {
         System.out.println("Enter amount of gas used for energy in your home, in kwh per month");
         double amount = input.nextDouble();
         try {
-            gas.setMonthlyKwh(amount);
+            gas.calculateCarbonEmission(amount);
         } catch (NegativeAmountException e) {
             System.out.println("Cannot calculate negative energy use... \n");
         }
@@ -303,7 +343,7 @@ public class CarbonFootprintApp {
         System.out.println("Enter distance spent on bus per day, in km");
         double distance = input.nextDouble();
         try {
-            transportation.setDistancePerDay(distance);
+            transportation.calculateCarbonEmission(distance);
         } catch (NegativeAmountException e) {
             System.out.println("Cannot calculte negative distance... \n");
         }
@@ -315,7 +355,7 @@ public class CarbonFootprintApp {
         System.out.println("Enter distance spent in car per day, in km");
         double distance = input.nextDouble();
         try {
-            car.setDistancePerDay(distance);
+            car.calculateCarbonEmission(distance);
         } catch (NegativeAmountException e) {
             System.out.println("Cannot calculate negative distance... \n");
         }
@@ -395,5 +435,15 @@ public class CarbonFootprintApp {
         } else if (selection.equals("v")) {
             diet.setDietType(DietType.VEGAN);
         }
+    }
+
+    // EFFECTS: returns the carbon footprint log controlled by this ui
+    public CarbonFootprintLog getCarbonLog() {
+        return carbonLog;
+    }
+
+    // EFFECTS: returns the tabbed pane of this ui
+    public JTabbedPane getTopBar() {
+        return topBar;
     }
 }

@@ -29,7 +29,7 @@ public class HomeEnergy extends CarbonEmission {
     // EFFECTS: calculates and sets the annual emission quantity in tonnes of carbon dioxide equivalent based on
     //          given kwh used per month
     @Override
-    protected void calculateCarbonEmission(double monthlyKwh) {
+    public void calculateCarbonEmission(double monthlyKwh) {
         if (energyType.equals(EnergyType.ELECTRICITY)) {
             carbonEmission = monthlyKwh * 12 * ELECTRIC_EF;
         } else if (energyType.equals(EnergyType.GAS)) {
@@ -37,6 +37,7 @@ public class HomeEnergy extends CarbonEmission {
         } else {
             carbonEmission = monthlyKwh * 12 * OIL_EF;
         }
+        setMonthlyKwh(monthlyKwh);
     }
 
     // EFFECTS: returns string representation of home energy's carbon emission
@@ -53,6 +54,12 @@ public class HomeEnergy extends CarbonEmission {
         return energyString;
     }
 
+    // EFFECTS: returns the maximum monthly kwh a user can set
+    @Override
+    public double getMax() {
+        return 5000;
+    }
+
     // EFFECTS: returns the energy type of the home energy source
     public EnergyType getEnergyType() {
         return energyType;
@@ -65,12 +72,12 @@ public class HomeEnergy extends CarbonEmission {
 
     // MODIFIES: this
     // EFFECTS: sets the the monthly energy consumption in kwh and sets carbon footprint emission based on kwh amount
-    public void setMonthlyKwh(double monthlyKwh) throws NegativeAmountException {
-        if (monthlyKwh < 0) {
-            throw new NegativeAmountException();
-        }
+    private void setMonthlyKwh(double monthlyKwh) {
+//        if (monthlyKwh < 0) {
+//            throw new NegativeAmountException();
+//        }
         this.monthlyKwh = monthlyKwh;
-        calculateCarbonEmission(this.monthlyKwh);
+//        calculateCarbonEmission(this.monthlyKwh);
     }
 
 

@@ -24,10 +24,10 @@ public class CarbonFootprintLogTest {
         bus = new Transportation();
         car = new Vehicle();
 
-        diet.setCalPerDay(2000);
-        energy.setMonthlyKwh(50);
-        bus.setDistancePerDay(30);
-        car.setDistancePerDay(2);
+        diet.calculateCarbonEmission(2000);
+        energy.calculateCarbonEmission(50);
+        bus.calculateCarbonEmission(30);
+        car.calculateCarbonEmission(2);
     }
 
     @Test

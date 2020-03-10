@@ -37,12 +37,12 @@ public class JsonWriterTest {
         bus = new Transportation();
         car = new Vehicle();
 
-        diet.setCalPerDay(2000);
-        elec.setMonthlyKwh(1000);
-        gas.setMonthlyKwh(1000);
-        oil.setMonthlyKwh(1000);
-        bus.setDistancePerDay(40);
-        car.setDistancePerDay(10);
+        diet.calculateCarbonEmission(2000);
+        elec.calculateCarbonEmission(1000);
+        gas.calculateCarbonEmission(1000);
+        oil.calculateCarbonEmission(1000);
+        bus.calculateCarbonEmission(40);
+        car.calculateCarbonEmission(10);
 
         List<CarbonEmission> emissionList = Arrays.asList(diet, elec, gas, oil, bus, car);
         ArrayList<CarbonEmission> emissions = new ArrayList<>();

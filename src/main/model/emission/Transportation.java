@@ -25,14 +25,20 @@ public class Transportation extends CarbonEmission {
     // EFFECTS: calculates and sets the annual emission quantity in
     //          tonnes of carbon dioxide equivalent based on km spent on bus a day
     @Override
-    protected void calculateCarbonEmission(double dailyDistance) {
+    public void calculateCarbonEmission(double dailyDistance) {
         carbonEmission = dailyDistance * 365 * BUS_EF;
+        setDistancePerDay(dailyDistance);
     }
 
     // EFFECTS: returns a string representation of transportation's carbon emissions
     @Override
     public String toString() {
         return "Transportation: " + String.format("%.2f", getCarbonEmission());
+    }
+
+    @Override
+    public double getMax() {
+        return 200;
     }
 
     // EFFECTS: returns the distance spent on bus each day
@@ -42,12 +48,12 @@ public class Transportation extends CarbonEmission {
 
     // MODIFIES: this
     // EFFECTS: sets km travelled per day by bus and carbon emission levels based on distance
-    public void setDistancePerDay(double distance) throws NegativeAmountException {
-        if (distance < 0) {
-            throw new NegativeAmountException();
-        }
+    private void setDistancePerDay(double distance)  {
+//        if (distance < 0) {
+//            throw new NegativeAmountException();
+//        }
         dailyDistance = distance;
-        calculateCarbonEmission(dailyDistance);
+//        calculateCarbonEmission(dailyDistance);
     }
 
 
