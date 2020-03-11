@@ -1,6 +1,5 @@
 package ui.tabs;
 
-import javafx.scene.control.Slider;
 import model.CountryList;
 import model.emission.*;
 import ui.CarbonFootprintApp;
@@ -12,8 +11,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Set;
 
+// source: SmartHome
 public class CalculateTab extends Tab {
     private static final int ROW_HEIGHT = 55;
     private static final int PADDING = 90;
@@ -45,7 +46,10 @@ public class CalculateTab extends Tab {
             this.add(makeTransEditor(transport));
         }
 
-        this.add(makeResultsButton());
+        JPanel buttonRow = makeResultsButton();
+        buttonRow.add(app.makeSaveButton());
+        this.add(buttonRow);
+
     }
 
     // MODIFIES: this
@@ -60,9 +64,16 @@ public class CalculateTab extends Tab {
     // EFFECTS: adds a combo box for all country options to select from
     private void placeCountrySelectionBox() {
         Set<String> countryNames = CountryList.getCountries().keySet();
+
         String[] countryNamesArray = new String[countryNames.size()];
+
         countryNamesArray = countryNames.toArray(countryNamesArray);
-        countriesBox = new JComboBox(countryNamesArray);
+
+        ArrayList<String> list = new ArrayList<>();
+        Collections.addAll(list, countryNamesArray);
+        Collections.sort(list);
+
+        countriesBox = new JComboBox(list.toArray());
 
         country = new JLabel("Select your country:", SwingConstants.LEFT);
 
@@ -181,7 +192,7 @@ public class CalculateTab extends Tab {
             public void actionPerformed(ActionEvent e) {
                 String buttonPressed = e.getActionCommand();
                 if (buttonPressed.equals(OVERVIEW_BUTTON)) {
-                    getApp().getTopBar().setSelectedIndex(CarbonFootprintApp.OVERVIEW_TAB_INDEX);
+                    getApp().getMainTabs().setSelectedIndex(CarbonFootprintApp.OVERVIEW_TAB_INDEX);
                 }
             }
         });
