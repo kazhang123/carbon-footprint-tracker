@@ -54,7 +54,6 @@ public class CarbonFootprintApp extends JFrame {
         loadTabs();
 
         add(mainTabs);
-
         setVisible(true);
     }
 

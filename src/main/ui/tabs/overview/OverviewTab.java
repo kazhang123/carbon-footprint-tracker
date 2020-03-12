@@ -22,6 +22,7 @@ public class OverviewTab extends Tab {
         tabbedPane.addTab("PIE", pieTab);
         tabbedPane.addTab("LINE", lineTab);
         tabbedPane.addTab("BAR", barTab);
+        tabbedPane.setTabPlacement(SwingConstants.RIGHT);
 
         this.add(tabbedPane);
 
