@@ -23,6 +23,9 @@ public class JsonReaderTest {
             ArrayList<CarbonEmission> carbonEmissions = (ArrayList<CarbonEmission>) carbonLog.getEmissionSources();
 
             assertEquals("ALGERIA", carbonLog.getCountry());
+            assertEquals(1, carbonLog.getMonth());
+            assertEquals(1, carbonLog.getDay());
+            assertEquals(2020, carbonLog.getYear());
 
             Diet diet = (Diet) carbonEmissions.get(0);
             assertEquals(DietType.MEDIUM_MEAT, diet.getDietType());
@@ -59,6 +62,9 @@ public class JsonReaderTest {
             ArrayList<CarbonEmission> carbonEmissions = (ArrayList<CarbonEmission>) carbonLog.getEmissionSources();
 
             assertEquals("ALGERIA", carbonLog.getCountry());
+            assertEquals(2, carbonLog.getMonth());
+            assertEquals(2, carbonLog.getDay());
+            assertEquals(2019, carbonLog.getYear());
 
             Diet diet = (Diet) carbonEmissions.get(0);
             assertEquals(DietType.VEGAN, diet.getDietType());

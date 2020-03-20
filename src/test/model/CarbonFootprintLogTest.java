@@ -5,11 +5,14 @@ import model.emission.exception.NegativeAmountException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Calendar;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CarbonFootprintLogTest {
 
+    Calendar c = Calendar.getInstance();
     CarbonFootprintLog testCarbonLog;
     Diet diet;
     HomeEnergy energy;
@@ -36,6 +39,9 @@ public class CarbonFootprintLogTest {
         assertEquals("CANADA", testCarbonLog.getCountry());
         assertEquals(15.12, testCarbonLog.getAvgCountryFootprint());
         assertEquals(0, testCarbonLog.getEmissionSources().size());
+        assertEquals(c.get(Calendar.MONTH) + 1, testCarbonLog.getMonth());
+        assertEquals(c.get(Calendar.DAY_OF_MONTH), testCarbonLog.getDay());
+        assertEquals(c.get(Calendar.YEAR), testCarbonLog.getYear());
     }
 
     @Test
@@ -61,12 +67,12 @@ public class CarbonFootprintLogTest {
     public void testNumTreesToOffset() {
         testCarbonLog.addCarbonSource(diet);
         assertEquals(Math.round(diet.getCarbonEmission() / CarbonFootprintLog.CARBON_PER_TREE),
-                testCarbonLog.numTreesToOffset());
+                testCarbonLog.numTreesToOffset(testCarbonLog.getTotalEmission()));
         testCarbonLog.addCarbonSource(energy);
         testCarbonLog.addCarbonSource(bus);
         testCarbonLog.addCarbonSource(car);
         assertEquals(Math.round(testCarbonLog.getTotalEmission() / CarbonFootprintLog.CARBON_PER_TREE),
-                testCarbonLog.numTreesToOffset());
+                testCarbonLog.numTreesToOffset(testCarbonLog.getTotalEmission()));
     }
 
     @Test
@@ -87,6 +93,14 @@ public class CarbonFootprintLogTest {
         testCarbonLog.addCarbonSource(energy);
         assertEquals(Math.round(diet.getCarbonEmission() / testCarbonLog.getTotalEmission() * 100),
                 testCarbonLog.percentageEmission(diet));
+    }
+
+    @Test
+    public void testUpdateCurrentLog() {
+        testCarbonLog.updateDate();
+        assertEquals(c.get(Calendar.MONTH) + 1, testCarbonLog.getMonth());
+        assertEquals(c.get(Calendar.DAY_OF_MONTH), testCarbonLog.getDay());
+        assertEquals(c.get(Calendar.YEAR), testCarbonLog.getYear());
     }
 
 

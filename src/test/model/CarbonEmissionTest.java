@@ -58,6 +58,9 @@ class CarbonEmissionTest {
         assertEquals(2000, dietLM.getCalPerDay());
         dietLM.calculateCarbonEmission(4000);
         assertEquals(4000  * 365 * (Diet.LOWMEATEATER_EF / 2000), dietLM.getCarbonEmission());
+        dietLM.setDietType(DietType.VEGETARIAN);
+        assertEquals( 4000 * 365 * (Diet.VEGETARIAN_EF / 2000), dietLM.getCarbonEmission());
+
 
         dietMM.calculateCarbonEmission(4000);
         assertEquals(4000  * 365 * (Diet.MEDMEATEATER_EF / 2000), dietMM.getCarbonEmission());

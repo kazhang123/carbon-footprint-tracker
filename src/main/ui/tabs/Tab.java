@@ -17,6 +17,7 @@ public abstract class Tab extends JPanel {
         return app;
     }
 
+    // EFFECTS: puts given component into a row in a JPanel
     protected JPanel formatRow(JComponent component) {
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());

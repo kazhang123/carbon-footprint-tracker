@@ -1,5 +1,8 @@
 {"logs" : [{
   "country": "ALGERIA",
+  "month": 1,
+  "day": 1,
+  "year": 2020,
   "emissionSources": [
     {
       "label": "Diet",

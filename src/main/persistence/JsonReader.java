@@ -23,9 +23,12 @@ public class JsonReader {
         for (Object log : jsonLogs) {
             JSONObject jsonLog = (JSONObject) log;
             String country = (String) jsonLog.get("country");
+            int month = (int) (long) jsonLog.get("month");
+            int day = (int) (long) jsonLog.get("day");
+            int year = (int) (long) jsonLog.get("year");
             JSONArray emissionSources = (JSONArray) jsonLog.get("emissionSources");
             ArrayList<CarbonEmission> emissions = parseEmissionSources(emissionSources);
-            CarbonFootprintLog carbonLog = new CarbonFootprintLog(country, emissions);
+            CarbonFootprintLog carbonLog = new CarbonFootprintLog(country, emissions, month, day, year);
             logs.add(carbonLog);
         }
 

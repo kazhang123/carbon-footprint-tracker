@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -21,26 +22,59 @@ public class CarbonFootprintLog implements Jsonable {
     public static final double CARBON_PER_TREE = 0.06; // amount of Co2 absorbed annually by average tree in tonnes
     public static final double WORLD_AVG = 5;
 
+    private Calendar c = Calendar.getInstance();
     private String country;
     private List<CarbonEmission> emissionSources;
+    private int month;
+    private int day;
+    private int year;
 
     // EFFECTS: constructs a new carbon footprint log
     public CarbonFootprintLog(String country) {
         this.country = country;
         emissionSources = new ArrayList<>();
+        month = c.get(Calendar.MONTH) + 1;
+        day = c.get(Calendar.DAY_OF_MONTH);
+        year = c.get(Calendar.YEAR);
     }
 
     // EFFECTS: constructs a carbon footprint log with id, and emission sources
     //          nextLogId is the id of the next log to be constructed
     // NOTE: this constructor is to be used only when constructing a log from data stored in file
-    public CarbonFootprintLog(String country, ArrayList<CarbonEmission> emissions) {
+    public CarbonFootprintLog(String country, ArrayList<CarbonEmission> emissions, int month, int day, int year) {
         this.country = country;
         emissionSources = emissions;
+        this.month = month;
+        this.day = day;
+        this.year = year;
+    }
+
+    // EFFECTS: returns the month the carbon footprint log was recorded
+    public int getMonth() {
+        return month;
+    }
+
+    // EFFECTS: returns the day of the month the carbon footprint log was recorded
+    public int getDay() {
+        return day;
+    }
+
+    // EFFECTS: returns the year the carbon footprint log was recorded
+    public int getYear() {
+        return year;
     }
 
     // EFFECTS: returns list of emission sources
     public List<CarbonEmission> getEmissionSources() {
         return emissionSources;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: update the carbon log with current date
+    public void updateDate() {
+        month = c.get(Calendar.MONTH) + 1;
+        day = c.get(Calendar.DAY_OF_MONTH);
+        year = c.get(Calendar.YEAR);
     }
 
     // EFFECTS: returns the total tonnes of CO2e emitted
@@ -84,8 +118,8 @@ public class CarbonFootprintLog implements Jsonable {
     }
 
     // EFFECTS: returns the number of trees needed to offset total carbon footprint
-    public int numTreesToOffset() {
-        return (int) Math.round(getTotalEmission() / CARBON_PER_TREE);
+    public int numTreesToOffset(double emission) {
+        return (int) Math.round(emission / CARBON_PER_TREE);
     }
 
     @Override
@@ -104,6 +138,9 @@ public class CarbonFootprintLog implements Jsonable {
 
         JSONObject log = new JSONObject();
         log.put("country", country);
+        log.put("month", month);
+        log.put("day", day);
+        log.put("year", year);
 
         JSONArray emissions = new JSONArray();
         for (CarbonEmission c : emissionSources) {

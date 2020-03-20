@@ -3,6 +3,7 @@ package ui.tabs;
 import model.CountryList;
 import model.emission.*;
 import ui.CarbonFootprintApp;
+import ui.tabs.overview.BarGraphTab;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -18,7 +19,7 @@ import java.util.Set;
 public class CalculateTab extends Tab {
     private static final int ROW_HEIGHT = 55;
     private static final int PADDING = 90;
-    private static final int WIDTH = CarbonFootprintApp.WIDTH - 2 * PADDING;
+    public static final int WIDTH = CarbonFootprintApp.WIDTH - 2 * PADDING;
     private static final String OVERVIEW_BUTTON = "Get results";
 
     private JLabel country;
@@ -74,6 +75,15 @@ public class CalculateTab extends Tab {
         Collections.sort(list);
 
         countriesBox = new JComboBox(list.toArray());
+        countriesBox.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selected = (String) countriesBox.getSelectedItem();
+                getApp().getCarbonLog().setCountry(selected);
+            }
+        });
+
+        countriesBox.setSelectedItem("CANADA");
 
         country = new JLabel("Select your country:", SwingConstants.LEFT);
 
@@ -82,13 +92,7 @@ public class CalculateTab extends Tab {
         row.add(countriesBox);
         row.setPreferredSize(new Dimension(WIDTH, ROW_HEIGHT));
 
-        countriesBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String selected = e.getActionCommand();
-                getApp().getCarbonLog().setCountry(selected);
-            }
-        });
+
 
         this.add(row);
     }

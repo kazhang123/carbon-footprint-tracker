@@ -6,15 +6,21 @@ import model.emission.*;
 import org.json.simple.parser.ParseException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+import sun.audio.AudioData;
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+import sun.audio.ContinuousAudioDataStream;
 import ui.tabs.TakeActionTab;
 import ui.tabs.CalculateTab;
 import ui.tabs.overview.OverviewTab;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -44,6 +50,7 @@ public class CarbonFootprintApp extends JFrame {
     public CarbonFootprintApp() {
         super("Carbon Footprint Tracker");
         setSize(WIDTH, HEIGHT);
+        setBackground(Color.WHITE);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         carbonLog = loadCurrentLog();
@@ -55,6 +62,46 @@ public class CarbonFootprintApp extends JFrame {
 
         add(mainTabs);
         setVisible(true);
+        playMusic();
+
+    }
+
+    // EFFECTS: plays the background music
+    private void playMusic() {
+        InputStream sound;
+        try {
+            sound = new FileInputStream(new File("data/Butterfly.wav"));
+            AudioStream audioStream = new AudioStream(sound);
+            AudioPlayer.player.start(audioStream);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+//        try {
+//            AudioData data = new AudioStream(new FileInputStream("data/Naruto.wav")).getData();
+//            ContinuousAudioDataStream sound = new ContinuousAudioDataStream(data);
+//            AudioPlayer.player.start(sound);
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+////        AudioPlayer backgroundPlayer = AudioPlayer.player;
+//        AudioStream backgroundMusic;
+////        AudioData data;
+//
+//        ContinuousAudioDataStream loop = null;
+//
+//        try {
+//            InputStream input = new FileInputStream(new File("data/Naruto.wav"));
+//            backgroundMusic = new AudioStream(input);
+//            ContinuousAudioDataStream sound = new ContinuousAudioDataStream(backgroundMusic);
+//            AudioPlayer.player.start(sound);
+//
+////            data = backgroundMusic.getData();
+////            loop = new ContinuousAudioDataStream(data);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+////        backgroundPlayer.start(loop);
     }
 
     // MODIFIES: this
@@ -67,6 +114,7 @@ public class CarbonFootprintApp extends JFrame {
         mainTabs.addTab("Calculate", calculateTab);
         mainTabs.addTab("Overview", overviewTab);
         mainTabs.addTab("Take Action", takeActionTab);
+
     }
 
     // EFFECTS: runs CarbonFootprint App
@@ -106,9 +154,7 @@ public class CarbonFootprintApp extends JFrame {
             car = (Vehicle) emissions.get(5);
 
             return carbonLog;
-        } catch (IOException e) {
-            return initializeCarbonFootprint();
-        } catch (ParseException e) {
+        } catch (Exception e) {
             return initializeCarbonFootprint();
         }
     }
@@ -133,6 +179,7 @@ public class CarbonFootprintApp extends JFrame {
     // EFFECTS: saves state of carbon footprint log to JSON_FILE
     private void saveLog() {
         try {
+            carbonLog.updateDate();
             JsonWriter writer = new JsonWriter(new File(JSON_FILE));
             writer.write(carbonLog);
             writer.close();
@@ -213,28 +260,28 @@ public class CarbonFootprintApp extends JFrame {
 
 
     // EFFECTS: prints user's carbon footprint statistics to screen
-    private void printStatistics() {
-        System.out.println("YOUR CARBON FOOTPRINT: \n");
-        System.out.println(diet.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(diet)
-                + "% of your total emission");
-        System.out.println(electricity.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(electricity)
-                + "% of your total emission");
-        System.out.println(oil.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(oil)
-                + "% of your total emission");
-        System.out.println(gas.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(gas)
-                + "% of your total emission");
-        System.out.println(transportation.toString() + " tonnes of CO2, "
-                + carbonLog.percentageEmission(transportation) + "% of your total emission");
-        System.out.println(car.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(car)
-                + "% of your total emission \n");
-        System.out.println("Your annual emission: " + String.format("%.2f", carbonLog.getTotalEmission())
-                + " tonnes of CO2");
-        System.out.println("You would need " + carbonLog.numTreesToOffset()
-                + " trees to offset your footprint. \n");
-        System.out.println("How do you compare?");
-        printCountryAverage();
-        System.out.println("The world average: " + CarbonFootprintLog.WORLD_AVG + " tonnes of CO2 a year \n");
-    }
+//    private void printStatistics() {
+//        System.out.println("YOUR CARBON FOOTPRINT: \n");
+//        System.out.println(diet.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(diet)
+//                + "% of your total emission");
+//        System.out.println(electricity.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(electricity)
+//                + "% of your total emission");
+//        System.out.println(oil.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(oil)
+//                + "% of your total emission");
+//        System.out.println(gas.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(gas)
+//                + "% of your total emission");
+//        System.out.println(transportation.toString() + " tonnes of CO2, "
+//                + carbonLog.percentageEmission(transportation) + "% of your total emission");
+//        System.out.println(car.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(car)
+//                + "% of your total emission \n");
+//        System.out.println("Your annual emission: " + String.format("%.2f", carbonLog.getTotalEmission())
+//                + " tonnes of CO2");
+//        System.out.println("You would need " + carbonLog.numTreesToOffset()
+//                + " trees to offset your footprint. \n");
+//        System.out.println("How do you compare?");
+//        printCountryAverage();
+//        System.out.println("The world average: " + CarbonFootprintLog.WORLD_AVG + " tonnes of CO2 a year \n");
+//    }
 
     // EFFECTS: prints caverage carbon footprint of user country if found.If not found, prints that it was not found
     private void printCountryAverage() {
@@ -441,6 +488,18 @@ public class CarbonFootprintApp extends JFrame {
     // EFFECTS: returns the carbon footprint log controlled by this ui
     public CarbonFootprintLog getCarbonLog() {
         return carbonLog;
+    }
+
+    public List<CarbonFootprintLog> getAllLogs() {
+        List<CarbonFootprintLog> allLogs = new ArrayList<>();
+        try {
+            allLogs = JsonReader.readJson(new File(JSON_FILE));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return allLogs;
     }
 
     // EFFECTS: returns the tabbed pane of this ui
