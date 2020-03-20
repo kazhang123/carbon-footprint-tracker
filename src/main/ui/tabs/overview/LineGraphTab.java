@@ -82,7 +82,7 @@ public class LineGraphTab extends Tab {
 
     private JFreeChart createChart(XYDataset dataset) {
         JFreeChart chart = ChartFactory.createTimeSeriesChart("", "Date",
-                "Carbon Emission (CO2e / year)", dataset, false, false, false);
+                "Carbon Emission (CO2e / year)", dataset);
 
         XYPlot plot = (XYPlot) chart.getPlot();
         plot.setBackgroundPaint(null);

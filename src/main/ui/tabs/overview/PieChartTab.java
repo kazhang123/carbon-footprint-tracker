@@ -1,6 +1,5 @@
 package ui.tabs.overview;
 
-import com.sun.tools.internal.xjc.reader.Ring;
 import model.emission.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
