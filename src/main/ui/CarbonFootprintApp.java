@@ -6,16 +6,13 @@ import model.emission.*;
 import org.json.simple.parser.ParseException;
 import persistence.JsonReader;
 import persistence.JsonWriter;
-import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
 import ui.tabs.TakeActionTab;
 import ui.tabs.CalculateTab;
 import ui.tabs.overview.OverviewTab;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -76,32 +73,6 @@ public class CarbonFootprintApp extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        try {
-//            AudioData data = new AudioStream(new FileInputStream("data/Naruto.wav")).getData();
-//            ContinuousAudioDataStream sound = new ContinuousAudioDataStream(data);
-//            AudioPlayer.player.start(sound);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-////        AudioPlayer backgroundPlayer = AudioPlayer.player;
-//        AudioStream backgroundMusic;
-////        AudioData data;
-//
-//        ContinuousAudioDataStream loop = null;
-//
-//        try {
-//            InputStream input = new FileInputStream(new File("data/Naruto.wav"));
-//            backgroundMusic = new AudioStream(input);
-//            ContinuousAudioDataStream sound = new ContinuousAudioDataStream(backgroundMusic);
-//            AudioPlayer.player.start(sound);
-//
-////            data = backgroundMusic.getData();
-////            loop = new ContinuousAudioDataStream(data);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-////        backgroundPlayer.start(loop);
     }
 
     // MODIFIES: this
@@ -116,27 +87,6 @@ public class CarbonFootprintApp extends JFrame {
         mainTabs.addTab("Take Action", takeActionTab);
 
     }
-
-    // EFFECTS: runs CarbonFootprint App
-//    private void runCarbonFootprint() {
-//        String command = null;
-//        runProgram = true;
-//        input = new Scanner(System.in);
-//
-//        loadCurrentLog();
-//
-//        while (runProgram) {
-//            displayMenu();
-//            command = input.next();
-//            command = command.toLowerCase();
-//
-//            if (command.equals("q")) {
-//                runProgram = false;
-//            } else {
-//                processCommand(command);
-//            }
-//        }
-//    }
 
     // MODIFIES: this
     // EFFECTS: loads most recent log from JSON_FILE if it exists,
@@ -211,78 +161,6 @@ public class CarbonFootprintApp extends JFrame {
         return carbonLog;
     }
 
-    // EFFECTS: displays start menu for program
-//    private void displayMenu() {
-//        System.out.println("What would you like to do?");
-//        System.out.println("c - calculate new carbon footprint");
-//        System.out.println("e - edit footprint");
-//        System.out.println("p - see your statistics");
-//        System.out.println("s - save your current footprint to file");
-//        System.out.println("h - see your emissions over time");
-//        System.out.println("t - receive tips on reducing your emissions!");
-//        System.out.println("q - quit");
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: processes user command
-//    private void processCommand(String command) {
-//        if (command.equals("c")) {
-//            calculateNewFootprint();
-//        } else if (command.equals("e")) {
-//            editFooprint();
-//        } else if (command.equals("p")) {
-//            printStatistics();
-//        } else if (command.equals("s")) {
-//            saveLog();
-//        } else if (command.equals("h")) {
-//            displayPast();
-//        } else if (command.equals("t")) {
-//            printTips();
-//        } else {
-//            System.out.println("Invalid selection");
-//        }
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: calculates carbon footprint through entire process
-//    private void calculateNewFootprint() {
-//        initializeCarbonFootprint();
-//        selectCountry();
-//        selectDiet();
-//        selectHomeEnergyE();
-//        selectHomeEnergyO();
-//        selectHomeEnergyGas();
-//        selectTranportation();
-//        selectVehicle();
-//
-//        printStatistics();
-//    }
-
-
-    // EFFECTS: prints user's carbon footprint statistics to screen
-//    private void printStatistics() {
-//        System.out.println("YOUR CARBON FOOTPRINT: \n");
-//        System.out.println(diet.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(diet)
-//                + "% of your total emission");
-//        System.out.println(electricity.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(electricity)
-//                + "% of your total emission");
-//        System.out.println(oil.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(oil)
-//                + "% of your total emission");
-//        System.out.println(gas.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(gas)
-//                + "% of your total emission");
-//        System.out.println(transportation.toString() + " tonnes of CO2, "
-//                + carbonLog.percentageEmission(transportation) + "% of your total emission");
-//        System.out.println(car.toString() + " tonnes of CO2, " + carbonLog.percentageEmission(car)
-//                + "% of your total emission \n");
-//        System.out.println("Your annual emission: " + String.format("%.2f", carbonLog.getTotalEmission())
-//                + " tonnes of CO2");
-//        System.out.println("You would need " + carbonLog.numTreesToOffset()
-//                + " trees to offset your footprint. \n");
-//        System.out.println("How do you compare?");
-//        printCountryAverage();
-//        System.out.println("The world average: " + CarbonFootprintLog.WORLD_AVG + " tonnes of CO2 a year \n");
-//    }
-
     // EFFECTS: prints caverage carbon footprint of user country if found.If not found, prints that it was not found
     private void printCountryAverage() {
         if (CountryList.getCountries().get(carbonLog.getCountry()) != null) {
@@ -292,131 +170,6 @@ public class CarbonFootprintApp extends JFrame {
             System.out.println("Sorry, don't have data for your selected country... \n");
         }
     }
-
-    // MODIFIES: this
-    // EFFECTS: prompts user to edit aspects of their emission sources
-//    private void editFooprint() {
-//        String selection = "";
-//
-//        while (!(selection.equals("c") || selection.equals("d") || selection.equals("e")
-//                || selection.equals("o") || selection.equals("g") || selection.equals("t")
-//                || selection.equals("v"))) {
-//
-//            displayEditMenu();
-//            selection = input.next();
-//        }
-//
-//        if (selection.equals("c")) {
-//            selectCountry();
-//        } else if (selection.equals("d")) {
-//            selectDiet();
-//        } else if (selection.equals("e")) {
-//            selectHomeEnergyE();
-//        } else if (selection.equals("o")) {
-//            selectHomeEnergyO();
-//        } else if (selection.equals("g")) {
-//            selectHomeEnergyGas();
-//        } else if (selection.equals("t")) {
-//            selectTranportation();
-//        } else if (selection.equals("v")) {
-//            selectVehicle();
-//        }
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: prompts user to select their diet fields
-//    private void selectDiet() {
-//        String selection = "";
-//
-//        while (!(selection.equals("h") || selection.equals("m") || selection.equals("l") || selection.equals("p")
-//                || selection.equals("p") || selection.equals("t") || selection.equals("v") || selection.equals("s"))) {
-//
-//            displayDietMenu();
-//
-//            selection = input.next();
-//            selection = selection.toLowerCase();
-//        }
-//
-//        processDietSelection(selection);
-//
-//        System.out.println("Enter daily calorie intake:");
-//        int cals = input.nextInt();
-//
-//        try {
-//            diet.calculateCarbonEmission(cals);
-//        } catch (NegativeAmountException e) {
-//            System.out.println("Cannot calculate negative calorie intake... \n");
-//        }
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: prompts user to enter their monthly electricity use
-//    private void selectHomeEnergyE() {
-//        System.out.println("Enter amount of electricity used for energy in your home, in kwh per month");
-//        double amount = input.nextDouble();
-//        try {
-//            electricity.calculateCarbonEmission(amount);
-//        } catch (NegativeAmountException e) {
-//            System.out.println("Cannot calculate negative energy use... \n");
-//        }
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: prompts user to enter their monthly oil use
-//    private void selectHomeEnergyO() {
-//        System.out.println("Enter amount of oil used for energy in your home, in kwh per month");
-//        double amount = input.nextDouble();
-//        try {
-//            oil.calculateCarbonEmission(amount);
-//        } catch (NegativeAmountException e) {
-//            System.out.println("Cannot calculate negative energy use... \n");
-//        }
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: prompts user to enter their monthly gas use
-//    private void selectHomeEnergyGas() {
-//        System.out.println("Enter amount of gas used for energy in your home, in kwh per month");
-//        double amount = input.nextDouble();
-//        try {
-//            gas.calculateCarbonEmission(amount);
-//        } catch (NegativeAmountException e) {
-//            System.out.println("Cannot calculate negative energy use... \n");
-//        }
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: prompts user to enter their public transportation distance/day
-//    private void selectTranportation() {
-//        System.out.println("Enter distance spent on bus per day, in km");
-//        double distance = input.nextDouble();
-//        try {
-//            transportation.calculateCarbonEmission(distance);
-//        } catch (NegativeAmountException e) {
-//            System.out.println("Cannot calculte negative distance... \n");
-//        }
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: prompts user to enter their vehicle distance/day
-//    private void selectVehicle() {
-//        System.out.println("Enter distance spent in car per day, in km");
-//        double distance = input.nextDouble();
-//        try {
-//            car.calculateCarbonEmission(distance);
-//        } catch (NegativeAmountException e) {
-//            System.out.println("Cannot calculate negative distance... \n");
-//        }
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: prompts user to enter their public transportation distance/day
-//    private void selectCountry() {
-//        System.out.println("Enter your country");
-//        String country = input.next();
-//        country = country.toUpperCase();
-//        carbonLog.setCountry(country);
-//    }
 
     // EFFECTS: prints sustainability OffsetTips.txt based on user's emission sources to screen
     private void printTips() {
@@ -443,47 +196,6 @@ public class CarbonFootprintApp extends JFrame {
             e.printStackTrace();
         }
     }
-
-    // EFFECTS: displays menu to select what emission source to edit
-//    private void displayEditMenu() {
-//        System.out.println("What would you like to change?");
-//        System.out.println("c - country");
-//        System.out.println("d - diet");
-//        System.out.println("e - electricity use");
-//        System.out.println("o - oil use");
-//        System.out.println("g - gas use");
-//        System.out.println("t - public transportation use");
-//        System.out.println("v - vehicle use ");
-//    }
-
-    // EFFECTS: displays menu to select diet type
-//    private void displayDietMenu() {
-//        System.out.println("What is your diet like?");
-//        System.out.println("h - Heavy meat eater (over 100 g a day)");
-//        System.out.println("m - Medium meat eater (50 - 99 g a day)");
-//        System.out.println("l - Light meat eater (less than 50 g a day)");
-//        System.out.println("p - Pescatarian");
-//        System.out.println("t - Vegetarian");
-//        System.out.println("v - Vegan ");
-//    }
-
-    // MODIFIES: this
-    // EFFECTS: processes user command on the diet menu
-//    private void processDietSelection(String selection) {
-//        if (selection.equals("h")) {
-//            diet.setDietType(DietType.HIGH_MEAT);
-//        } else if (selection.equals("m")) {
-//            diet.setDietType(DietType.MEDIUM_MEAT);
-//        } else if (selection.equals("l")) {
-//            diet.setDietType(DietType.LOW_MEAT);
-//        } else if (selection.equals("p")) {
-//            diet.setDietType(DietType.PESCETARIAN);
-//        } else if (selection.equals("t")) {
-//            diet.setDietType(DietType.VEGETARIAN);
-//        } else if (selection.equals("v")) {
-//            diet.setDietType(DietType.VEGAN);
-//        }
-//    }
 
     // EFFECTS: returns the carbon footprint log controlled by this ui
     public CarbonFootprintLog getCarbonLog() {

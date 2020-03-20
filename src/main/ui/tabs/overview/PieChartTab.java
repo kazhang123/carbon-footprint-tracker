@@ -23,6 +23,10 @@ import java.awt.*;
 import java.text.AttributedString;
 import java.util.ArrayList;
 
+/*
+represents a tab within the Overview tab that displays user
+data as a pie chart
+ */
 public class PieChartTab extends Tab {
     protected static final int CHART_WIDTH = 600;
     protected static final int CHART_HEIGHT = 600;
@@ -30,6 +34,8 @@ public class PieChartTab extends Tab {
     private ArrayList<CarbonEmission> emissions;
     private String[] sourceLabels = {"Diet", "Electricity", "Gas", "Oil", "Public Transportation", "Vehicle"};
     private CarbonFootprintLog log = getApp().getCarbonLog();
+    private JLabel carbonEmission;
+    private JLabel offsetTrees;
 
     // REQUIRES: carbon footprint app that controls this tab
     // EFFECTS: creates tab with pie chart displaying the percentage of impact each carbon emission source has
@@ -46,21 +52,10 @@ public class PieChartTab extends Tab {
 
         this.add(chartPanel, BorderLayout.CENTER);
 
-        double emission = getApp().getCarbonLog().getTotalEmission();
-        JLabel totalEmission = new JLabel(String.valueOf(emission));
+        carbonEmission = new JLabel();
+        offsetTrees = new JLabel();
 
-        JLabel carbonEmission = new JLabel("<html> YOUR FOOTPRINT IS <br/>"
-                + String.format("%.2f", log.getTotalEmission())
-                + " TONNES OF CO2e <br/> PER YEAR  <br/> </html>");
-
-        JLabel offsetTrees = new JLabel("<html>You would need <br/>" +  log.numTreesToOffset(log.getTotalEmission())
-                + " <br/>trees to offset your footprint </html>");
-
-        carbonEmission.setBorder(new EmptyBorder(200, 20, 10, 15));
-        offsetTrees.setBorder(new EmptyBorder(0, 20, 0, 15));
-
-        carbonEmission.setFont(new Font("Dialog", Font.BOLD, 18));
-        offsetTrees.setFont(new Font("Dialog", Font.PLAIN, 18));
+        initializeLabels();
         JPanel labelColumn = makeLabelColumn(carbonEmission, offsetTrees);
 
         this.add(labelColumn);
@@ -68,19 +63,35 @@ public class PieChartTab extends Tab {
         app.getMainTabs().addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                totalEmission.setText(String.valueOf(getApp().getCarbonLog().getTotalEmission()));
-
                 RingPlot plot = (RingPlot) chart.getPlot();
                 plot.setDataset(createDataset());
                 plot.setCenterText(makeCenterText(log.getTotalEmission()));
-                carbonEmission.setText("<html> YOUR FOOTPRINT IS <br/>"
-                        + String.format("%.2f", log.getTotalEmission())
-                        + " TONNES OF CO2e <br/> PER YEAR  <br/> </html>");
-                offsetTrees.setText("<html>YOU WOULD NEED <br/>" +  log.numTreesToOffset(log.getTotalEmission())
-                        + " TREES <br/>" + "TO OFFSET <br/> YOUR FOOTPRINT</html>");
+                initializeLabels();
 
             }
         });
+    }
+
+    // MODIFIES: this
+    // EFFECTS: creates JLabels to summarize user data
+    private void initializeLabels() {
+        carbonEmission.setText("<html> YOUR FOOTPRINT IS <br/>"
+                + String.format("%.2f", log.getTotalEmission())
+                + " TONNES OF CO2e <br/> PER YEAR  <br/> </html>");
+//        carbonEmission = new JLabel("<html> YOUR FOOTPRINT IS <br/>"
+//                + String.format("%.2f", log.getTotalEmission())
+//                + " TONNES OF CO2e <br/> PER YEAR  <br/> </html>");
+
+        offsetTrees.setText("<html>You would need <br/>" +  log.numTreesToOffset(log.getTotalEmission())
+                + " trees to <br/> offset your footprint </html>");
+//        offsetTrees = new JLabel("<html>You would need <br/>" +  log.numTreesToOffset(log.getTotalEmission())
+//                + " <br/>trees to offset your footprint </html>");
+
+        carbonEmission.setBorder(new EmptyBorder(200, 20, 10, 15));
+        offsetTrees.setBorder(new EmptyBorder(0, 20, 0, 15));
+
+        carbonEmission.setFont(new Font("Dialog", Font.BOLD, 18));
+        offsetTrees.setFont(new Font("Dialog", Font.PLAIN, 18));
     }
 
     // EFFECTS: returns data set based on contribution of each emission source to total carbon emission
@@ -131,11 +142,11 @@ public class PieChartTab extends Tab {
     // EFFECTS: sets the colour for each section of the chart
     private void setSectionColours(RingPlot plot) {
         plot.setSectionPaint("Diet", new Color(250, 176, 215));
-        plot.setSectionPaint("Electricity", new Color(255, 190, 117 ));
+        plot.setSectionPaint("Electricity", new Color(255, 190, 117));
         plot.setSectionPaint("Gas", new Color(187, 236, 248));
         plot.setSectionPaint("Oil", new Color(189, 241, 178));
         plot.setSectionPaint("Public Transportation", new Color(255, 254, 166));
-        plot.setSectionPaint("Vehicle", new Color(164, 196, 243 ));
+        plot.setSectionPaint("Vehicle", new Color(164, 196, 243));
     }
 
     // EFFECTS: makes text to be placed in center of ring chart

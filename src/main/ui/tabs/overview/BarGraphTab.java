@@ -19,6 +19,9 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
+/*
+represents a tab within the Overview tab that displays bar graphs of user data
+ */
 public class BarGraphTab extends Tab {
     private static final int WIDTH = CalculateTab.WIDTH;
     private static final int HEIGHT = 190;
@@ -30,12 +33,8 @@ public class BarGraphTab extends Tab {
     public BarGraphTab(CarbonFootprintApp app) {
         super(app);
 
-        setBackground(Color.WHITE);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JLabel title = new JLabel("HOW DO YOU COMPARE?");
-        title.setFont(new Font("Dialog", Font.BOLD, 20));
-        JPanel titleRow = formatRow(title);
-        titleRow.setBackground(Color.WHITE);
+        initializeTab();
+        JPanel titleRow = makeTitle();
 
         CategoryDataset footprintDataset = createFootprintDataset();
         JFreeChart footprintChart = createChart(footprintDataset, FOOTPRINT_KEY);
@@ -64,6 +63,22 @@ public class BarGraphTab extends Tab {
             }
         });
 
+    }
+
+    // MODIFIES: this
+    // EFFECTS: initializes the background colour and layout of the bar graph tab
+    private void initializeTab() {
+        setBackground(Color.WHITE);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    }
+
+    // EFFECTS: creates a JPanel with a title in the center to be displayed at hte top of the tab
+    private JPanel makeTitle() {
+        JLabel title = new JLabel("HOW DO YOU COMPARE?");
+        title.setFont(new Font("Dialog", Font.BOLD, 20));
+        JPanel titleRow = formatRow(title);
+        titleRow.setBackground(Color.WHITE);
+        return titleRow;
     }
 
     // EFFECTS: creates a dataset comparing user's carboon footprint to their country average

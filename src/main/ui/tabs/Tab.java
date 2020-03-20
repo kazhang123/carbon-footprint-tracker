@@ -5,6 +5,9 @@ import ui.CarbonFootprintApp;
 import javax.swing.*;
 import java.awt.*;
 
+/*
+represents a tab
+ */
 public abstract class Tab extends JPanel {
     private CarbonFootprintApp app;
 

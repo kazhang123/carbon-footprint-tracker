@@ -23,6 +23,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+represents a tab within the Overview tab that displays a time series graph of user's data
+ */
 public class LineGraphTab extends Tab {
     private static final int WIDTH = CalculateTab.WIDTH;
 

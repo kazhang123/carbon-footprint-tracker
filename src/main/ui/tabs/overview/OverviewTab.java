@@ -12,36 +12,34 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+/*
+represents a tab where user can select between different ways to view
+their data
+ */
 public class OverviewTab extends Tab {
     private static final String BAR_ICON = "data/icons/barIcon.png";
     private static final String LINE_ICON = "data/icons/lineIcon.png";
     private static final String PIE_ICON =  "data/icons/pieIcon.png";
+    private JTabbedPane tabbedPane;
     private Image pieImage;
     private Image lineImage;
     private Image barImage;
+    private ImageIcon pieIcon;
+    private ImageIcon lineIcon;
+    private ImageIcon barIcon;
 
     // REQUIRES: carbon footprint app that controls this tab
     // EFFECTS: creates overview tab that summarizes user data with charts
     public OverviewTab(CarbonFootprintApp app) {
         super(app);
         setBackground(Color.WHITE);
-        JTabbedPane tabbedPane = new JTabbedPane();
-        tabbedPane.setTabPlacement(SwingConstants.BOTTOM);
+        tabbedPane = new JTabbedPane();
         JPanel pieTab = new PieChartTab(app);
         JPanel lineTab = new LineGraphTab(app);
         JPanel barTab = new BarGraphTab(app);
 
-        try {
-            pieImage = ImageIO.read(new File(PIE_ICON));
-            lineImage = ImageIO.read(new File(LINE_ICON));
-            barImage = ImageIO.read(new File(BAR_ICON));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        ImageIcon pieIcon = new ImageIcon(pieImage);
-        ImageIcon lineIcon = new ImageIcon(lineImage);
-        ImageIcon barIcon = new ImageIcon(barImage);
+        makeImages();
+        makeIcons();
         tabbedPane.addTab("", pieIcon, pieTab);
         tabbedPane.addTab("", lineIcon, lineTab);
         tabbedPane.addTab("", barIcon, barTab);
@@ -54,6 +52,7 @@ public class OverviewTab extends Tab {
             protected void paintContentBorder(Graphics g, int tabPlacement, int selectedIndex) {
 
             }
+
             @Override
             protected Insets getContentBorderInsets(int tabPlacement) {
                 return borderInsets;
@@ -63,6 +62,25 @@ public class OverviewTab extends Tab {
         this.add(tabbedPane);
 
 
+    }
+
+    // EFFECTS: creates image icons from the images created from PNGs in file
+    private void makeIcons() {
+        pieIcon = new ImageIcon(pieImage);
+        lineIcon = new ImageIcon(lineImage);
+        barIcon = new ImageIcon(barImage);
+    }
+
+    // EFFECTS: creates images from PNGs in file
+    private void makeImages() {
+        try {
+            pieImage = ImageIO.read(new File(PIE_ICON));
+            lineImage = ImageIO.read(new File(LINE_ICON));
+            barImage = ImageIO.read(new File(BAR_ICON));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

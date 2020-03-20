@@ -3,11 +3,8 @@ package model.emission;
 import model.CountryList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import persistence.Jsonable;
 
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,7 +19,7 @@ public class CarbonFootprintLog implements Jsonable {
     public static final double CARBON_PER_TREE = 0.06; // amount of Co2 absorbed annually by average tree in tonnes
     public static final double WORLD_AVG = 5;
 
-    private Calendar c = Calendar.getInstance();
+    private Calendar calendar = Calendar.getInstance();
     private String country;
     private List<CarbonEmission> emissionSources;
     private int month;
@@ -33,9 +30,9 @@ public class CarbonFootprintLog implements Jsonable {
     public CarbonFootprintLog(String country) {
         this.country = country;
         emissionSources = new ArrayList<>();
-        month = c.get(Calendar.MONTH) + 1;
-        day = c.get(Calendar.DAY_OF_MONTH);
-        year = c.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH) + 1;
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        year = calendar.get(Calendar.YEAR);
     }
 
     // EFFECTS: constructs a carbon footprint log with id, and emission sources
@@ -72,9 +69,9 @@ public class CarbonFootprintLog implements Jsonable {
     // MODIFIES: this
     // EFFECTS: update the carbon log with current date
     public void updateDate() {
-        month = c.get(Calendar.MONTH) + 1;
-        day = c.get(Calendar.DAY_OF_MONTH);
-        year = c.get(Calendar.YEAR);
+        month = calendar.get(Calendar.MONTH) + 1;
+        day = calendar.get(Calendar.DAY_OF_MONTH);
+        year = calendar.get(Calendar.YEAR);
     }
 
     // EFFECTS: returns the total tonnes of CO2e emitted

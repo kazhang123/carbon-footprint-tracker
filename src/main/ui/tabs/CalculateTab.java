@@ -15,12 +15,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Set;
 
-// source: SmartHome
+/*
+represents a tab that allows user to calculate their carbon emission
+source code: SmartHome
+ */
 public class CalculateTab extends Tab {
     private static final int ROW_HEIGHT = 55;
     private static final int PADDING = 90;
     public static final int WIDTH = CarbonFootprintApp.WIDTH - 2 * PADDING;
     private static final String OVERVIEW_BUTTON = "Get results";
+    private static final String[] dietTypes = {"Heavy meat eater (over 100 g a day)",
+            "Medium meat eater (50 - 99 g a day)", "Light meat eater (less than 50 g a day)",
+            "Pescatarian", "Vegetarian", "Vegan"};
 
     private JLabel country;
     private JComboBox countriesBox;
@@ -139,8 +145,6 @@ public class CalculateTab extends Tab {
         Diet diet = (Diet) c;
         JLabel name = new JLabel("What is your diet like?", SwingConstants.LEFT);
         JPanel row = new JPanel(rowLayout);
-        String[] dietTypes = {"Heavy meat eater (over 100 g a day)", "Medium meat eater (50 - 99 g a day)",
-                "Light meat eater (less than 50 g a day)", "Pescatarian", "Vegetarian", "Vegan"};
         JComboBox dietBox = new JComboBox(dietTypes);
 
         row.add(name);
