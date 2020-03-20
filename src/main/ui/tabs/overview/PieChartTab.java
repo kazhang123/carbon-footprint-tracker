@@ -5,10 +5,8 @@ import model.emission.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.labels.PieSectionLabelGenerator;
 import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.CenterTextMode;
-import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.RingPlot;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
@@ -20,7 +18,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.text.AttributedString;
 import java.util.ArrayList;
 
 /*
@@ -78,14 +75,9 @@ public class PieChartTab extends Tab {
         carbonEmission.setText("<html> YOUR FOOTPRINT IS <br/>"
                 + String.format("%.2f", log.getTotalEmission())
                 + " TONNES OF CO2e <br/> PER YEAR  <br/> </html>");
-//        carbonEmission = new JLabel("<html> YOUR FOOTPRINT IS <br/>"
-//                + String.format("%.2f", log.getTotalEmission())
-//                + " TONNES OF CO2e <br/> PER YEAR  <br/> </html>");
 
         offsetTrees.setText("<html>You would need <br/>" +  log.numTreesToOffset(log.getTotalEmission())
                 + " trees to <br/> offset your footprint </html>");
-//        offsetTrees = new JLabel("<html>You would need <br/>" +  log.numTreesToOffset(log.getTotalEmission())
-//                + " <br/>trees to offset your footprint </html>");
 
         carbonEmission.setBorder(new EmptyBorder(200, 20, 10, 15));
         offsetTrees.setBorder(new EmptyBorder(0, 20, 0, 15));
@@ -116,7 +108,6 @@ public class PieChartTab extends Tab {
         initializeChart(plot);
 
         plot.setCenterTextFont(new Font("Dialog", Font.BOLD, 25));
-        double totalEmission = getApp().getCarbonLog().getTotalEmission();
         plot.setCenterText(makeCenterText(log.getTotalEmission()));
         setSectionColours(plot);
         plot.setBackgroundPaint(null);
@@ -125,6 +116,8 @@ public class PieChartTab extends Tab {
         return chart;
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes chart graphics
     private void initializeChart(RingPlot plot) {
         plot.setSeparatorsVisible(false);
         plot.setShadowPaint(null);
@@ -149,11 +142,12 @@ public class PieChartTab extends Tab {
         plot.setSectionPaint("Vehicle", new Color(164, 196, 243));
     }
 
-    // EFFECTS: makes text to be placed in center of ring chart
+    // EFFECTS: returns text to be placed in center of ring chart
     private String makeCenterText(double total) {
         return String.format("%.2f", total) + " TONNES";
     }
 
+    // EFFECTS: returns a JPanel with JLabels stacked on top of each other describing user's data
     private JPanel makeLabelColumn(JLabel carbonEmission, JLabel offsetTrees) {
         JPanel labelColumn = new JPanel();
         labelColumn.setLayout(new BoxLayout(labelColumn, BoxLayout.Y_AXIS));
