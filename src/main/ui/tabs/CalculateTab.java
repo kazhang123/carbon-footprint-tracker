@@ -3,7 +3,6 @@ package ui.tabs;
 import model.CountryList;
 import model.emission.*;
 import ui.CarbonFootprintApp;
-import ui.tabs.overview.BarGraphTab;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;

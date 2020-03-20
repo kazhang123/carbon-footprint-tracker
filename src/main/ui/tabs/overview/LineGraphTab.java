@@ -1,14 +1,11 @@
 package ui.tabs.overview;
 
-import model.emission.CarbonEmission;
 import model.emission.CarbonFootprintLog;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYSplineRenderer;
 import org.jfree.data.time.Day;
-import org.jfree.data.time.Month;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
@@ -20,7 +17,6 @@ import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /*

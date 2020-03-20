@@ -1,6 +1,5 @@
 package ui.tabs;
 
-import sun.invoke.empty.Empty;
 import ui.CarbonFootprintApp;
 
 import javax.swing.*;

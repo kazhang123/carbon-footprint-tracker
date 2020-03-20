@@ -5,8 +5,6 @@ import ui.tabs.Tab;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicTabbedPaneUI;
 import java.awt.*;
 import java.io.File;
