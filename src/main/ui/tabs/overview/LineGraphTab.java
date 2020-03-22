@@ -58,6 +58,7 @@ public class LineGraphTab extends Tab {
 
     }
 
+    // EFFECTS: returns a time series data set based off history of user's saved carbon footprints
     private XYDataset createDataset() {
         TimeSeries series = new TimeSeries("");
         CarbonFootprintLog currLog = getApp().getCarbonLog();
@@ -76,6 +77,7 @@ public class LineGraphTab extends Tab {
         return dataset;
     }
 
+    // EFFECTS: creates a time series chart from given dataset
     private JFreeChart createChart(XYDataset dataset) {
         JFreeChart chart = ChartFactory.createTimeSeriesChart("", "Date",
                 "Carbon Emission (CO2e / year)", dataset);

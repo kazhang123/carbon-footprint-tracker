@@ -7,8 +7,6 @@ public abstract class CarbonEmission implements Jsonable {
     public static final double MAX_KWH = 5000;
     public static final double MAX_CALS = 5000;
     public static final double MAX_KM = 100;
-
-
     protected double carbonEmission;
 
     public CarbonEmission() {

@@ -86,7 +86,7 @@ public class Diet extends CarbonEmission {
     }
 
 
-    // EFFECTS: saves diet object to JSON array
+    // EFFECTS: saves diet object to given JSON array
     @Override
     public void saveJson(FileWriter fileWriter, Object obj) {
         JSONObject dietObj = new JSONObject();

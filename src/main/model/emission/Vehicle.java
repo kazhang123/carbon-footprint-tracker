@@ -38,6 +38,7 @@ public class Vehicle extends CarbonEmission {
         return "Vehicle: " + String.format("%.2f", getCarbonEmission());
     }
 
+    // EFFECTS: returns maximum daily distance user can select
     @Override
     public double getMax() {
         return 200;

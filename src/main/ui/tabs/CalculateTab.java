@@ -127,7 +127,6 @@ public class CalculateTab extends Tab {
         JLabel status = new JLabel("0");
         JSlider slider = new JSlider(0, (int) c.getMax(), 0);
         slider.setMajorTickSpacing((int) Math.round(c.getMax() / 4));
-//        slider.setMinorTickSpacing(100);
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
         slider.addChangeListener(new SliderListener(c, status));

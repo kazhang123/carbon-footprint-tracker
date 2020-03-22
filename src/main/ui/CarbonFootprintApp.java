@@ -19,7 +19,6 @@ import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 // carbon footprint tracker application
 // Source code: TellerApp
@@ -38,8 +37,6 @@ public class CarbonFootprintApp extends JFrame {
     private HomeEnergy oil;
     private Transportation transportation;
     private Vehicle car;
-    private boolean runProgram;
-    private Scanner input;
 
     private JTabbedPane mainTabs;
 
@@ -133,9 +130,8 @@ public class CarbonFootprintApp extends JFrame {
             JsonWriter writer = new JsonWriter(new File(JSON_FILE));
             writer.write(carbonLog);
             writer.close();
-//            System.out.println("Current footprint saved to file \n");
         } catch (IOException e) {
-//            System.out.println("Unable to save to file \n");
+            System.out.println("Unable to save to file \n");
         }
 
     }

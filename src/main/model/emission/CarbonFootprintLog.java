@@ -119,6 +119,7 @@ public class CarbonFootprintLog implements Jsonable {
         return (int) Math.round(emission / CARBON_PER_TREE);
     }
 
+    // EFFECTS: saves this carbon footprint log to file
     @Override
     public void saveJson(FileWriter fileWriter, Object obj) throws IOException {
         JSONArray jsonLogs = (JSONArray) obj;
