@@ -29,7 +29,6 @@ public class PieChartTab extends Tab {
 
     private ArrayList<CarbonEmission> emissions;
     private String[] sourceLabels = {"Diet", "Electricity", "Gas", "Oil", "Public Transportation", "Vehicle"};
-    private CarbonFootprintLog log = getApp().getCarbonLog();
     private JLabel carbonEmission;
     private JLabel offsetTrees;
 
@@ -61,9 +60,8 @@ public class PieChartTab extends Tab {
             public void stateChanged(ChangeEvent e) {
                 RingPlot plot = (RingPlot) chart.getPlot();
                 plot.setDataset(createDataset());
-                plot.setCenterText(makeCenterText(log.getTotalEmission()));
+                plot.setCenterText(makeCenterText(getApp().getCarbonLog().getTotalEmission()));
                 initializeLabels();
-
             }
         });
     }
@@ -71,11 +69,12 @@ public class PieChartTab extends Tab {
     // MODIFIES: this
     // EFFECTS: creates JLabels to summarize user data
     private void initializeLabels() {
+        CarbonFootprintLog log = getApp().getCarbonLog();
         carbonEmission.setText("<html> YOUR FOOTPRINT IS <br/>"
                 + String.format("%.2f", log.getTotalEmission())
                 + " TONNES OF CO2e <br/> PER YEAR  <br/> </html>");
 
-        offsetTrees.setText("<html>You would need <br/>" +  log.numTreesToOffset(log.getTotalEmission())
+        offsetTrees.setText("<html>You would need <br/>" + log.numTreesToOffset(log.getTotalEmission())
                 + " trees to <br/> offset your footprint </html>");
 
         carbonEmission.setBorder(new EmptyBorder(200, 20, 10, 15));
@@ -87,6 +86,7 @@ public class PieChartTab extends Tab {
 
     // EFFECTS: returns data set based on contribution of each emission source to total carbon emission
     private PieDataset createDataset() {
+        CarbonFootprintLog log = getApp().getCarbonLog();
         ArrayList<CarbonEmission> emissions = (ArrayList<CarbonEmission>) log.getEmissionSources();
 
         DefaultPieDataset result = new DefaultPieDataset();
@@ -102,6 +102,7 @@ public class PieChartTab extends Tab {
 
     // EFFECTS: returns pie chart of emission sources
     private JFreeChart createChart(PieDataset dataset) {
+        CarbonFootprintLog log = getApp().getCarbonLog();
         JFreeChart chart = ChartFactory.createRingChart(null, dataset, false, false, false);
         RingPlot plot = (RingPlot) chart.getPlot();
         initializeChart(plot);

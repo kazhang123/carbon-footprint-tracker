@@ -30,13 +30,13 @@ public class CarbonFootprintApp extends JFrame {
     public static final int TAKE_ACTION_TAB_INDEX = 2;
 
     private static final String JSON_FILE = "data/savedLogs.json";
-    private CarbonFootprintLog carbonLog;
-    private Diet diet;
-    private HomeEnergy electricity;
-    private HomeEnergy gas;
-    private HomeEnergy oil;
-    private Transportation transportation;
-    private Vehicle car;
+    private static CarbonFootprintLog carbonLog;
+    private static Diet diet;
+    private static HomeEnergy electricity;
+    private static HomeEnergy gas;
+    private static HomeEnergy oil;
+    private static Transportation transportation;
+    private static Vehicle car;
 
     private JTabbedPane mainTabs;
 
@@ -88,7 +88,7 @@ public class CarbonFootprintApp extends JFrame {
     // MODIFIES: this
     // EFFECTS: loads most recent log from JSON_FILE if it exists,
     // otherwise initialize log with default values
-    private CarbonFootprintLog loadCurrentLog() {
+    private static CarbonFootprintLog loadCurrentLog() {
         try {
             List<CarbonFootprintLog> allLogs = JsonReader.readJson(new File(JSON_FILE));
             carbonLog = allLogs.get(allLogs.size() - 1);
@@ -106,22 +106,6 @@ public class CarbonFootprintApp extends JFrame {
         }
     }
 
-    // EFFECTS: displays past carbon footprint logs saved to JSON_FILE
-    private void displayPast() {
-        try {
-            List<CarbonFootprintLog> allLogs = JsonReader.readJson(new File(JSON_FILE));
-            System.out.println("Your carbon footprint over time in tonnes of CO2e per year:");
-            for (CarbonFootprintLog l : allLogs) {
-                System.out.println(String.format("%.2f", l.getTotalEmission()));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            System.out.println("No records to display \n");
-        }
-
-
-    }
 
     // EFFECTS: saves state of carbon footprint log to JSON_FILE
     private void saveLog() {
@@ -137,8 +121,14 @@ public class CarbonFootprintApp extends JFrame {
     }
 
     // MODIFIES: this
+    // EFFECTS: resets current carbon footprint log as last saved log
+    public static void resetLog() {
+        carbonLog = loadCurrentLog();
+    }
+
+    // MODIFIES: this
     // EFFECTS: initializes carbon footprint with default values
-    private CarbonFootprintLog initializeCarbonFootprint() {
+    private static CarbonFootprintLog initializeCarbonFootprint() {
         carbonLog = new CarbonFootprintLog("Canada");
         diet = new Diet(DietType.MEDIUM_MEAT);
         electricity = new HomeEnergy(EnergyType.ELECTRICITY);
