@@ -1,6 +1,5 @@
 package model.emission;
 
-import model.emission.exception.NegativeAmountException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -70,17 +69,15 @@ public class HomeEnergy extends CarbonEmission {
         return monthlyKwh;
     }
 
+    // REQUIRES: monthlyKwh >= 0
     // MODIFIES: this
     // EFFECTS: sets the the monthly energy consumption in kwh and sets carbon footprint emission based on kwh amount
     private void setMonthlyKwh(double monthlyKwh) {
-//        if (monthlyKwh < 0) {
-//            throw new NegativeAmountException();
-//        }
         this.monthlyKwh = monthlyKwh;
-//        calculateCarbonEmission(this.monthlyKwh);
     }
 
 
+    // EFFECTS: saves home energy object to JSON array
     @Override
     public void saveJson(FileWriter fileWriter, Object obj) {
         JSONObject energyObj = new JSONObject();

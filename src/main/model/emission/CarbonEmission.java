@@ -20,6 +20,7 @@ public abstract class CarbonEmission implements Jsonable {
         return carbonEmission;
     }
 
+    // REQUIRES: amount >= 0
     // MODIFIES: this
     // EFFECTS: sets and calculates carbon emission of given amount depending on emission type
     public abstract void calculateCarbonEmission(double amount);

@@ -1,12 +1,12 @@
 package persistence;
 
+import jdk.nashorn.internal.ir.debug.JSONWriter;
 import model.emission.*;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -90,6 +90,34 @@ public class JsonWriterTest {
             fail("exception should not have been thrown");
         }
     }
+
+
+    // test that a new array list of logs will be created when there are no saved logs
+    @Test
+    public void testWriteToNewFile() {
+        try {
+            writer.close();
+            PrintWriter pw = new PrintWriter("data/testJson4.json");
+            pw.close();
+
+            JsonWriter testWriter = new JsonWriter(new File("data/testJson4.json"));
+            testWriter.write(carbonLog);
+            testWriter.close();
+
+            List<CarbonFootprintLog> logs = JsonReader.readJson(new File("data/testJson4.json"));
+            assertEquals(1, logs.size());
+
+        } catch (FileNotFoundException e) {
+            fail("Should not have thrown FileNotFoundException");
+        } catch (IOException e) {
+            fail("Should not have thrown IOException");
+        } catch (ParseException e) {
+            fail("Should not have thrown ParseException");
+        }
+
+    }
+
+
 
 
 

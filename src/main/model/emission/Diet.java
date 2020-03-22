@@ -1,6 +1,5 @@
 package model.emission;
 
-import model.emission.exception.NegativeAmountException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -79,17 +78,15 @@ public class Diet extends CarbonEmission {
         return calsPerDay;
     }
 
+    // REQUIRES: cals >= 0
     // MODIFIES: this
     // EFFECTS: sets the kCal consumed per day
     private void setCalPerDay(int cals)  {
-//        if (cals < 0) {
-//            throw new NegativeAmountException();
-//        }
         calsPerDay = cals;
-//        calculateCarbonEmission(calsPerDay);
     }
 
 
+    // EFFECTS: saves diet object to JSON array
     @Override
     public void saveJson(FileWriter fileWriter, Object obj) {
         JSONObject dietObj = new JSONObject();

@@ -1,7 +1,6 @@
 package model;
 
 import model.emission.*;
-import model.emission.exception.NegativeAmountException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +19,7 @@ public class CarbonFootprintLogTest {
     Vehicle car;
 
     @BeforeEach
-    public void setUp() throws NegativeAmountException {
+    public void setUp() {
         testCarbonLog = new CarbonFootprintLog("CANADA");
         diet = new Diet(DietType.MEDIUM_MEAT);
         energy = new HomeEnergy(EnergyType.ELECTRICITY);

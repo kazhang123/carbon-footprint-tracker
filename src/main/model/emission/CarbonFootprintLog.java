@@ -123,16 +123,6 @@ public class CarbonFootprintLog implements Jsonable {
     public void saveJson(FileWriter fileWriter, Object obj) throws IOException {
         JSONArray jsonLogs = (JSONArray) obj;
 
-//        JSONParser parser = new JSONParser();
-//        JSONArray jsonLogs;
-//        try {
-//            Object parsedObj = parser.parse(new FileReader("data/savedLogs.json"));
-//            JSONObject parsedJsonObj = (JSONObject) parsedObj;
-//            jsonLogs = (JSONArray) parsedJsonObj.get("logs");
-//        } catch (ParseException e) {
-//            jsonLogs = new JSONArray();
-//        }
-
         JSONObject log = new JSONObject();
         log.put("country", country);
         log.put("month", month);

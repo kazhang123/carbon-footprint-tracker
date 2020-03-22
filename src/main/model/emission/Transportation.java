@@ -1,6 +1,5 @@
 package model.emission;
 
-import model.emission.exception.NegativeAmountException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -46,17 +45,15 @@ public class Transportation extends CarbonEmission {
         return dailyDistance;
     }
 
+    // REQUIRES: distance >= 0
     // MODIFIES: this
     // EFFECTS: sets km travelled per day by bus and carbon emission levels based on distance
     private void setDistancePerDay(double distance)  {
-//        if (distance < 0) {
-//            throw new NegativeAmountException();
-//        }
         dailyDistance = distance;
-//        calculateCarbonEmission(dailyDistance);
     }
 
 
+    // EFFECTS: saves transportation object to JSON array
     @Override
     public void saveJson(FileWriter fileWriter, Object obj) {
         JSONObject busObj = new JSONObject();
