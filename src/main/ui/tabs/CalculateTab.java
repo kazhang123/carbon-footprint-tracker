@@ -124,11 +124,12 @@ public class CalculateTab extends Tab {
     // EFFECTS: returns a slider to control c's field that effects their carbon emission
     private JPanel getSlider(CarbonEmission c) {
         JPanel sliderPanel = new JPanel();
-        JLabel status = new JLabel("0");
+        JLabel status = new JLabel(String.valueOf(c.getValue()));
         JSlider slider = new JSlider(0, (int) c.getMax(), 0);
         slider.setMajorTickSpacing((int) Math.round(c.getMax() / 4));
         slider.setPaintTicks(true);
         slider.setPaintLabels(true);
+        slider.setValue((int) c.getValue());
         slider.addChangeListener(new SliderListener(c, status));
 
         sliderPanel.add(slider);

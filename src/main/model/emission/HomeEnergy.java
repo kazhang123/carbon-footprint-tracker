@@ -59,6 +59,12 @@ public class HomeEnergy extends CarbonEmission {
         return 5000;
     }
 
+    // EFFECTS: returns the monthlyKwh
+    @Override
+    public double getValue() {
+        return monthlyKwh;
+    }
+
     // EFFECTS: returns the energy type of the home energy source
     public EnergyType getEnergyType() {
         return energyType;

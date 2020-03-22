@@ -41,6 +41,12 @@ public class Transportation extends CarbonEmission {
         return 200;
     }
 
+    // EFFECTS: returns the daily distance
+    @Override
+    public double getValue() {
+        return dailyDistance;
+    }
+
     // EFFECTS: returns the distance spent on bus each day
     public double getDistance() {
         return dailyDistance;

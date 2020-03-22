@@ -62,6 +62,12 @@ public class Diet extends CarbonEmission {
         return 10000;
     }
 
+    // EFFECTS: returns the calories per day
+    @Override
+    public double getValue() {
+        return calsPerDay;
+    }
+
     // EFFECTS: returns the diet type
     public DietType getDietType() {
         return dietType;

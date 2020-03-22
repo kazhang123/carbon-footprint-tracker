@@ -4,9 +4,6 @@ import persistence.Jsonable;
 
 // represents a carbon footprint source, with an annual carbon emission measured in tonnes of CO2 equivalent
 public abstract class CarbonEmission implements Jsonable {
-    public static final double MAX_KWH = 5000;
-    public static final double MAX_CALS = 5000;
-    public static final double MAX_KM = 100;
     protected double carbonEmission;
 
     public CarbonEmission() {
@@ -28,4 +25,7 @@ public abstract class CarbonEmission implements Jsonable {
 
     // EFFECTS: returns the max quantity the user can select for the emission source
     public abstract double getMax();
+
+    // EFFECTS: returns the value of the carbon emission source that affects its carbon emission
+    public abstract double getValue();
 }

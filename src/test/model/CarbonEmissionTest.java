@@ -47,6 +47,7 @@ class CarbonEmissionTest {
         assertEquals(dietVege.getDietType(), DietType.VEGETARIAN);
         assertEquals(dietVegan.getDietType(), DietType.VEGAN);
         assertEquals(10000, dietLM.getMax());
+        assertEquals(0, dietLM.getValue());
     }
 
     // test whether calculation method is multiplying emissions factor correctly
@@ -82,6 +83,7 @@ class CarbonEmissionTest {
         assertEquals(0, transportation.getCarbonEmission());
         assertEquals(0, transportation.getDistance());
         assertEquals(200, transportation.getMax());
+        assertEquals(0, transportation.getValue());
     }
 
     @Test
@@ -98,6 +100,7 @@ class CarbonEmissionTest {
         assertEquals(0, vehicle.getDistance());
         assertEquals(0, vehicle.getCarbonEmission());
         assertEquals(200, vehicle.getMax());
+        assertEquals(0, vehicle.getValue());
     }
 
     // test whether calculation method is multiplying emissions factor correctly
@@ -114,6 +117,7 @@ class CarbonEmissionTest {
         assertEquals(0, homeEnergyE.getMonthlyKwh());
         assertEquals(homeEnergyE.getEnergyType(),EnergyType.ELECTRICITY);
         assertEquals(5000, homeEnergyE.getMax());
+        assertEquals(0, homeEnergyE.getValue());
 
         assertEquals(0, homeEnergyG.getCarbonEmission());
         assertEquals(0, homeEnergyG.getMonthlyKwh());

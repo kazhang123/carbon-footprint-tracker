@@ -44,6 +44,12 @@ public class Vehicle extends CarbonEmission {
         return 200;
     }
 
+    // EFFECTS: returns the daily distance
+    @Override
+    public double getValue() {
+        return dailyDistance;
+    }
+
     // EFFECTS: returns the distance travelled by car a day
     public double getDistance() {
         return dailyDistance;
