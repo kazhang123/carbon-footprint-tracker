@@ -35,5 +35,4 @@ where you will find different types of graphs summarizing the data you have ente
 in the "Take Action" tab.
 - You can save the state of my application by clicking the "save" button in the "Calculate" tab
 - You can reload the state of my application by restarting the program. You should find that the data in the graphs will describe 
-your last save. The "Reset" button in the calculate tab will reload your last save. You should see upon clicking "Reset" that the "Overview" tab 
-will reflect your last save.
+your last save

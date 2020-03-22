@@ -54,7 +54,6 @@ public class CalculateTab extends Tab {
 
         JPanel buttonRow = makeResultsButton();
         buttonRow.add(app.makeSaveButton());
-        buttonRow.add(makeResetButton());
         this.add(buttonRow);
 
     }
@@ -204,22 +203,6 @@ public class CalculateTab extends Tab {
             }
         });
         return buttonRow;
-    }
-
-    // EFFECTS: returns a button that resets user's data to last save
-    private JButton makeResetButton() {
-        JButton reset = new JButton("Reset");
-        reset.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String buttonPressed = e.getActionCommand();
-                if (buttonPressed.equals("Reset")) {
-                    CarbonFootprintApp.resetLog();
-                }
-            }
-        });
-
-        return reset;
     }
 
     private class SliderListener implements ChangeListener {
