@@ -36,6 +36,7 @@ public class PieChartTab extends Tab {
     // EFFECTS: creates tab with pie chart displaying the percentage of impact each carbon emission source has
     public PieChartTab(CarbonFootprintApp app) {
         super(app);
+        log = getApp().getCarbonLog();
         setBackground(Color.WHITE);
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

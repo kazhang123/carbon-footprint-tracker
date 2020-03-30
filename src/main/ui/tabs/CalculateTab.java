@@ -88,7 +88,7 @@ public class CalculateTab extends Tab {
             }
         });
 
-        countriesBox.setSelectedItem("CANADA");
+        countriesBox.setSelectedItem(getApp().getCarbonLog().getCountry());
 
         country = new JLabel("Select your country:", SwingConstants.LEFT);
 
@@ -145,6 +145,7 @@ public class CalculateTab extends Tab {
         JLabel name = new JLabel("What is your diet like?", SwingConstants.LEFT);
         JPanel row = new JPanel(rowLayout);
         JComboBox dietBox = new JComboBox(dietTypes);
+        dietBox.setSelectedItem(loadDietType(diet));
 
         row.add(name);
         row.add(dietBox);
@@ -163,7 +164,7 @@ public class CalculateTab extends Tab {
         dietBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String selection = e.getActionCommand();
+                String selection = (String) dietBox.getSelectedItem();
                 processDietSelection(diet, selection);
             }
         });
@@ -206,6 +207,7 @@ public class CalculateTab extends Tab {
         return buttonRow;
     }
 
+    // represents a slider listener
     private class SliderListener implements ChangeListener {
         private CarbonEmission emission;
         private JLabel status;
@@ -230,7 +232,7 @@ public class CalculateTab extends Tab {
     }
 
     // MODIFIES: this
-    // EFFECTS: selects diet type based on user input
+    // EFFECTS: sets diet type based on user input
     private void processDietSelection(Diet diet, String selection) {
         switch (selection) {
             case "Heavy meat eater (over 100 g a day)":
@@ -253,6 +255,27 @@ public class CalculateTab extends Tab {
                 break;
         }
     }
+
+    // EFFECTS: returns the JCombo box selection of given diet type
+    private String loadDietType(Diet diet) {
+        DietType type = diet.getDietType();
+
+        switch (type) {
+            case HIGH_MEAT:
+                return "Heavy meat eater (over 100 g a day)";
+            case MEDIUM_MEAT:
+                return "Medium meat eater (50 - 99 g a day)";
+            case LOW_MEAT:
+                return "Light meat eater (less than 50 g a day)";
+            case PESCETARIAN:
+                return "Pescatarian";
+            case VEGETARIAN:
+                return "Vegetarian";
+            default:
+                return "Vegan";
+        }
+    }
+
 
 
 

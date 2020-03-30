@@ -17,7 +17,6 @@ import java.util.List;
 // statistics of their country
 public class CarbonFootprintLog implements Jsonable {
     public static final double CARBON_PER_TREE = 0.06; // amount of Co2 absorbed annually by average tree in tonnes
-    public static final double WORLD_AVG = 5;
 
     private Calendar calendar = Calendar.getInstance();
     private String country;

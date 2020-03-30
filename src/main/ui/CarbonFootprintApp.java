@@ -106,23 +106,6 @@ public class CarbonFootprintApp extends JFrame {
         }
     }
 
-    // EFFECTS: displays past carbon footprint logs saved to JSON_FILE
-    private void displayPast() {
-        try {
-            List<CarbonFootprintLog> allLogs = JsonReader.readJson(new File(JSON_FILE));
-            System.out.println("Your carbon footprint over time in tonnes of CO2e per year:");
-            for (CarbonFootprintLog l : allLogs) {
-                System.out.println(String.format("%.2f", l.getTotalEmission()));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
-            System.out.println("No records to display \n");
-        }
-
-
-    }
-
     // EFFECTS: saves state of carbon footprint log to JSON_FILE
     private void saveLog() {
         try {
@@ -157,41 +140,6 @@ public class CarbonFootprintApp extends JFrame {
         return carbonLog;
     }
 
-    // EFFECTS: prints caverage carbon footprint of user country if found.If not found, prints that it was not found
-    private void printCountryAverage() {
-        if (CountryList.getCountries().get(carbonLog.getCountry()) != null) {
-            System.out.println("Your country's average: " + carbonLog.getAvgCountryFootprint()
-                    + " tonnes of CO2 a year \n");
-        } else {
-            System.out.println("Sorry, don't have data for your selected country... \n");
-        }
-    }
-
-    // EFFECTS: prints sustainability OffsetTips.txt based on user's emission sources to screen
-    private void printTips() {
-        System.out.println("REDUCE YOUR IMPACT:\n");
-        if (diet.getDietType().equals(DietType.HIGH_MEAT) || diet.getDietType().equals(DietType.MEDIUM_MEAT)) {
-            System.out.println("Consider eating meatless meals once a week! \n"
-                    + " Eating one meatless meal a week can offset your footprint by up to 0.4 tonnes a year \n");
-        }
-        if (car.getCarbonEmission() > 0) {
-            System.out.println("Take public transportation! \n For each day of the week you take the bus,"
-                    + " you can save up to 0.7 tonnes of CO2 and $2000 every year on fuel. \n");
-            System.out.println("Carpool to work to save 0.9 tonnes a year. \n");
-        }
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("data/OffsetTips.txt"));
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                System.out.println(line + "\n");
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     // EFFECTS: returns the carbon footprint log controlled by this ui
     public CarbonFootprintLog getCarbonLog() {
