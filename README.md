@@ -36,4 +36,3 @@ in the "Take Action" tab.
 - You can save the state of my application by clicking the "save" button in the "Calculate" tab
 - You can reload the state of my application by restarting the program. You should find that the data in the graphs will describe 
 your last save
-

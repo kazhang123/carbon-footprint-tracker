@@ -7,7 +7,7 @@ import java.io.FileWriter;
 
 // represents a diet as a source of carbon emissions,
 // with a diet type, daily calorie intake, and annual carbon emission
-public class Diet implements CarbonEmission {
+public class Diet extends CarbonEmission {
 
     // Emission factors by diet type measured in tonnes Co2e / 2000 kCal
     public static final double HIGHMEATEATER_EF = 0.00719; // >= 100 g meat / day
@@ -17,20 +17,14 @@ public class Diet implements CarbonEmission {
     public static final double VEGETARIAN_EF = 0.00381;
     public static final double VEGAN_EF = 0.00289;
 
-    private double carbonEmission;
     private DietType dietType;
     private int calsPerDay;
 
     // EFFECTS: constructs a new diet emission source
     public Diet(DietType dietType) {
-        carbonEmission = 0;
+        super();
         this.dietType = dietType;
         calsPerDay = 0;
-    }
-
-    @Override
-    public double getCarbonEmission() {
-        return carbonEmission;
     }
 
     // MODIFIES: this

@@ -262,17 +262,17 @@ public class CalculateTab extends Tab {
 
         switch (type) {
             case HIGH_MEAT:
-                return dietTypes[0];
+                return "Heavy meat eater (over 100 g a day)";
             case MEDIUM_MEAT:
-                return dietTypes[1];
+                return "Medium meat eater (50 - 99 g a day)";
             case LOW_MEAT:
-                return dietTypes[2];
+                return "Light meat eater (less than 50 g a day)";
             case PESCETARIAN:
-                return dietTypes[3];
+                return "Pescatarian";
             case VEGETARIAN:
-                return dietTypes[4];
+                return "Vegetarian";
             default:
-                return dietTypes[5];
+                return "Vegan";
         }
     }
 
