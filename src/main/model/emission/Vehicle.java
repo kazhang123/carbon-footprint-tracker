@@ -1,13 +1,10 @@
 package model.emission;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
-import java.io.FileWriter;
 
 // represents a personal vehicle as a source of carbon emission,
 // with a daily distance travelled on bus and annual carbon emission
-public class Vehicle extends CarbonEmission {
+public class Vehicle extends Travel implements CarbonEmission {
 
     // emission factor in tonnes of CO2e per gallon of gasoline consumed
     public static final double GASOLINE_EF = 0.008887;
@@ -15,11 +12,16 @@ public class Vehicle extends CarbonEmission {
     public static final double AVG_MPG = 24;
     public static final double MILES_PER_KM = 0.62;
 
-    private double dailyDistance; // in km
+    private double carbonEmission;
 
     public Vehicle() {
         super();
-        dailyDistance = 0;
+        carbonEmission = 0;
+    }
+
+    @Override
+    public double getCarbonEmission() {
+        return carbonEmission;
     }
 
     // REQUIRES; dailyDistance >= 0
@@ -42,35 +44,6 @@ public class Vehicle extends CarbonEmission {
     @Override
     public double getMax() {
         return 200;
-    }
-
-    // EFFECTS: returns the daily distance
-    @Override
-    public double getValue() {
-        return dailyDistance;
-    }
-
-    // EFFECTS: returns the distance travelled by car a day
-    public double getDistance() {
-        return dailyDistance;
-    }
-
-    // REQUIRES: distance >= 0
-    // MODIFIES: this
-    // EFFECTS: sets km travelled by car per day
-    private void setDistancePerDay(double distance) {
-        dailyDistance = distance;
-    }
-
-
-    // EFFECTS: saves vehicle object to JSON array
-    @Override
-    public void saveJson(FileWriter fileWriter, Object obj) {
-        JSONObject carObj = new JSONObject();
-        carObj.put("label", "Vehicle");
-        carObj.put("dailyDistance", dailyDistance);
-        JSONArray emissions = (JSONArray) obj;
-        emissions.add(carObj);
     }
 
 
