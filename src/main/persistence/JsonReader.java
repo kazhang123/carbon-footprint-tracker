@@ -36,7 +36,7 @@ public class JsonReader {
     }
 
     // EFFECTS: returns a list of carbon emission sources for a carbon footprint log read from JSONArray
-    public static ArrayList<CarbonEmission> parseEmissionSources(JSONArray sources) {
+    private static ArrayList<CarbonEmission> parseEmissionSources(JSONArray sources) {
         JSONObject jsonDiet = (JSONObject) sources.get(0);
         String dietTypeString = (String) jsonDiet.get("dietType");
         Diet diet = new Diet(DietType.valueOf(dietTypeString));

@@ -44,5 +44,6 @@ public abstract class Travel {
         emissions.add(travelObj);
     }
 
+    // EFFECTS: returns label to be used when saving object to file
     protected abstract String getLabel();
 }

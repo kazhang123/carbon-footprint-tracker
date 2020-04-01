@@ -38,16 +38,15 @@ public class CalculateTab extends Tab {
         placeGreeting();
         placeCountrySelectionBox();
         ArrayList<CarbonEmission> emissionList = (ArrayList<CarbonEmission>) app.getCarbonLog().getEmissionSources();
-        this.add(makeDietEditor(emissionList.get(0)));
 
-        for (int i = 1; i < 4; i++) {
-            CarbonEmission energy = emissionList.get(i);
-            this.add(makeEnergyEditor(energy));
-        }
-
-        for (int i = 4; i < 6; i++) {
-            CarbonEmission transport = emissionList.get(i);
-            this.add(makeTransEditor(transport));
+        for (CarbonEmission c : emissionList) {
+            if (c instanceof Diet) {
+                this.add(makeDietEditor(c));
+            } else if (c instanceof HomeEnergy) {
+                this.add(makeEnergyEditor(c));
+            } else {
+                this.add(makeTransEditor(c));
+            }
         }
 
         JPanel buttonRow = makeResultsButton();

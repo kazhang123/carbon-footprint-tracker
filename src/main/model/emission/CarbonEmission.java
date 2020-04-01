@@ -20,4 +20,5 @@ public interface CarbonEmission extends Jsonable {
 
     // EFFECTS: returns the value of the carbon emission source that affects its carbon emission
     double getValue();
+
 }

@@ -12,9 +12,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-// represents a log tracking different sources of carbon emissions,
-// with a list of all sources, and a user country to determine
-// statistics of their country
+/*
+ represents a log tracking different sources of carbon emissions,
+ with a list of all sources, and a user country to determine
+ statistics of their country
+ */
 public class CarbonFootprintLog implements Jsonable {
     public static final double CARBON_PER_TREE = 0.06; // amount of Co2 absorbed annually by average tree in tonnes
 

@@ -28,7 +28,6 @@ public class PieChartTab extends Tab {
     protected static final int CHART_HEIGHT = 600;
 
     private ArrayList<CarbonEmission> emissions;
-    private String[] sourceLabels = {"Diet", "Electricity", "Gas", "Oil", "Public Transportation", "Vehicle"};
     private JLabel carbonEmission;
     private JLabel offsetTrees;
 
@@ -92,10 +91,14 @@ public class PieChartTab extends Tab {
 
         DefaultPieDataset result = new DefaultPieDataset();
 
-        int i = 0;
-        for (String s : sourceLabels) {
-            result.setValue(s, log.percentageEmission(emissions.get(i)));
-            i++;
+        for (CarbonEmission c : emissions) {
+            if (c instanceof HomeEnergy) {
+                String type = ((HomeEnergy) c).getEnergyType().toString();
+                String cap = type.substring(0,1) + type.substring(1).toLowerCase();
+                result.setValue(cap, log.percentageEmission(c));
+            } else {
+                result.setValue(c.getClass().getSimpleName(), log.percentageEmission(c));
+            }
         }
 
         return result;
@@ -139,7 +142,7 @@ public class PieChartTab extends Tab {
         plot.setSectionPaint("Electricity", new Color(255, 190, 117));
         plot.setSectionPaint("Gas", new Color(187, 236, 248));
         plot.setSectionPaint("Oil", new Color(189, 241, 178));
-        plot.setSectionPaint("Public Transportation", new Color(255, 254, 166));
+        plot.setSectionPaint("Transportation", new Color(255, 254, 166));
         plot.setSectionPaint("Vehicle", new Color(164, 196, 243));
     }
 
