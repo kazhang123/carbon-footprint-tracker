@@ -50,4 +50,4 @@ To do this, I also had to make CarbonEmission an interface.
 - The CarbonFootprintLog class had poor cohesion, as it was handling behaviour related to the date.  
 I fixed this by making a Date class to specifically handle functionality related to the date
 - There was redundant and unnecessary coupling between the CarbonFootprintApp and CarbonEmission classes  
-I fixed this by removing the CarbonEmission objects as fields 
+I fixed this by removing the CarbonEmission objects as fields and locally instantiating them

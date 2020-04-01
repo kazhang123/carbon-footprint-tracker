@@ -48,7 +48,7 @@ public class CarbonFootprintApp extends JFrame {
 
         add(mainTabs);
         setVisible(true);
-//        playMusic();
+        playMusic();
     }
 
     // EFFECTS: plays the background music
@@ -78,7 +78,7 @@ public class CarbonFootprintApp extends JFrame {
 
     // MODIFIES: this
     // EFFECTS: loads most recent log from JSON_FILE if it exists,
-    // otherwise initialize log with default values
+    //          otherwise initialize log with default values
     private CarbonFootprintLog loadCurrentLog() {
         try {
             List<CarbonFootprintLog> allLogs = JsonReader.readJson(new File(JSON_FILE));
