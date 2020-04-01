@@ -7,6 +7,7 @@ import java.awt.*;
 
 /*
 represents a tab
+source: SmartHome
  */
 public abstract class Tab extends JPanel {
     private CarbonFootprintApp app;

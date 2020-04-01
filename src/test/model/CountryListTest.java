@@ -14,21 +14,21 @@ public class CountryListTest {
 
     @BeforeEach
     public void setUp() {
-        countries = CountryList.getCountries();
+        countries = CountryList.getInstance().getCountries();
         countryList = new CountryList();
     }
 
     @Test
     public void testCountryListSize() {
         assertEquals(208, countryList.getSize());
-        assertEquals(208, countryList.getCountries().size());
+        assertEquals(208, countryList.getInstance().getCountries().size());
     }
 
     @Test
     public void testGetCountryAvg() {
-        assertEquals(15.12, countries.get("CANADA"));
-        assertEquals(0.16, countries.get("BURKINA FASO"));
-        assertEquals(16.49, CountryList.countries.get("USA"));
+        assertEquals(15.12, CountryList.getInstance().getCountries().get("CANADA"));
+        assertEquals(0.16, CountryList.getInstance().getCountries().get("BURKINA FASO"));
+        assertEquals(16.49, CountryList.getInstance().getCountries().get("USA"));
     }
 
 

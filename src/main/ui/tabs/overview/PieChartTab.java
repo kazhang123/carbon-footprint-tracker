@@ -36,7 +36,7 @@ public class PieChartTab extends Tab {
     // EFFECTS: creates tab with pie chart displaying the percentage of impact each carbon emission source has
     public PieChartTab(CarbonFootprintApp app) {
         super(app);
-        log = getApp().getCarbonLog();
+        CarbonFootprintLog log = getApp().getCarbonLog();
         setBackground(Color.WHITE);
 
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -109,7 +109,7 @@ public class PieChartTab extends Tab {
         initializeChart(plot);
 
         plot.setCenterTextFont(new Font("Dialog", Font.BOLD, 25));
-        plot.setCenterText(makeCenterText(log.getTotalEmission()));
+        plot.setCenterText(makeCenterText(getApp().getCarbonLog().getTotalEmission()));
         setSectionColours(plot);
         plot.setBackgroundPaint(null);
         plot.setLabelGenerator(new StandardPieSectionLabelGenerator("{0} {2}"));

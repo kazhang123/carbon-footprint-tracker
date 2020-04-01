@@ -27,8 +27,6 @@ public class CalculateTab extends Tab {
             "Medium meat eater (50 - 99 g a day)", "Light meat eater (less than 50 g a day)",
             "Pescatarian", "Vegetarian", "Vegan"};
 
-    private JLabel country;
-    private JComboBox countriesBox;
     private GridLayout rowLayout;
 
 
@@ -69,7 +67,7 @@ public class CalculateTab extends Tab {
     // MODIFIES: this
     // EFFECTS: adds a combo box for all country options to select from
     private void placeCountrySelectionBox() {
-        Set<String> countryNames = CountryList.getCountries().keySet();
+        Set<String> countryNames = CountryList.getInstance().getCountries().keySet();
 
         String[] countryNamesArray = new String[countryNames.size()];
 
@@ -79,7 +77,7 @@ public class CalculateTab extends Tab {
         Collections.addAll(list, countryNamesArray);
         Collections.sort(list);
 
-        countriesBox = new JComboBox(list.toArray());
+        JComboBox countriesBox = new JComboBox(list.toArray());
         countriesBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -90,14 +88,12 @@ public class CalculateTab extends Tab {
 
         countriesBox.setSelectedItem(getApp().getCarbonLog().getCountry());
 
-        country = new JLabel("Select your country:", SwingConstants.LEFT);
+        JLabel country = new JLabel("Select your country:", SwingConstants.LEFT);
 
         JPanel row = new JPanel(rowLayout);
         row.add(country);
         row.add(countriesBox);
         row.setPreferredSize(new Dimension(WIDTH, ROW_HEIGHT));
-
-
 
         this.add(row);
     }

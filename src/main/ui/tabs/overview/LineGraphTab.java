@@ -62,13 +62,14 @@ public class LineGraphTab extends Tab {
     private XYDataset createDataset() {
         TimeSeries series = new TimeSeries("");
         CarbonFootprintLog currLog = getApp().getCarbonLog();
-        currLog.updateDate();
+        currLog.getDate().updateDate();
 
         List<CarbonFootprintLog> logs = getApp().getAllLogs();
         logs.add(currLog);
 
         for (CarbonFootprintLog log : logs) {
-            series.addOrUpdate(new Day(log.getDay(), log.getMonth(), log.getYear()), log.getTotalEmission());
+            series.addOrUpdate(new Day(log.getDate().getDay(),
+                    log.getDate().getMonth(), log.getDate().getYear()), log.getTotalEmission());
         }
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();

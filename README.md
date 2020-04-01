@@ -38,4 +38,16 @@ in the "Take Action" tab.
 your last save
 
 ### Phase 4: Task 2
-I have included a type hierarchy in my code. CarbonEmission is an abstract class that is extended by Diet, HomeEnergy, Transportation, and Vehicle.
+I have included a type hierarchy in my code.  
+CarbonEmission is an abstract class that is extended by Diet, HomeEnergy, Transportation, 
+and Vehicle.  
+Note: After Task 3, CarbonEmission is now an interface that is implemented by Diet, HomeEnergy, Transportation, and Vehicle
+
+### Phase 4: Task 3
+- The Transportation and Vehicle classes had high coupling as their code was nearly identical.  
+I fixed this by extracting an abstract class, Travel, from their identical methods and making them both extend this new class.   
+To do this, I also had to make CarbonEmission an interface. 
+- The CarbonFootprintLog class had poor cohesion, as it was handling behaviour related to the date.  
+I fixed this by making a Date class to specifically handle functionality related to the date
+- There was some unnecessary coupling between the CarbonFootprintApp and CarbonEmission classes  
+I fixed this by removing the CarbonEmission objects as fields, as they did not need to be there.

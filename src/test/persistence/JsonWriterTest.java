@@ -63,8 +63,8 @@ public class JsonWriterTest {
             ArrayList<CarbonEmission> carbonEmissions = (ArrayList<CarbonEmission>) carbonLog.getEmissionSources();
 
             assertEquals("UZBEKISTAN", carbonLog.getCountry());
-            assertEquals(1, carbonLog.getMonth());
-            assertEquals(2020, carbonLog.getYear());
+            assertEquals(1, carbonLog.getDate().getMonth());
+            assertEquals(2020, carbonLog.getDate().getYear());
 
             Diet diet = (Diet) carbonEmissions.get(0);
             assertEquals(DietType.MEDIUM_MEAT, diet.getDietType());

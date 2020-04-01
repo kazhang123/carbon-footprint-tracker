@@ -4,10 +4,11 @@ import java.util.HashMap;
 
 // HashMap representing country names and their average carbon footprint in tonnes of CO2 per year
 public class CountryList {
-    public static HashMap<String, Double> countries = new HashMap<String, Double>();
+    public static CountryList instance;
+    private HashMap<String, Double> countries = new HashMap<>();
 
-    // EFFECTS: adds countries and returns list of all countries and their average footprints
-    public static HashMap<String, Double> getCountries() {
+    // EFFECTS: constructs a country list and adds all countries to HashMap
+    public CountryList() {
         addCountriesAtoBo();
         addCountriesBotoCr();
         addCountriesCutoGa();
@@ -18,13 +19,26 @@ public class CountryList {
         addCountriesRwtoSu();
         addCountriesSutoUs();
         addCountriesUztoZ();
+    }
 
+    // EFFECTS: returns single instance of CountryList
+    public static CountryList getInstance() {
+        if (instance == null) {
+            instance = new CountryList();
+        }
+
+        return instance;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds countries and returns list of all countries and their average footprints
+    public HashMap<String, Double> getCountries() {
         return countries;
     }
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with A through Bo
-    private static void addCountriesAtoBo() {
+    private void addCountriesAtoBo() {
         countries.put("AFGHANISTAN", 0.30);
         countries.put("ALBANIA", 1.98);
         countries.put("ALGERIA", 3.72);
@@ -52,7 +66,7 @@ public class CountryList {
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with Bo to Cr
-    private static void addCountriesBotoCr() {
+    private void addCountriesBotoCr() {
         countries.put("BOTSWANA", 3.24);
         countries.put("BRAZIL", 2.59);
         countries.put("BRUNEI DARUSSALAM", 22.12);
@@ -80,7 +94,7 @@ public class CountryList {
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with Cu to Ga
-    private static void addCountriesCutoGa() {
+    private void addCountriesCutoGa() {
         countries.put("CUBA", 3.05);
         countries.put("CYPRUS", 5.26);
         countries.put("CZECH REPUBLIC", 9.17);
@@ -106,7 +120,7 @@ public class CountryList {
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with Ge to Ir
-    private static void addCountriesGetoIr() {
+    private void addCountriesGetoIr() {
         countries.put("GEORGIA", 2.41);
         countries.put("GERMANY", 8.89);
         countries.put("GHANA", 0.54);
@@ -133,7 +147,7 @@ public class CountryList {
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with Ir to Ma
-    private static void addCountriesIrtoMa() {
+    private void addCountriesIrtoMa() {
         countries.put("ISRAEL", 7.86);
         countries.put("ITALY", 5.27);
         countries.put("JAMAICA", 2.59);
@@ -160,7 +174,7 @@ public class CountryList {
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with Ma to Ne
-    private static void addCountriesMatoNe() {
+    private void addCountriesMatoNe() {
         countries.put("MADAGASCAR", 0.13);
         countries.put("MALAWI", 0.07);
         countries.put("MALAYSIA", 8.03);
@@ -187,7 +201,7 @@ public class CountryList {
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with Ne to Rw
-    private static void addCountriesNetoRw() {
+    private void addCountriesNetoRw() {
         countries.put("NETHERLANDS", 9.92);
         countries.put("NEW CALEDONIA", 3.87);
         countries.put("NEW ZEALAND", 7.69);
@@ -215,7 +229,7 @@ public class CountryList {
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with Rw to Su
-    private static void addCountriesRwtoSu() {
+    private void addCountriesRwtoSu() {
         countries.put("SAINT KITTS AND NEVIS", 4.30);
         countries.put("SAINT LUCIA", 2.31);
         countries.put("SAINT VINCENT AND THE GRENADINES", 1.91);
@@ -243,7 +257,7 @@ public class CountryList {
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with Su to Us
-    private static void addCountriesSutoUs() {
+    private void addCountriesSutoUs() {
         countries.put("SURINAME", 3.63);
         countries.put("SWAZILAND", 0.93);
         countries.put("SWEDEN", 4.48);
@@ -269,7 +283,7 @@ public class CountryList {
 
     // MODIFIES: this
     // EFFECTS: adds countries with names starting with Uz to Z
-    private static void addCountriesUztoZ() {
+    private void addCountriesUztoZ() {
         countries.put("UZBEKISTAN", 3.42);
         countries.put("VANUATU", 0.59);
         countries.put("VENEZUELA", 6.03);
@@ -281,7 +295,7 @@ public class CountryList {
     }
 
     // EFFECTS: returns number of countries in list
-    public static int getSize() {
+    public int getSize() {
         return countries.size();
     }
 }

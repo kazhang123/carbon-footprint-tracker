@@ -7,21 +7,28 @@ import java.io.FileWriter;
 
 // represents energy used in a home as a source of carbon emission,
 // with an energy type, monthly power consumed, and annual carbon emission
-public class HomeEnergy extends CarbonEmission {
+public class HomeEnergy implements CarbonEmission {
 
     // Emission factors in tonnes CO2e / kwh
     public static final double GAS_EF = 0.00018;
     public static final double OIL_EF = 0.00025;
     public static final double ELECTRIC_EF = 0.0005; // differs by country, temporary constant
 
+    private double carbonEmission;
     private EnergyType energyType;
     private double monthlyKwh;
 
     // EFFECTS: constructs a new home energy emission source
     public HomeEnergy(EnergyType energyType) {
-        super();
+        carbonEmission = 0;
         this.energyType = energyType;
         monthlyKwh = 0;
+    }
+
+    // EFFECTS: returns the carbon emission in tonnes of CO2e
+    @Override
+    public double getCarbonEmission() {
+        return carbonEmission;
     }
 
     // MODIFIES: this

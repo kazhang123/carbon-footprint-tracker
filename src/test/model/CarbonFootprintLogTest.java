@@ -38,9 +38,9 @@ public class CarbonFootprintLogTest {
         assertEquals("CANADA", testCarbonLog.getCountry());
         assertEquals(15.12, testCarbonLog.getAvgCountryFootprint());
         assertEquals(0, testCarbonLog.getEmissionSources().size());
-        assertEquals(c.get(Calendar.MONTH) + 1, testCarbonLog.getMonth());
-        assertEquals(c.get(Calendar.DAY_OF_MONTH), testCarbonLog.getDay());
-        assertEquals(c.get(Calendar.YEAR), testCarbonLog.getYear());
+        assertEquals(c.get(Calendar.MONTH) + 1, testCarbonLog.getDate().getMonth());
+        assertEquals(c.get(Calendar.DAY_OF_MONTH), testCarbonLog.getDate().getDay());
+        assertEquals(c.get(Calendar.YEAR), testCarbonLog.getDate().getYear());
     }
 
     @Test
@@ -94,13 +94,6 @@ public class CarbonFootprintLogTest {
                 testCarbonLog.percentageEmission(diet));
     }
 
-    @Test
-    public void testUpdateCurrentLog() {
-        testCarbonLog.updateDate();
-        assertEquals(c.get(Calendar.MONTH) + 1, testCarbonLog.getMonth());
-        assertEquals(c.get(Calendar.DAY_OF_MONTH), testCarbonLog.getDay());
-        assertEquals(c.get(Calendar.YEAR), testCarbonLog.getYear());
-    }
 
 
 }

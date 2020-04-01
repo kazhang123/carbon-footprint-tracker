@@ -1,7 +1,6 @@
 package ui;
 
 import model.emission.CarbonFootprintLog;
-import model.CountryList;
 import model.emission.*;
 import org.json.simple.parser.ParseException;
 import persistence.JsonReader;
@@ -21,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 // carbon footprint tracker application
-// Source code: TellerApp
 public class CarbonFootprintApp extends JFrame {
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 700;
@@ -31,12 +29,6 @@ public class CarbonFootprintApp extends JFrame {
 
     private static final String JSON_FILE = "data/savedLogs.json";
     private CarbonFootprintLog carbonLog;
-    private Diet diet;
-    private HomeEnergy electricity;
-    private HomeEnergy gas;
-    private HomeEnergy oil;
-    private Transportation transportation;
-    private Vehicle car;
 
     private JTabbedPane mainTabs;
 
@@ -92,13 +84,6 @@ public class CarbonFootprintApp extends JFrame {
         try {
             List<CarbonFootprintLog> allLogs = JsonReader.readJson(new File(JSON_FILE));
             carbonLog = allLogs.get(allLogs.size() - 1);
-            List<CarbonEmission> emissions = carbonLog.getEmissionSources();
-            diet = (Diet) emissions.get(0);
-            electricity = (HomeEnergy) emissions.get(1);
-            gas = (HomeEnergy) emissions.get(2);
-            oil = (HomeEnergy) emissions.get(3);
-            transportation = (Transportation) emissions.get(4);
-            car = (Vehicle) emissions.get(5);
 
             return carbonLog;
         } catch (Exception e) {
@@ -109,7 +94,7 @@ public class CarbonFootprintApp extends JFrame {
     // EFFECTS: saves state of carbon footprint log to JSON_FILE
     private void saveLog() {
         try {
-            carbonLog.updateDate();
+            carbonLog.getDate().updateDate();
             JsonWriter writer = new JsonWriter(new File(JSON_FILE));
             writer.write(carbonLog);
             writer.close();
@@ -123,12 +108,12 @@ public class CarbonFootprintApp extends JFrame {
     // EFFECTS: initializes carbon footprint with default values
     private CarbonFootprintLog initializeCarbonFootprint() {
         carbonLog = new CarbonFootprintLog("Canada");
-        diet = new Diet(DietType.MEDIUM_MEAT);
-        electricity = new HomeEnergy(EnergyType.ELECTRICITY);
-        gas = new HomeEnergy(EnergyType.GAS);
-        oil = new HomeEnergy(EnergyType.OIL);
-        transportation = new Transportation();
-        car = new Vehicle();
+        Diet diet = new Diet(DietType.MEDIUM_MEAT);
+        HomeEnergy electricity = new HomeEnergy(EnergyType.ELECTRICITY);
+        HomeEnergy gas = new HomeEnergy(EnergyType.GAS);
+        HomeEnergy oil = new HomeEnergy(EnergyType.OIL);
+        Transportation transportation = new Transportation();
+        Vehicle car = new Vehicle();
 
         carbonLog.addCarbonSource(diet);
         carbonLog.addCarbonSource(electricity);
