@@ -60,8 +60,9 @@ public class PieChartTab extends Tab {
             public void stateChanged(ChangeEvent e) {
                 RingPlot plot = (RingPlot) chart.getPlot();
                 plot.setDataset(createDataset());
-                plot.setCenterText(makeCenterText(getApp().getCarbonLog().getTotalEmission()));
+                plot.setCenterText(makeCenterText(log.getTotalEmission()));
                 initializeLabels();
+
             }
         });
     }
@@ -74,7 +75,7 @@ public class PieChartTab extends Tab {
                 + String.format("%.2f", log.getTotalEmission())
                 + " TONNES OF CO2e <br/> PER YEAR  <br/> </html>");
 
-        offsetTrees.setText("<html>You would need <br/>" + log.numTreesToOffset(log.getTotalEmission())
+        offsetTrees.setText("<html>You would need <br/>" +  log.numTreesToOffset(log.getTotalEmission())
                 + " trees to <br/> offset your footprint </html>");
 
         carbonEmission.setBorder(new EmptyBorder(200, 20, 10, 15));
@@ -106,7 +107,6 @@ public class PieChartTab extends Tab {
 
     // EFFECTS: returns pie chart of emission sources
     private JFreeChart createChart(PieDataset dataset) {
-        CarbonFootprintLog log = getApp().getCarbonLog();
         JFreeChart chart = ChartFactory.createRingChart(null, dataset, false, false, false);
         RingPlot plot = (RingPlot) chart.getPlot();
         initializeChart(plot);

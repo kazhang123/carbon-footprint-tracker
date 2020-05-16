@@ -48,7 +48,7 @@ public class CarbonFootprintApp extends JFrame {
 
         add(mainTabs);
         setVisible(true);
-        playMusic();
+//        playMusic();
     }
 
     // EFFECTS: plays the background music
