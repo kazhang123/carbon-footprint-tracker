@@ -15,7 +15,7 @@ of your daily life is contributing to climate change from your daily lifestyle c
 ## Features
 - Calculate your yearly carbon footprint based on your daily activities
 - Compare your carbon footprint to the average person in your country
-- Receive a personalized chart of where your carbon emissions are coming from
+- Receive personalized charts summarizing your data
 - Receive tips on where to lessen your carbon emissions
 
 
