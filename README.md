@@ -26,8 +26,8 @@ of your daily life is contributing to climate change from your daily lifestyle c
 - Save your data with the "save" button to save your entry and track your carbon footprint over time
 
 ### Screenshots:
-![Alt text](data/screenshots/Screen Shot 2020-09-14 at 7.54.30 PM.png)
+![Alt text](![alt text](data/screenshots/image1.png?raw=true))
 
-![Alt text](data/screenshots/Screen Shot 2020-09-14 at 7.54.45 PM.png)
+![Alt text](![alt text](data/screenshots/image2.png?raw=true))
 
-![Alt text](data/screenshots/Screen Shot 2020-09-14 at 7.54.51 PM.png)
+![Alt text](![alt text](data/screenshots/image3.png?raw=true))
